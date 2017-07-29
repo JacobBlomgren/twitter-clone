@@ -1,9 +1,12 @@
-import compression from 'compression';
 import express from 'express';
+import compression from 'compression';
+import env from 'dotenv';
 
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
 import { isProd } from '../shared/utils/isProd';
 import renderApp from './render-app';
+
+env.config();
 
 const app = express();
 
