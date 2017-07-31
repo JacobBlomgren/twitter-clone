@@ -8,11 +8,11 @@ import registerUser from '../../src/server/auth/registerUser';
 const request = supertest(app);
 passportStub.install(app);
 
-beforeEach(function() {
+beforeEach(() => {
   db.any('DELETE FROM account');
 });
 
-afterEach(function() {
+afterEach(() => {
   passportStub.logout();
 });
 
@@ -85,5 +85,23 @@ describe('POST api/auth/login', () => {
       .send({ username: 'jacob', password: 'password' });
 
     expect(response.statusCode).toBe(401);
+  });
+});
+
+describe('GET api/auth/logout', () => {
+  it('should logout a logged in user', async () => {
+    await registerUser('jacob', 'password');
+    passportStub.login({ username: 'jacob', password: 'password' });
+    const response = await request.get('/api/auth/logout');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.status).toBe('Success');
+  });
+
+  it('shouldn\'t logout a user that is not logged in', async () => {
+    const response = await request.get('/api/auth/logout');
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.status).toBe('Not logged in');
   });
 });

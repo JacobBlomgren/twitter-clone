@@ -17,6 +17,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// Checks a password against the password from the database.
 async function checkPassword(username, password, done) {
   try {
     const user = await getUserByUsername(username);
