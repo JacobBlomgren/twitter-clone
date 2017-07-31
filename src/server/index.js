@@ -5,7 +5,6 @@
 import './env';
 import express from 'express';
 import compression from 'compression';
-import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
@@ -13,6 +12,7 @@ import session from 'express-session';
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
 import { isProd } from '../shared/utils/isProd';
 import renderApp from './render-app';
+import routes from './routes';
 
 const app = express();
 
@@ -20,7 +20,6 @@ app.use(compression());
 app.use(STATIC_PATH, express.static('dist'));
 app.use(STATIC_PATH, express.static('public'));
 
-app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -34,6 +33,9 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api', routes);
+
 app.get('/', (req, res) => {
   res.send(renderApp(APP_NAME));
 });

@@ -1,7 +1,6 @@
 import pgp from 'pg-promise';
-import promise from 'bluebird';
 
-const pgpInitialized = pgp({ promiseLib: promise });
+const pgpInitialized = pgp();
 const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,

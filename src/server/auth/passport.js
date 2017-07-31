@@ -20,6 +20,11 @@ passport.deserializeUser(async (id, done) => {
 async function checkPassword(username, password, done) {
   try {
     const user = await getUserByUsername(username);
+
+    if (user === null) {
+      return done(null, false, { message: 'Username does not exist.' });
+    }
+
     const passwordMatches = await bcrypt.compare(password, user.hash);
 
     if (passwordMatches) {
