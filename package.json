@@ -13,6 +13,7 @@
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
     "pretty-lint": "yarn prettier && yarn lint",
     "test": "yarn lint && jest --coverage",
+    "docs": "documentation build src/** -f html -o docs"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
