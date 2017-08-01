@@ -8,18 +8,18 @@ export default async function(req, res, next) {
       if (err || !user)
         res
           .status(500)
-          .json({ status: 'Authentication fail after registration' });
+          .json({ error: 'Authentication fail after registration' });
       if (user) {
         req.login(user, err2 => {
           if (err2)
             res
               .status(500)
-              .json({ status: 'Authentication fail after registration' });
-          res.status(200).json({ status: 'Success' });
+              .json({ error: 'Authentication fail after registration' });
+          res.status(201).json({ status: 'Success' });
         });
       }
     })(req, res, next);
   } catch (err) {
-    res.status(500).json({ status: 'Error' });
+    res.status(500).end();
   }
 }

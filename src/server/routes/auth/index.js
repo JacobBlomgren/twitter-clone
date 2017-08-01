@@ -3,7 +3,8 @@ import express from 'express';
 import register from './register';
 import checkAlreadyLoggedIn from './checkAlreadyLoggedIn';
 import { authenticate, login } from './login';
-import { loginRequired, logout } from './logout';
+import logout from './logout';
+import loginRequired from './loginRequired';
 
 const router = express.Router();
 

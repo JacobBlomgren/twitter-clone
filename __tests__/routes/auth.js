@@ -22,7 +22,7 @@ describe('POST /api/auth/register', () => {
       .post('/api/auth/register')
       .send({ username: 'jacob', password: 'password' });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(201);
     expect(response.body.status).toBe('Success');
   });
 
@@ -35,7 +35,6 @@ describe('POST /api/auth/register', () => {
       .send({ username: 'jacob', password: 'password' });
 
     expect(response.statusCode).toBe(500);
-    expect(response.body.status).toBe('Error');
   });
 
   it("should't register a new user if another is already logged in", async () => {
@@ -45,7 +44,7 @@ describe('POST /api/auth/register', () => {
       .send({ username: 'jacob', password: 'password' });
 
     expect(response.statusCode).toBe(401);
-    expect(response.body.status).toBe('A user is already logged in');
+    expect(response.body.error).toBe('A user is already logged in');
   });
 });
 
@@ -55,6 +54,7 @@ describe('POST api/auth/login', () => {
     const response = await request
       .post('/api/auth/login')
       .send({ username: 'jacob', password: 'password' });
+    
     expect(response.statusCode).toBe(200);
     expect(response.body.status).toBe('Success');
   });
@@ -76,7 +76,7 @@ describe('POST api/auth/login', () => {
       .send({ username: 'jacob', password: 'password' });
 
     expect(response.statusCode).toBe(401);
-    expect(response.body.status).toBe('A user is already logged in');
+    expect(response.body.error).toBe('A user is already logged in');
   });
 
   it("shouldn't login an unregistered user", async () => {
@@ -102,6 +102,6 @@ describe('GET api/auth/logout', () => {
     const response = await request.get('/api/auth/logout');
 
     expect(response.statusCode).toBe(401);
-    expect(response.body.status).toBe('Not logged in');
+    expect(response.body.error).toBe('Not logged in');
   });
 });
