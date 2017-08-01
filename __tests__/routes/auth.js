@@ -34,11 +34,11 @@ describe('POST /api/auth/register', () => {
       .post('/api/auth/register')
       .send({ username: 'jacob', password: 'password' });
 
-    expect(response.statusCode).toBe(409);
-    expect(response.body.status).toBe('Username already exists');
+    expect(response.statusCode).toBe(500);
+    expect(response.body.status).toBe('Error');
   });
 
-  it('should\'t register a new user if another is already logged in', async () => {
+  it("should't register a new user if another is already logged in", async () => {
     passportStub.login({ username: 'sara', password: 'password' });
     const response = await request
       .post('/api/auth/register')
@@ -68,7 +68,7 @@ describe('POST api/auth/login', () => {
     expect(response.statusCode).toBe(401);
   });
 
-  it('shouldn\'t log in an already logged in user', async () => {
+  it("shouldn't log in an already logged in user", async () => {
     await registerUser('jacob', 'password');
     passportStub.login({ username: 'jacob', password: 'password' });
     const response = await request
@@ -79,7 +79,7 @@ describe('POST api/auth/login', () => {
     expect(response.body.status).toBe('A user is already logged in');
   });
 
-  it('shouldn\'t login an unregistered user', async () => {
+  it("shouldn't login an unregistered user", async () => {
     const response = await request
       .post('/api/auth/login')
       .send({ username: 'jacob', password: 'password' });
@@ -98,7 +98,7 @@ describe('GET api/auth/logout', () => {
     expect(response.body.status).toBe('Success');
   });
 
-  it('shouldn\'t logout a user that is not logged in', async () => {
+  it("shouldn't logout a user that is not logged in", async () => {
     const response = await request.get('/api/auth/logout');
 
     expect(response.statusCode).toBe(401);

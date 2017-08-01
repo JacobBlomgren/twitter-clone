@@ -5,11 +5,21 @@ export default async function(req, res, next) {
   try {
     await registerUser(req.body.username, req.body.password);
     passport.authenticate('local', (err, user) => {
+      if (err || !user)
+        res
+          .status(500)
+          .json({ status: 'Authentication fail after registration' });
       if (user) {
-        res.status(200).json({ status: 'Success' });
+        req.login(user, err2 => {
+          if (err2)
+            res
+              .status(500)
+              .json({ status: 'Authentication fail after registration' });
+          res.status(200).json({ status: 'Success' });
+        });
       }
     })(req, res, next);
   } catch (err) {
-    res.status(409).json({ status: 'Username already exists' });
+    res.status(500).json({ status: 'Error' });
   }
 }
