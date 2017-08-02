@@ -1,12 +1,14 @@
 CREATE TABLE account (
   username VARCHAR(15) UNIQUE NOT NULL,
-  user_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   hash CHAR(60) NOT NULL,
   salt_rounds INTEGER NOT NULL
 );
 
+CREATE INDEX username_index ON account (username);
+
 CREATE TABLE tweet (
-  tweet_id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES account,
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES account (id),
   content VARCHAR(140) NOT NULL
 );
