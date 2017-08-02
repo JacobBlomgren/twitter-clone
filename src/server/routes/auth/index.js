@@ -1,10 +1,10 @@
 import express from 'express';
 
 import register from './register';
-import checkAlreadyLoggedIn from './checkAlreadyLoggedIn';
+import checkAlreadyLoggedIn from '../middleware/checkAlreadyLoggedIn';
 import { authenticate, login } from './login';
 import logout from './logout';
-import loginRequired from './loginRequired';
+import loginRequired from '../middleware/loginRequired';
 
 const router = express.Router();
 
