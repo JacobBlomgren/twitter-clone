@@ -4,7 +4,7 @@ import loginRequired from '../middleware/loginRequired';
 import {
   follow as followQuery,
   unfollow as unfollowQuery,
-} from '../../db/queries';
+} from '../../db/queries/follow';
 
 const router = express.Router();
 

@@ -2,7 +2,8 @@ import session from 'supertest-session';
 
 import app from '../../src/server/app';
 import { resetFollows, reset } from '../../src/server/db/reset';
-import { getUserByUsername, follow } from '../../src/server/db/queries';
+import { getUserByUsername } from '../../src/server/db/queries/user';
+import { follow } from '../../src/server/db/queries/follow';
 import registerUser from '../../src/server/auth/registerUser';
 
 let sara = {};

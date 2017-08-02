@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 
-import { getUserByID, getUserByUsername } from '../db/queries';
+import { getUserByID, getUserByUsername } from '../db/queries/user';
 
 passport.serializeUser(({ id }, done) => {
   done(null, id);

@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { insertUser } from '../db/queries';
+import { insertUser } from '../db/queries/user';
 
 /**
  * Registers a user with the provided arguments and hashes the password before inserting it in the database.
