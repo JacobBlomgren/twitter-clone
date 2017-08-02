@@ -8,10 +8,11 @@ import db from './connection';
  * @return {number} user.id
  * @return {string} user.hash
  * @return {string} user.salt_rounds
+ * @return {string} user.created_at - ISO 8601 format, date only
  */
 export function getUserByID(id) {
   return db.oneOrNone(
-    'SELECT username, id, hash, salt_rounds FROM account WHERE id = $1',
+    'SELECT username, id, hash, salt_rounds, created_at FROM account WHERE id = $1',
     id,
   );
 }
@@ -24,10 +25,11 @@ export function getUserByID(id) {
  * @return {number} user.id
  * @return {string} user.hash
  * @return {string} user.salt_rounds
+ * @return {string} user.created_at - ISO 8601 format, date only
  */
 export function getUserByUsername(username) {
   return db.oneOrNone(
-    'SELECT username, id, hash, salt_rounds FROM account WHERE username = $1',
+    'SELECT username, id, hash, salt_rounds, created_at FROM account WHERE username = $1',
     username,
   );
 }
