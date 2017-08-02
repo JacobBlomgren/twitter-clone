@@ -12,3 +12,9 @@ CREATE TABLE tweet (
   user_id INTEGER REFERENCES account (id),
   content VARCHAR(140) NOT NULL
 );
+
+CREATE TABLE follows (
+  follower INTEGER REFERENCES account (id),
+  followee INTEGER REFERENCES account (id),
+  PRIMARY KEY (follower, followee)
+);

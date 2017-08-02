@@ -4,14 +4,14 @@ import bcrypt from 'bcryptjs';
 
 import { getUserByID, getUserByUsername } from '../db/queries';
 
-passport.serializeUser((id, done) => {
+passport.serializeUser(({ id }, done) => {
   done(null, id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await getUserByID(id);
-    done(null, user.id);
+    done(null, { username: user.username, id: user.id });
   } catch (err) {
     done(err, null);
   }
@@ -29,7 +29,7 @@ async function checkPassword(username, password, done) {
     const passwordMatches = await bcrypt.compare(password, user.hash);
 
     if (passwordMatches) {
-      return done(null, user);
+      return done(null, { username: user.username, id: user.id });
     }
     return done(null, false, { message: 'Incorrect password.' });
   } catch (err) {
