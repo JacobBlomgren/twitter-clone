@@ -1,19 +1,21 @@
 import supertest from 'supertest';
-import passportStub from 'passport-stub';
+import session from 'supertest-session';
 
 import app from '../../src/server/app';
 import db from '../../src/server/db/connection';
 import registerUser from '../../src/server/auth/registerUser';
 
 const request = supertest(app);
-passportStub.install(app);
+
+let testSession;
 
 beforeEach(() => {
+  testSession = session(app);
   db.any('DELETE FROM account');
 });
 
 afterEach(() => {
-  passportStub.logout();
+  db.any('DELETE FROM account');
 });
 
 describe('POST /api/auth/register', () => {
@@ -38,8 +40,11 @@ describe('POST /api/auth/register', () => {
   });
 
   it("should't register a new user if another is already logged in", async () => {
-    passportStub.login({ username: 'sara', password: 'password' });
-    const response = await request
+    await registerUser('sara', 'password');
+    await testSession
+      .post('/api/auth/login')
+      .send({ username: 'sara', password: 'password' });
+    const response = await testSession
       .post('/api/auth/register')
       .send({ username: 'jacob', password: 'password' });
 
@@ -54,7 +59,7 @@ describe('POST api/auth/login', () => {
     const response = await request
       .post('/api/auth/login')
       .send({ username: 'jacob', password: 'password' });
-    
+
     expect(response.statusCode).toBe(200);
     expect(response.body.status).toBe('Success');
   });
@@ -70,8 +75,10 @@ describe('POST api/auth/login', () => {
 
   it("shouldn't log in an already logged in user", async () => {
     await registerUser('jacob', 'password');
-    passportStub.login({ username: 'jacob', password: 'password' });
-    const response = await request
+    await testSession
+      .post('/api/auth/login')
+      .send({ username: 'jacob', password: 'password' });
+    const response = await testSession
       .post('/api/auth/login')
       .send({ username: 'jacob', password: 'password' });
 
@@ -91,8 +98,10 @@ describe('POST api/auth/login', () => {
 describe('GET api/auth/logout', () => {
   it('should logout a logged in user', async () => {
     await registerUser('jacob', 'password');
-    passportStub.login({ username: 'jacob', password: 'password' });
-    const response = await request.get('/api/auth/logout');
+    await testSession
+      .post('/api/auth/login')
+      .send({ username: 'jacob', password: 'password' });
+    const response = await testSession.get('/api/auth/logout');
 
     expect(response.statusCode).toBe(200);
     expect(response.body.status).toBe('Success');
