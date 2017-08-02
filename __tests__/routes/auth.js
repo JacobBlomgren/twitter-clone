@@ -51,6 +51,17 @@ describe('POST /api/auth/register', () => {
     expect(response.statusCode).toBe(401);
     expect(response.body.error).toBe('A user is already logged in');
   });
+
+  it('should login a user after a successful registration', async () => {
+    const response = await request
+      .post('/api/auth/register')
+      .send({ username: 'jacob', password: 'password' });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.status).toBe('Success');
+    // contains the session cookie
+    expect(response.headers['set-cookie']).not.toBeNull();
+  });
 });
 
 describe('POST api/auth/login', () => {
