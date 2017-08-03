@@ -1,14 +1,12 @@
 import express from 'express';
 
 import loginRequired from '../middleware/loginRequired';
-import {
-  follow as followQuery,
-  unfollow as unfollowQuery,
-} from '../../db/queries/follow';
+import follow from './follow';
+import unfollow from './unfollow';
 
 const router = express.Router();
 
-function parseUserID(req, res, next) {
+function validateUserID(req, res, next) {
   if (isNaN(parseInt(req.body.user_id, 10))) {
     res
       .status(400)
@@ -24,26 +22,8 @@ function checkFollowYourself(req, res, next) {
 }
 
 router.use(loginRequired);
-router.use(parseUserID);
+router.use(validateUserID);
 router.use(checkFollowYourself);
-
-async function follow(req, res) {
-  try {
-    await followQuery(req.user.id, req.body.user_id);
-    res.status(200).json({ status: `Followed ${req.body.user_id}` });
-  } catch (err) {
-    res.status(500).end();
-  }
-}
-
-async function unfollow(req, res) {
-  try {
-    await unfollowQuery(req.user.id, req.body.user_id);
-    res.status(204).json({ status: `Unfollowed ${req.body.user_id}` });
-  } catch (err) {
-    res.status(500).end();
-  }
-}
 
 router.post('/', follow);
 router.delete('/', unfollow);
