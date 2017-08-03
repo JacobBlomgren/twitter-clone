@@ -2,20 +2,23 @@ import supertest from 'supertest';
 import session from 'supertest-session';
 
 import app from '../../src/server/app';
-import db from '../../src/server/db/connection';
+import { resetAccount, reset } from '../../src/server/db/reset';
 import registerUser from '../../src/server/auth/registerUser';
 
 const request = supertest(app);
 
 let testSession;
 
-beforeEach(() => {
+beforeEach(async () => {
   testSession = session(app);
-  db.any('DELETE FROM account');
 });
 
-afterEach(() => {
-  db.any('DELETE FROM account');
+afterEach(async () => {
+  await resetAccount();
+});
+
+afterAll(async () => {
+  await reset();
 });
 
 describe('POST /api/auth/register', () => {

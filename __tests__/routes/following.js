@@ -11,7 +11,6 @@ let jacob = {};
 let request;
 
 beforeAll(async () => {
-  await reset();
   await registerUser('jacob', 'password');
   await registerUser('sara', 'password');
 
