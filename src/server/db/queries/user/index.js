@@ -1,4 +1,4 @@
-import db from '../../connection';
+import { db } from '../../connection';
 
 /**
  * Gets a user from the database

@@ -1,4 +1,4 @@
-import db from '../../connection';
+import { db } from '../../connection';
 
 export function follow(follower, followee) {
   return db.none('INSERT INTO follows (follower, followee) VALUES ($1, $2)', [
@@ -13,4 +13,3 @@ export function unfollow(follower, followee) {
     followee,
   ]);
 }
-

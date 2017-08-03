@@ -9,5 +9,6 @@ const config = {
   password: process.env.DB_PASSWORD,
 };
 const db = pgpInitialized(config);
+const pgpHelpers = pgpInitialized.helpers;
 
-export default db;
+export { db, pgpHelpers };

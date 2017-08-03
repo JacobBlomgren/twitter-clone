@@ -1,4 +1,4 @@
-import db from '../../connection';
+import { db } from '../../connection';
 
 export function insertTweet(userID, content) {
   return db.none(

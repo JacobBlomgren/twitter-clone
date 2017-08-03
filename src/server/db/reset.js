@@ -1,4 +1,4 @@
-import db from './connection';
+import { db, pgpHelpers } from './connection';
 
 export function resetAccount() {
   return db.none('DELETE FROM account');
@@ -8,7 +8,16 @@ export function resetFollows() {
   return db.none('DELETE FROM follows');
 }
 
+export function resetTweets() {
+  return db.none('DELETE FROM tweet');
+}
+
 export async function reset() {
-  await resetFollows();
-  return resetAccount();
+  return db.none(
+    pgpHelpers.concat([
+      'DELETE FROM follows',
+      'DELETE FROM tweet',
+      'DELETE FROM account',
+    ]),
+  );
 }
