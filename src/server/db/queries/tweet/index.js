@@ -2,7 +2,7 @@ import R from 'ramda';
 
 import { db, pgpHelpers } from '../../connection';
 
-export async function insertTweet(userID, content, hashtags) {
+export async function insertTweet(userID, content, hashtags, mentions) {
   const insertion = await db.one(
     'INSERT INTO tweet (user_id, content) VALUES ($/userID/, $/content/) RETURNING id',
     {
@@ -19,11 +19,23 @@ export async function insertTweet(userID, content, hashtags) {
     tweet_id: tweetID,
     hashtag,
   }));
-  const query = pgpHelpers.insert(
+  const hashtagQuery = pgpHelpers.insert(
     hashtagsWithTweetID,
     ['tweet_id', 'hashtag'],
     'hashtag_used',
   );
+
+  const mentionsWithTweetID = mentions.map(username => ({
+    tweet_id: tweetID,
+    username,
+  }));
+  const mentionQuery = pgpHelpers.insert(
+    mentionsWithTweetID,
+    ['tweet_id', 'username'],
+    'mentions',
+  );
+
+  const query = pgpHelpers.concat([hashtagQuery, mentionQuery]);
   await db.none(query);
   return tweetID;
 }

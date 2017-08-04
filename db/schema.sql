@@ -29,3 +29,9 @@ CREATE TABLE hashtag_used (
 );
 
 CREATE INDEX hashtag_index ON hashtag_used (hashtag);
+
+CREATE TABLE mentions (
+  tweet_id INTEGER REFERENCES tweet (id),
+  username VARCHAR(15),
+  PRIMARY KEY (tweet_id, username)
+);

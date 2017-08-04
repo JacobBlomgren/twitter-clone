@@ -15,8 +15,8 @@ const matches = R.compose(R.map(R.replace(/#/g, '')), matchHashtag);
  * Supplemental Punctuation block (\u2E00-\u2E7F).
  *
  * See {@link https://stackoverflow.com/a/25575009}
- * @param str
- * @returns {Array}
+ * @param {string} str - The string to find matches in.
+ * @returns {Array} - The array of matches. Empty if no matches are found.
  */
 export default function(str) {
   const res = matches(str);
