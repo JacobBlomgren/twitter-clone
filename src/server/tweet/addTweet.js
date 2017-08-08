@@ -2,8 +2,8 @@ import { insertTweet } from '../db/queries/tweet';
 import findHashtags from '../../shared/tweet/findHashtags';
 import findMentions from '../../shared/tweet/findMentions';
 
-export default async function(userID, content) {
+export default async function(userID, content, replyTo) {
   const hashtags = findHashtags(content);
   const mentions = findMentions(content);
-  await insertTweet(userID, content, hashtags, mentions);
+  await insertTweet(userID, content, hashtags, mentions, replyTo);
 }

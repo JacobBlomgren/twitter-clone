@@ -8,10 +8,9 @@ export default async function(req, res) {
         .status(400)
         .json({ error: 'Tweet cannot be larger than 140 characters' });
     }
-    await addTweet(req.user.id, req.body.content);
+    await addTweet(req.user.id, req.body.content, req.body.reply_to);
     res.status(200).json({ status: 'Posted tweet' });
   } catch (err) {
-    console.log(err);
     res.status(500).end();
   }
 }

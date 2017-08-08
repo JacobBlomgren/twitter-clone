@@ -1,8 +1,48 @@
 import R from 'ramda';
 
-import { db, pgpHelpers } from '../../connection';
+import { db, pgpHelpers, QueryFile } from '../../connection';
 
-export async function insertTweet(userID, content, hashtags, mentions) {
+async function insertHashtags(tweetID, hashtags) {
+  const hashtagsWithTweetID = hashtags.map(hashtag => ({
+    tweet_id: tweetID,
+    hashtag,
+  }));
+  return db.none(
+    pgpHelpers.insert(
+      hashtagsWithTweetID,
+      ['tweet_id', 'hashtag'],
+      'hashtag_used',
+    ),
+  );
+}
+
+const mentionsQueryFile = new QueryFile(
+  './server/db/queries/tweet/mentions.sql',
+  { minify: true },
+);
+
+async function insertMentions(tweetID, mentions) {
+  const queries = mentions.map(username => ({
+    query: mentionsQueryFile,
+    values: [tweetID, username],
+  }));
+  return db.none(pgpHelpers.concat(queries));
+}
+
+async function insertReplyTo(tweetID, replyTo) {
+  return db.none('INSERT INTO reply_to (reply, original) VALUES ($1, $2)', [
+    tweetID,
+    replyTo,
+  ]);
+}
+
+export async function insertTweet(
+  userID,
+  content,
+  hashtags,
+  mentions,
+  replyTo,
+) {
   const insertion = await db.one(
     'INSERT INTO tweet (user_id, content) VALUES ($/userID/, $/content/) RETURNING id',
     {
@@ -12,31 +52,12 @@ export async function insertTweet(userID, content, hashtags, mentions) {
   );
 
   const tweetID = insertion.id;
-
-  if (R.isEmpty(hashtags)) return tweetID;
-
-  const hashtagsWithTweetID = hashtags.map(hashtag => ({
-    tweet_id: tweetID,
-    hashtag,
-  }));
-  const hashtagQuery = pgpHelpers.insert(
-    hashtagsWithTweetID,
-    ['tweet_id', 'hashtag'],
-    'hashtag_used',
-  );
-
-  const mentionsWithTweetID = mentions.map(username => ({
-    tweet_id: tweetID,
-    username,
-  }));
-  const mentionQuery = pgpHelpers.insert(
-    mentionsWithTweetID,
-    ['tweet_id', 'username'],
-    'mentions',
-  );
-
-  const query = pgpHelpers.concat([hashtagQuery, mentionQuery]);
-  await db.none(query);
+  // These three queries could be concatenated together for performance as suggested here
+  // https://github.com/vitaly-t/pg-promise/wiki/Performance-Boost but since this app will never
+  // need that kind of performance optimization, it is left like this for clarity.
+  if (!R.isEmpty(hashtags)) await insertHashtags(tweetID, hashtags);
+  if (!R.isEmpty(mentions)) await insertMentions(tweetID, mentions);
+  if (replyTo !== null) insertReplyTo(tweetID, replyTo);
   return tweetID;
 }
 
