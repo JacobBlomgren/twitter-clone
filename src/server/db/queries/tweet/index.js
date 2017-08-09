@@ -4,6 +4,7 @@ import { db, pgpHelpers } from '../../connection';
 import getQueryFile from '../../getQueryFile';
 
 async function insertHashtags(tweetID, hashtags) {
+  if (R.isEmpty(hashtags)) return Promise.resolve();
   const hashtagsWithTweetID = hashtags.map(hashtag => ({
     tweet_id: tweetID,
     hashtag,
@@ -20,6 +21,7 @@ async function insertHashtags(tweetID, hashtags) {
 const mentionsQueryFile = getQueryFile('tweet/mentions');
 
 async function insertMentions(tweetID, mentions) {
+  if (R.isEmpty(mentions)) return Promise.resolve();
   const queries = mentions.map(username => ({
     query: mentionsQueryFile,
     values: [tweetID, username],
@@ -30,6 +32,7 @@ async function insertMentions(tweetID, mentions) {
 const replyToQueryFile = getQueryFile('tweet/replyTo');
 
 async function insertReplyTo(tweetID, replyTo) {
+  if (replyTo === null) return Promise.resolve();
   return db.none(replyToQueryFile, [tweetID, replyTo]);
 }
 
@@ -47,14 +50,18 @@ export async function insertTweet(
       content,
     },
   );
-
   const tweetID = insertion.id;
-  // These three queries could be concatenated together for performance as suggested here
-  // https://github.com/vitaly-t/pg-promise/wiki/Performance-Boost but since this app will never
-  // need that kind of performance optimization, it is left like this for clarity.
-  if (!R.isEmpty(hashtags)) await insertHashtags(tweetID, hashtags);
-  if (!R.isEmpty(mentions)) await insertMentions(tweetID, mentions);
-  if (replyTo !== null) await insertReplyTo(tweetID, replyTo);
+
+  // These three queries could be concatenated together so that they do not make
+  // three separate database requests, as suggested here
+  // https://github.com/vitaly-t/pg-promise/wiki/Performance-Boost
+  // But since this app will never need that kind of performance optimization,
+  // it is left like this for clarity.
+  await Promise.all([
+    insertHashtags(tweetID, hashtags),
+    insertMentions(tweetID, mentions),
+    insertReplyTo(tweetID, replyTo),
+  ]);
   return tweetID;
 }
 

@@ -11,4 +11,4 @@ const config = {
 const db = pgpInitialized(config);
 const pgpHelpers = pgpInitialized.helpers;
 
-export { db, pgpHelpers};
+export { db, pgpHelpers };
