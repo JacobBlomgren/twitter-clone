@@ -23,7 +23,7 @@ CREATE TABLE tweet (
 );
 
 CREATE TABLE hashtag_used (
-  tweet_id INTEGER REFERENCES tweet (id),
+  tweet_id INTEGER REFERENCES tweet (id) ON DELETE CASCADE,
   hashtag TEXT,
   PRIMARY KEY (tweet_id, hashtag)
 );
@@ -31,15 +31,15 @@ CREATE TABLE hashtag_used (
 CREATE INDEX hashtag_index ON hashtag_used (hashtag);
 
 CREATE TABLE mentions (
-  tweet_id INTEGER REFERENCES tweet (id),
+  tweet_id INTEGER REFERENCES tweet (id) ON DELETE CASCADE,
   user_id INTEGER REFERENCES account (id),
   username VARCHAR(15) NOT NULL,
   PRIMARY KEY (tweet_id, user_id)
 );
 
 CREATE TABLE reply_to (
-  reply INTEGER REFERENCES tweet (id),
-  original INTEGER REFERENCES tweet (id),
+  reply INTEGER REFERENCES tweet (id) ON DELETE CASCADE,
+  original INTEGER REFERENCES tweet (id) ON DELETE SET NULL,
   original_user_id INTEGER NOT NULL REFERENCES account (id) ON DELETE SET NULL,
   PRIMARY KEY (reply, original)
 );
