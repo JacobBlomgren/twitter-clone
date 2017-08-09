@@ -40,5 +40,6 @@ CREATE TABLE mentions (
 CREATE TABLE reply_to (
   reply INTEGER REFERENCES tweet (id),
   original INTEGER REFERENCES tweet (id),
+  original_user_id INTEGER NOT NULL REFERENCES account (id) ON DELETE SET NULL,
   PRIMARY KEY (reply, original)
 );

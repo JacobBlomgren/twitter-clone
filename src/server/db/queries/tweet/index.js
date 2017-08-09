@@ -1,6 +1,7 @@
 import R from 'ramda';
 
-import { db, pgpHelpers, QueryFile } from '../../connection';
+import { db, pgpHelpers } from '../../connection';
+import getQueryFile from '../../getQueryFile';
 
 async function insertHashtags(tweetID, hashtags) {
   const hashtagsWithTweetID = hashtags.map(hashtag => ({
@@ -16,10 +17,7 @@ async function insertHashtags(tweetID, hashtags) {
   );
 }
 
-const mentionsQueryFile = new QueryFile(
-  './server/db/queries/tweet/mentions.sql',
-  { minify: true },
-);
+const mentionsQueryFile = getQueryFile('tweet/mentions');
 
 async function insertMentions(tweetID, mentions) {
   const queries = mentions.map(username => ({
@@ -29,11 +27,10 @@ async function insertMentions(tweetID, mentions) {
   return db.none(pgpHelpers.concat(queries));
 }
 
+const replyToQueryFile = getQueryFile('tweet/replyTo');
+
 async function insertReplyTo(tweetID, replyTo) {
-  return db.none('INSERT INTO reply_to (reply, original) VALUES ($1, $2)', [
-    tweetID,
-    replyTo,
-  ]);
+  return db.none(replyToQueryFile, [tweetID, replyTo]);
 }
 
 export async function insertTweet(
@@ -57,7 +54,7 @@ export async function insertTweet(
   // need that kind of performance optimization, it is left like this for clarity.
   if (!R.isEmpty(hashtags)) await insertHashtags(tweetID, hashtags);
   if (!R.isEmpty(mentions)) await insertMentions(tweetID, mentions);
-  if (replyTo !== null) insertReplyTo(tweetID, replyTo);
+  if (replyTo !== null) await insertReplyTo(tweetID, replyTo);
   return tweetID;
 }
 

@@ -10,6 +10,5 @@ const config = {
 };
 const db = pgpInitialized(config);
 const pgpHelpers = pgpInitialized.helpers;
-const QueryFile = pgpInitialized.QueryFile;
 
-export { db, pgpHelpers, QueryFile };
+export { db, pgpHelpers};
