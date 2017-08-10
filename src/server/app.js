@@ -27,9 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   session({
+    name: 'sessionId',
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      // two days
+      maxAge: 1000 * 60 * 60 * 24 * 2,
+    },
   }),
 );
 
