@@ -12,7 +12,7 @@ import { db } from '../../connection';
  */
 export function getUserByID(id) {
   return db.oneOrNone(
-    'SELECT username, id, hash, salt_rounds, created_at FROM account WHERE id = $1',
+    'SELECT username, user_id AS id, hash, salt_rounds, created_at FROM account WHERE user_id = $1',
     id,
   );
 }
@@ -29,7 +29,7 @@ export function getUserByID(id) {
  */
 export function getUserByUsername(username) {
   return db.oneOrNone(
-    'SELECT username, id, hash, salt_rounds, created_at FROM account WHERE username = $1',
+    'SELECT username, user_id AS id, hash, salt_rounds, created_at FROM account WHERE username = $1',
     username,
   );
 }

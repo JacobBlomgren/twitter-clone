@@ -67,7 +67,7 @@ export async function insertTweet(
 
 export function removeTweet(tweetID, userID) {
   return db.oneOrNone(
-    'DELETE FROM tweet WHERE id = $/tweetID/ AND user_ID = $/userID/ RETURNING *',
+    'DELETE FROM tweet WHERE tweet_id = $/tweetID/ AND user_ID = $/userID/ RETURNING *',
     {
       tweetID,
       userID,
