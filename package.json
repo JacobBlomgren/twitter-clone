@@ -12,7 +12,9 @@
     "prettier": "prettier --single-quote --trailing-comma all --write \"{src,__tests__}/**/*.js\" webpack.config.babel.js",
     "lint": "eslint src webpack.config.babel.js __test__ --ext .js,.jsx",
     "pretty-lint": "yarn prettier && yarn lint",
-    "test": "jest --coverage",
+    "test": "yarn test:unit && yarn test:integration",
+    "test:unit": "jest --coverage unit",
+    "test:integration": "jest --coverage --runInBand routes",
     "docs": "documentation build src/** -f html -o docs"
   },
   "devDependencies": {
@@ -59,6 +61,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-hot-loader": "next",
-    "string-length": "^2.0.0"
+    "string-length": "^2.0.0",
+    "xss-filters": "^1.2.7"
   }
 }
