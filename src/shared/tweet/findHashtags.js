@@ -16,7 +16,7 @@ const matches = R.compose(R.map(R.replace(/#/g, '')), matchHashtag);
  *
  * See {@link https://stackoverflow.com/a/25575009}
  * @param {string} str - The string to find matches in.
- * @returns {Array} - The array of matches. Empty if no matches are found.
+ * @returns {[string]} - The array of matches. Empty if no matches are found.
  */
 export default function(str) {
   const res = matches(str);

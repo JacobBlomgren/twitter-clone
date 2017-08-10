@@ -12,7 +12,7 @@ const matches = R.compose(R.map(R.replace(/@/g, '')), matchMention);
  * followed by a non-username character will not be matched
  *
  * @param {string} str - The string to find matches in.
- * @returns {Array} - The array of matches. Empty if no matches are found.
+ * @returns {[Array]} - The array of matches. Empty if no matches are found.
  *
  * @example
  * findMentions('@jacob'); // => ['jacob']

@@ -1,20 +1,11 @@
 import express from 'express';
 
 import loginRequired from '../middleware/loginRequired';
+import validateID from '../middleware/validateID';
 import follow from './follow';
 import unfollow from './unfollow';
 
 const router = express.Router();
-
-function validateUserID(req, res, next) {
-  const id = req.body.user_id;
-  if (isNaN(parseInt(id, 10)) || id <= 1) {
-    res.status(400).json({
-      error: 'Incorrect format. user_id must be a strictly positive integer.',
-    });
-  }
-  next();
-}
 
 function checkFollowYourself(req, res, next) {
   if (req.body.user_id === req.user.id)
@@ -23,7 +14,7 @@ function checkFollowYourself(req, res, next) {
 }
 
 router.use(loginRequired);
-router.use(validateUserID);
+router.use(validateID(['user_id']));
 router.use(checkFollowYourself);
 
 router.post('/', follow);
