@@ -10,14 +10,14 @@ CREATE INDEX username_index ON account (username);
 
 
 CREATE TABLE follows (
-  follower INTEGER REFERENCES account (id),
-  followee INTEGER REFERENCES account (id),
+  follower INTEGER REFERENCES account (id) ON DELETE CASCADE,
+  followee INTEGER REFERENCES account (id) ON DELETE CASCADE,
   PRIMARY KEY (follower, followee)
 );
 
 CREATE TABLE tweet (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER  NOT NULL REFERENCES account (id),
+  user_id INTEGER  NOT NULL REFERENCES account (id) ON DELETE CASCADE,
   content TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
