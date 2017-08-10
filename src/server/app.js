@@ -4,6 +4,7 @@
 
 import './env';
 import express from 'express';
+import helmet from 'helmet';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import passport from 'passport';
@@ -14,6 +15,8 @@ import renderApp from './render-app';
 import routes from './routes';
 
 const app = express();
+
+app.use(helmet());
 
 app.use(compression());
 app.use(STATIC_PATH, express.static('dist'));
