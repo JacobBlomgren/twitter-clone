@@ -38,8 +38,10 @@ CREATE TABLE mentions (
 );
 
 CREATE TABLE reply_to (
-  reply INTEGER REFERENCES tweet (tweet_id) ON DELETE CASCADE,
-  original INTEGER REFERENCES tweet (tweet_id) ON DELETE SET NULL,
+  reply_tweet_id INTEGER REFERENCES tweet (tweet_id) ON DELETE CASCADE,
+  original_tweet_id INTEGER REFERENCES tweet (tweet_id) ON DELETE SET NULL,
   original_user_id INTEGER NOT NULL REFERENCES account (user_id) ON DELETE SET NULL,
-  PRIMARY KEY (reply, original)
+  PRIMARY KEY (reply_tweet_id, original_tweet_id)
 );
+
+CREATE INDEX reply_to_index ON reply_to (original_tweet_id);

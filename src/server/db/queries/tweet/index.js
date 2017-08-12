@@ -29,7 +29,7 @@ async function insertMentions(tweetID, mentions) {
   return db.none(pgpHelpers.concat(queries));
 }
 
-const replyToQueryFile = getQueryFile('tweet/replyTo');
+const replyToQueryFile = getQueryFile('tweet/reply_to');
 
 async function insertReplyTo(tweetID, replyTo) {
   if (replyTo === null) return Promise.resolve();
@@ -73,4 +73,29 @@ export function removeTweet(tweetID, userID) {
       userID,
     },
   );
+}
+
+const getTweetQueryFile = getQueryFile('tweet/get_tweet');
+const getHashtagsQueryFile = getQueryFile('tweet/get_hashtags');
+const getMentionsQueryFile = getQueryFile('tweet/get_mentions');
+const getReplyToQueryFile = getQueryFile('tweet/get_reply_to');
+
+async function getTweetWithTask(tweetID, task) {
+  const tweet = await task.oneOrNone(getTweetQueryFile, tweetID);
+  if (tweet === null) return Promise.resolve(null);
+  const [replyTo, hashtags, mentions] = await Promise.all([
+    task.oneOrNone(getReplyToQueryFile, tweetID),
+    task.manyOrNone(getHashtagsQueryFile, tweetID),
+    task.manyOrNone(getMentionsQueryFile, tweetID),
+  ]);
+  return {
+    ...tweet,
+    reply_to: replyTo,
+    hashtags,
+    mentions,
+  };
+}
+
+export async function getTweet(tweetID) {
+  return db.task('get tweet', async task => getTweetWithTask(tweetID, task));
 }
