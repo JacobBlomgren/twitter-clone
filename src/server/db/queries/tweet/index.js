@@ -3,13 +3,13 @@ import R from 'ramda';
 import { db, pgpHelpers } from '../../connection';
 import getQueryFile from '../../getQueryFile';
 
-async function insertHashtags(tweetID, hashtags, task) {
+async function insertHashtags(transaction, tweetID, hashtags) {
   if (R.isEmpty(hashtags)) return Promise.resolve();
   const hashtagsWithTweetID = hashtags.map(hashtag => ({
     tweet_id: tweetID,
     hashtag,
   }));
-  return task.none(
+  return transaction.none(
     pgpHelpers.insert(
       hashtagsWithTweetID,
       ['tweet_id', 'hashtag'],
@@ -20,20 +20,20 @@ async function insertHashtags(tweetID, hashtags, task) {
 
 const mentionsQueryFile = getQueryFile('tweet/mentions');
 
-async function insertMentions(tweetID, mentions, task) {
+async function insertMentions(transaction, tweetID, mentions) {
   if (R.isEmpty(mentions)) return Promise.resolve();
   const queries = mentions.map(username => ({
     query: mentionsQueryFile,
     values: [tweetID, username],
   }));
-  return task.none(pgpHelpers.concat(queries));
+  return transaction.none(pgpHelpers.concat(queries));
 }
 
 const replyToQueryFile = getQueryFile('tweet/reply_to');
 
-async function insertReplyTo(tweetID, replyTo, task) {
+async function insertReplyTo(transaction, tweetID, replyTo) {
   if (replyTo === null) return Promise.resolve();
-  return task.none(replyToQueryFile, [tweetID, replyTo]);
+  return transaction.none(replyToQueryFile, [tweetID, replyTo]);
 }
 
 export async function insertTweet(
@@ -43,10 +43,8 @@ export async function insertTweet(
   mentions,
   replyTo,
 ) {
-  // Use a task to share the database connection
-  // See https://github.com/vitaly-t/pg-promise/wiki/chaining-queries
-  return db.task('insert tweet', async task => {
-    const insertion = await task.one(
+  return db.tx('insert tweet', async transaction => {
+    const insertion = await transaction.one(
       'INSERT INTO tweet (user_id, content) VALUES ($/userID/, $/content/) RETURNING tweet_id',
       {
         userID,
@@ -60,10 +58,10 @@ export async function insertTweet(
     // https://github.com/vitaly-t/pg-promise/wiki/Performance-Boost
     // But since this app will never need that kind of performance optimization,
     // it is left like this for clarity.
-    await Promise.all([
-      insertHashtags(tweetID, hashtags, task),
-      insertMentions(tweetID, mentions, task),
-      insertReplyTo(tweetID, replyTo, task),
+    await transaction.batch([
+      insertHashtags(transaction, tweetID, hashtags),
+      insertMentions(transaction, tweetID, mentions),
+      insertReplyTo(transaction, tweetID, replyTo),
     ]);
     return tweetID;
   });
@@ -84,7 +82,7 @@ const getHashtagsQueryFile = getQueryFile('tweet/get_hashtags');
 const getMentionsQueryFile = getQueryFile('tweet/get_mentions');
 const getReplyToQueryFile = getQueryFile('tweet/get_reply_to');
 
-async function getTweetWithTask(tweetID, task) {
+async function getTweetWithTask(task, tweetID) {
   const tweet = await task.oneOrNone(getTweetQueryFile, tweetID);
   if (tweet === null) return Promise.resolve(null);
   const [replyTo, hashtags, mentions] = await Promise.all([
@@ -101,5 +99,5 @@ async function getTweetWithTask(tweetID, task) {
 }
 
 export async function getTweet(tweetID) {
-  return db.task('get tweet', async task => getTweetWithTask(tweetID, task));
+  return db.task('get tweet', async task => getTweetWithTask(task, tweetID));
 }
