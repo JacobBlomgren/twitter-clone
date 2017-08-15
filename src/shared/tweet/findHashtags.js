@@ -4,10 +4,10 @@ const regex = /#[^\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>¿?@[\]^_`{|}
 
 const matchHashtag = R.match(regex);
 
-const matches = R.compose(R.map(R.replace(/#/g, '')), matchHashtag);
+const matches = R.compose(R.uniq, R.map(R.replace(/#/g, '')), matchHashtag);
 
 /**
- * Finds all hashtags in a string. A hashtag is defined as a hashtag sign (#),
+ * Finds all unique hashtags in a string. A hashtag is defined as a hashtag sign (#),
  * followed by a string of letters, that is ended with either whitespace or punctuation.
  *
  * Punctuation is defined as the following characters !"#$%&'()*+,-./:;<=>¿?@[\]^_`{|}~

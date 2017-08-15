@@ -13,6 +13,10 @@ it('should match several hashtags with text in between', () => {
   ]);
 });
 
+it('should remove duplicate hashtags', () => {
+  expect(findHashtags('#hashtag #hashtag #hashtag')).toEqual(['hashtag']);
+});
+
 it('should match hashtags with non-english characters', () => {
   expect(findHashtags('#igår')).toEqual(['igår']);
   expect(findHashtags('#mañana')).toEqual(['mañana']);

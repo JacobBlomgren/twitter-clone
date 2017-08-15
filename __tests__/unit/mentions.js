@@ -12,6 +12,10 @@ it('should match several usernames with text in between', () => {
   ]);
 });
 
+it('should remove duplicate mentions', () => {
+  expect(findMentions('@jacob @jacob @jacob')).toEqual(['jacob']);
+});
+
 it('should not match the part of mentions after 15 characters', () => {
   expect(findMentions('@longerThanFifteen')).toEqual(['longerThanFifte']);
 });

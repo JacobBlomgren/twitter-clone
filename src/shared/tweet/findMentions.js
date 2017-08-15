@@ -4,10 +4,10 @@ const regex = /@[a-zA-z0-9]{1,15}/g;
 
 const matchMention = R.match(regex);
 
-const matches = R.compose(R.map(R.replace(/@/g, '')), matchMention);
+const matches = R.compose(R.uniq, R.map(R.replace(/@/g, '')), matchMention);
 
 /**
- * Finds all username mentions in a string. If a mention breaks a username rule,
+ * Finds all unique username mentions in a string. If a mention breaks a username rule,
  * everything up to the character where the rule is broken will be matched. A single "@"
  * followed by a non-username character will not be matched
  *
