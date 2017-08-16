@@ -1,7 +1,7 @@
 import joi from 'joi';
 import celebrate from 'celebrate';
 
-import { removeTweet as removeTweetQuery } from '../../db/queries/tweet/index';
+import removeTweetQuery from '../../db/queries/tweet/removeTweet';
 import id from '../middleware/validation/id';
 
 export async function removeTweet(req, res) {

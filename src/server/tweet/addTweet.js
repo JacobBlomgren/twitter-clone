@@ -1,4 +1,5 @@
-import { insertTweet, getTweet } from '../db/queries/tweet';
+import insertTweet from '../db/queries/tweet/insertTweet';
+import getTweet from '../db/queries/tweet/getTweet';
 import findHashtags from '../../shared/tweet/findHashtags';
 import findMentions from '../../shared/tweet/findMentions';
 

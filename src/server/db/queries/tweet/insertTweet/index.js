@@ -1,7 +1,7 @@
 import R from 'ramda';
 
-import { db, pgpHelpers } from '../../connection';
-import getQueryFile from '../../getQueryFile';
+import { db, pgpHelpers } from '../../../connection';
+import getQueryFile from '../../../getQueryFile';
 
 async function insertHashtags(transaction, tweetID, hashtags) {
   if (R.isEmpty(hashtags)) return Promise.resolve();
@@ -18,7 +18,7 @@ async function insertHashtags(transaction, tweetID, hashtags) {
   );
 }
 
-const mentionsQueryFile = getQueryFile('tweet/mentions');
+const mentionsQueryFile = getQueryFile('tweet/insertTweet/insert_mentions');
 
 async function insertMentions(transaction, tweetID, mentions) {
   if (R.isEmpty(mentions)) return Promise.resolve();
@@ -29,20 +29,14 @@ async function insertMentions(transaction, tweetID, mentions) {
   return transaction.none(pgpHelpers.concat(queries));
 }
 
-const replyToQueryFile = getQueryFile('tweet/reply_to');
+const replyToQueryFile = getQueryFile('tweet/insertTweet/insert_reply_to');
 
 async function insertReplyTo(transaction, tweetID, replyTo) {
   if (replyTo === null) return Promise.resolve();
   return transaction.none(replyToQueryFile, [tweetID, replyTo]);
 }
 
-export async function insertTweet(
-  userID,
-  content,
-  hashtags,
-  mentions,
-  replyTo,
-) {
+export default async function(userID, content, hashtags, mentions, replyTo) {
   return db.tx('insert tweet', async transaction => {
     const insertion = await transaction.one(
       'INSERT INTO tweet (user_id, content) VALUES ($/userID/, $/content/) RETURNING tweet_id',
@@ -65,39 +59,4 @@ export async function insertTweet(
     ]);
     return tweetID;
   });
-}
-
-export async function removeTweet(tweetID, userID) {
-  return db.oneOrNone(
-    'DELETE FROM tweet WHERE tweet_id = $/tweetID/ AND user_ID = $/userID/ RETURNING *',
-    {
-      tweetID,
-      userID,
-    },
-  );
-}
-
-const getTweetQueryFile = getQueryFile('tweet/get_tweet');
-const getHashtagsQueryFile = getQueryFile('tweet/get_hashtags');
-const getMentionsQueryFile = getQueryFile('tweet/get_mentions');
-const getReplyToQueryFile = getQueryFile('tweet/get_reply_to');
-
-async function getTweetWithTask(task, tweetID) {
-  const tweet = await task.oneOrNone(getTweetQueryFile, tweetID);
-  if (tweet === null) return Promise.resolve(null);
-  const [replyTo, hashtags, mentions] = await Promise.all([
-    task.oneOrNone(getReplyToQueryFile, tweetID),
-    task.manyOrNone(getHashtagsQueryFile, tweetID),
-    task.manyOrNone(getMentionsQueryFile, tweetID),
-  ]);
-  return {
-    ...tweet,
-    reply_to: replyTo,
-    hashtags,
-    mentions,
-  };
-}
-
-export async function getTweet(tweetID) {
-  return db.task('get tweet', async task => getTweetWithTask(task, tweetID));
 }
