@@ -1,7 +1,9 @@
 import express from 'express';
+import joi from 'joi';
+import celebrate from 'celebrate';
 
 import loginRequired from '../middleware/loginRequired';
-import validateID from '../middleware/validateID';
+import id from '../middleware/validation/id';
 import follow from './follow';
 import unfollow from './unfollow';
 
@@ -13,8 +15,14 @@ function checkFollowYourself(req, res, next) {
   next();
 }
 
+const validate = celebrate({
+  body: joi.object().keys({
+    user_id: id.required(),
+  }),
+});
+
 router.use(loginRequired);
-router.use(validateID(['user_id']));
+router.use(validate);
 router.use(checkFollowYourself);
 
 router.post('/', follow);

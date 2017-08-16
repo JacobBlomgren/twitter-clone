@@ -65,6 +65,43 @@ describe('POST /api/auth/register', () => {
     // contains the session cookie
     expect(response.headers['set-cookie']).not.toBeNull();
   });
+
+  it("shouldn't accept malformed requests", async () => {
+    const usernameWrongType = await request
+      .post('/api/auth/register')
+      .send({ username: 9, password: 'password' });
+    expect(usernameWrongType.statusCode).toBe(400);
+
+    const usernameTooLong = await request
+      .post('/api/auth/register')
+      .send({ username: 'aaaaaaaaaaaaaaaa', password: 'password' });
+    expect(usernameTooLong.statusCode).toBe(400);
+
+    const usernameTooShort = await request
+      .post('/api/auth/register')
+      .send({ username: 'aa', password: 'password' });
+    expect(usernameTooShort.statusCode).toBe(400);
+
+    const emtpyUsernameString = await request
+      .post('/api/auth/register')
+      .send({ username: '', password: 'password' });
+    expect(emtpyUsernameString.statusCode).toBe(400);
+
+    const omittedUsername = await request
+      .post('/api/auth/register')
+      .send({ password: 'password' });
+    expect(omittedUsername.statusCode).toBe(400);
+
+    const passwordTooShort = await request
+      .post('/api/auth/register')
+      .send({ username: 'jacob', password: 'short' });
+    expect(passwordTooShort.statusCode).toBe(400);
+
+    const omittedPassword = await request
+      .post('/api/auth/register')
+      .send({ username: 'jacob' });
+    expect(omittedPassword.statusCode).toBe(400);
+  });
 });
 
 describe('POST api/auth/login', () => {

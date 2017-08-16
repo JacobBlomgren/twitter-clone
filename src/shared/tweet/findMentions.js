@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const regex = /@[a-zA-z0-9]{1,15}/g;
+const regex = /@[a-zA-z0-9]{3,15}/g;
 
 const matchMention = R.match(regex);
 

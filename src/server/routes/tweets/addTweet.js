@@ -1,5 +1,9 @@
+import joi from 'joi';
+import celebrate from 'celebrate';
+
 import addTweetHelper from '../../tweet/addTweet';
 import checkLengthHelper from '../../../shared/tweet/checkLength';
+import id from '../middleware/validation/id';
 
 export async function addTweet(req, res) {
   try {
@@ -13,6 +17,13 @@ export async function addTweet(req, res) {
     res.status(500).end();
   }
 }
+
+export const validate = celebrate({
+  body: joi.object().keys({
+    content: joi.string().required(),
+    reply_to: id,
+  }),
+});
 
 export function checkLength(req, res, next) {
   if (!checkLengthHelper(req.body.content)) {

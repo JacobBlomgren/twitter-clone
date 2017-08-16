@@ -1,7 +1,12 @@
+import joi from 'joi';
+import celebrate from 'celebrate';
+
 import registerUser from '../../auth/registerUser';
 import passport from '../../auth/passport';
+import username from '../middleware/validation/username';
+import password from '../middleware/validation/password';
 
-export default async function(req, res, next) {
+export async function register(req, res, next) {
   try {
     await registerUser(req.body.username, req.body.password);
     passport.authenticate('local', (err, user) => {
@@ -23,3 +28,10 @@ export default async function(req, res, next) {
     res.status(500).end();
   }
 }
+
+export const validate = celebrate({
+  body: joi.object().keys({
+    username: username.required(),
+    password: password.required(),
+  }),
+});

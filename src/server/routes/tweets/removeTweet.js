@@ -1,8 +1,12 @@
-import { removeTweet } from '../../db/queries/tweet/index';
+import joi from 'joi';
+import celebrate from 'celebrate';
 
-export default async function(req, res) {
+import { removeTweet as removeTweetQuery } from '../../db/queries/tweet/index';
+import id from '../middleware/validation/id';
+
+export async function removeTweet(req, res) {
   try {
-    const removed = await removeTweet(req.body.tweet_id, req.user.id);
+    const removed = await removeTweetQuery(req.body.tweet_id, req.user.id);
     if (removed === null) {
       res.status(404).json({
         error:
@@ -14,3 +18,9 @@ export default async function(req, res) {
     res.status(500).end();
   }
 }
+
+export const validate = celebrate({
+  body: joi.object().keys({
+    tweet_id: id.required(),
+  }),
+});

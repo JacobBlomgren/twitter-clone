@@ -65,16 +65,19 @@ describe('POST /api/following', () => {
 
   it("shouldn't be possible to send a malformed follow request", async () => {
     await login();
+
     const responseString = await request
       .post('/api/following')
       .send({ user_id: 'asdfg' });
-
     expect(responseString.statusCode).toBe(400);
 
     const responseNegative = await request
       .post('/api/following')
       .send({ user_id: -100 });
     expect(responseNegative.statusCode).toBe(400);
+
+    const responseOmitted = await request.post('/api/following').send({});
+    expect(responseOmitted.statusCode).toBe(400);
   });
 
   it('cannot follow when not logged in', async () => {
