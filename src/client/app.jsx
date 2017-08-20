@@ -2,9 +2,9 @@ import React from 'react';
 
 function App() {
   return (
-    <div>
+    <div className="container-fluid">
       <h1>Hello, Jacob!</h1>
-      <p>Text text text!!!</p>
+      <p>Text text text</p>
       <p>More text</p>
     </div>
   );

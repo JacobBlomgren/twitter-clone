@@ -9,6 +9,7 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
+import 'babel-polyfill';
 
 import { APP_NAME, STATIC_PATH } from '../shared/config';
 import renderApp from './render-app';

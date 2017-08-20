@@ -1,13 +1,16 @@
 import 'babel-polyfill';
+import 'bootstrap';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import App from './app';
-import { APP_CONTAINER_SELECTOR } from '../shared/config';
+import { APP_CONTAINER_ID } from '../shared/config';
 
-const rootEl = document.querySelector(APP_CONTAINER_SELECTOR);
+import '../../public/styles/main.scss';
+
+const rootEl = document.getElementById(APP_CONTAINER_ID);
 
 function wrapApp(AppComponent) {
   return (
