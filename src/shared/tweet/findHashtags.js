@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const regex = /#[^\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>¿?@[\]^_`{|}~\s]+/g;
+import regex from './hashtagRegex';
 
 const matchHashtag = R.match(regex);
 

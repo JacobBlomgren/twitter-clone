@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const regex = /@[a-zA-z0-9]{3,15}/g;
+import regex from './mentionRegex';
 
 const matchMention = R.match(regex);
 
@@ -17,7 +17,7 @@ const matches = R.compose(R.uniq, R.map(R.replace(/@/g, '')), matchMention);
  * @example
  * findMentions('@jacob'); // => ['jacob']
  * findMentions('@longerThanFifteen'); // => ['longerThanFifte']
- * findMentions('@aaá'); // => ['aa]
+ * findMentions('@aaaá'); // => ['aaa']
  * findMentions('@'); // => []
  */
 export default function(str) {
