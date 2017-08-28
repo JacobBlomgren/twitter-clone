@@ -11,8 +11,8 @@ import passport from 'passport';
 import session from 'express-session';
 import 'babel-polyfill';
 
-import { APP_NAME, STATIC_PATH } from '../shared/config';
-import renderApp from './render-app';
+import { STATIC_PATH } from '../shared/config';
+import renderApp from './renderApp';
 import routes from './routes';
 
 const app = express();
@@ -44,8 +44,6 @@ app.use(passport.session());
 
 app.use('/api', routes);
 
-app.get('/', (req, res) => {
-  res.send(renderApp(APP_NAME));
-});
+app.get('/', renderApp);
 
 export default app;

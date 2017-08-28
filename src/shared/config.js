@@ -3,5 +3,3 @@ export const STATIC_PATH = '/static';
 export const APP_NAME = 'App';
 
 export const WDS_PORT = 7000;
-
-export const APP_CONTAINER_ID = 'js-app';

@@ -3,8 +3,9 @@ import webpack from 'webpack';
 import path from 'path';
 
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-import { WDS_PORT } from './src/shared/config';
+import { WDS_PORT, APP_NAME } from './src/shared/config';
 import { isProd } from './src/shared/utils/isProd';
 
 export default {
@@ -84,6 +85,10 @@ export default {
     new ExtractTextPlugin({
       filename: 'styles/main.css',
       disable: !isProd,
+    }),
+    new HtmlWebpackPlugin({
+      title: APP_NAME,
+      template: 'index.ejs',
     }),
   ],
 };
