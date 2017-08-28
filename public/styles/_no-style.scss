@@ -1,0 +1,13 @@
+// Mixins to remove default styling of buttons, lists, etc.
+
+@mixin ol-no-style {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+@mixin button-no-style {
+  background: none;
+  border: 0;
+  outline: none;
+  padding: 0;
+}

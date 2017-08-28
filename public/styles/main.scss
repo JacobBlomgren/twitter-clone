@@ -1,79 +1,19 @@
-@import "custom";
-@import "~bootstrap/scss/bootstrap";
+@import 'custom';
+@import '~bootstrap/scss/bootstrap';
+@import 'tweet';
 
 body {
   background-color: #ededed;
 }
 
-@mixin ol-no-style {
-  padding-left: 0;
-  list-style-type: none;
-}
-
 .TweetList {
-  width: 520px;
   margin: auto;
+  width: 520px;
   @include ol-no-style;
 }
 
-.Tweet {
-  padding: 1.2rem;
-  background-color: rgba(74,74,74,0.08);
-}
-
 .ListSkin {
-  background-color: white;
+  background-color: #fff;
   border-bottom: 1px solid #f4f4f4;
 }
 
-.Tweet__Info {
-  color: $gray-700;
-
-  span {
-    margin-right: 0.3rem;
-  }
-}
-
-.Tweet__Info__Name {
-  color: inherit;
-}
-
-.Name {
-  font-weight: bold;
-}
-
-.Tweet__Content {
-  margin-bottom: 1.2rem;
-}
-
-@mixin button-no-style {
-  background: none;
-  border: none;
-  outline:none;
-  padding: 0;
-}
-
-.Tweet__Action {
-  width: 6rem;
-  display: inline-block;
-}
-
-.Tweet__Action__Button {
-  color: $gray-700;
-  text-align: left;
-  @include button-no-style;
-
-  .Tweet__Action__Button__Icon {
-    height: 0.9rem;
-    vertical-align: middle;
-    margin-right: 0.3rem;
-  }
-}
-
-.Tweet__Action__Button:hover {
-  color: lighten($gray-700, 30%);
-
-  .Tweet__Action__Button__Icon {
-    opacity: 0.7;
-  }
-}
