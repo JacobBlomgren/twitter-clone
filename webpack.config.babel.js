@@ -83,7 +83,7 @@ export default {
       Popper: ['popper.js', 'default'],
     }),
     new ExtractTextPlugin({
-      filename: 'styles/main.css',
+      filename: 'styles/main-[contenthash].css',
       disable: !isProd,
     }),
     new HtmlWebpackPlugin({
