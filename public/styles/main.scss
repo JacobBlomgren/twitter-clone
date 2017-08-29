@@ -8,8 +8,13 @@ body {
 
 .TweetList {
   margin: auto;
-  width: 520px;
   @include ol-no-style;
+}
+
+@include media-breakpoint-up(md) {
+  .TweetList {
+    width: 520px;
+  }
 }
 
 .ListSkin {
