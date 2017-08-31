@@ -4,6 +4,7 @@ import path from 'path';
 
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
 
 import { WDS_PORT, APP_NAME } from './src/shared/config';
 import { isProd } from './src/shared/utils/isProd';
@@ -87,8 +88,10 @@ export default {
       disable: !isProd,
     }),
     new HtmlWebpackPlugin({
+      alwaysWriteToDisk: true,
       title: APP_NAME,
       template: 'index.ejs',
     }),
+    new HtmlWebpackHarddiskPlugin(),
   ],
 };
