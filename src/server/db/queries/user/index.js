@@ -1,5 +1,13 @@
 import { db } from '../../connection';
 
+import getQueryFile from '../../getQueryFile';
+
+const getUserQueryFile = getQueryFile('user/get_user');
+
+export function getUserByID(userID) {
+  return db.oneOrNone(getUserQueryFile, userID);
+}
+
 /**
  * Gets the authorization info for a user from the database.
  * @param userID
