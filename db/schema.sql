@@ -1,5 +1,5 @@
 CREATE TABLE account (
-  username VARCHAR(15) UNIQUE NOT NULL,
+  username VARCHAR(15) UNIQUE NOT NULL CONSTRAINT lowercase CHECK (lower(username) = username),
   user_id SERIAL PRIMARY KEY,
   hash CHAR(60) NOT NULL,
   salt_rounds INTEGER NOT NULL,
@@ -33,7 +33,7 @@ CREATE INDEX hashtag_index ON hashtag_used (hashtag);
 CREATE TABLE mentions (
   tweet_id INTEGER REFERENCES tweet ON DELETE CASCADE,
   user_id INTEGER REFERENCES account,
-  username VARCHAR(15) NOT NULL,
+  username VARCHAR(15) NOT NULL CONSTRAINT lowercase CHECK (lower(username) = username),
   PRIMARY KEY (tweet_id, user_id)
 );
 
