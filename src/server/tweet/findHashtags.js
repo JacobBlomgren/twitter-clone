@@ -1,8 +1,8 @@
 import R from 'ramda';
 
-import regex from './hashtagRegex';
+import { hashtagRegexGlobal } from '../../shared/tweet/hashtagRegex';
 
-const matchHashtag = R.match(regex);
+const matchHashtag = R.match(hashtagRegexGlobal);
 
 const matches = R.compose(R.uniq, R.map(R.replace(/#/g, '')), matchHashtag);
 

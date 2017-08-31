@@ -1,7 +1,7 @@
 import insertTweet from '../db/queries/tweet/insertTweet';
 import getTweet from '../db/queries/tweet/getTweet';
-import findHashtags from '../../shared/tweet/findHashtags';
-import findMentions from '../../shared/tweet/findMentions';
+import findHashtags from './findHashtags';
+import findMentions from './findMentions';
 
 export default async function(userID, content, replyTo) {
   const hashtags = findHashtags(content);

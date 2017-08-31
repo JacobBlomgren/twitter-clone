@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Mention from './Mention';
-import mentionRegex from '../../shared/tweet/mentionRegex';
+import { mentionRegex } from '../../../shared/tweet/mentionRegex';
 
 // Recursively find all mentions and convert them to mention components
 function insertMentions(str, acc) {

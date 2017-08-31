@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Hashtag from './Hashtag';
-import hashtagRegex from '../../shared/tweet/hashtagRegex';
+import { hashtagRegex } from '../../../shared/tweet/hashtagRegex';
 
 // Recursively find all hashtags and convert them to Hashtag components
 function insertHashtags(str, acc) {
