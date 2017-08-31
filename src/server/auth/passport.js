@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 
-import { getUserByID, getUserByUsername } from '../db/queries/user';
+import { getUserByIDAuth, getUserByUsernameAuth } from '../db/queries/user';
 
 passport.serializeUser(({ id }, done) => {
   done(null, id);
@@ -10,7 +10,7 @@ passport.serializeUser(({ id }, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await getUserByID(id);
+    const user = await getUserByIDAuth(id);
     done(null, { username: user.username, id: user.id });
   } catch (err) {
     done(err, null);
@@ -20,7 +20,7 @@ passport.deserializeUser(async (id, done) => {
 // Checks a password against the password from the database.
 async function checkPassword(username, password, done) {
   try {
-    const user = await getUserByUsername(username);
+    const user = await getUserByUsernameAuth(username);
 
     if (user === null) {
       return done(null, false, { message: 'Username does not exist.' });
