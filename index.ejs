@@ -4,11 +4,40 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><%= htmlWebpackPlugin.options.title%></title>
+    <% htmlWebpackPlugin.files.css.map(file => { %>
+    <link href="<%= file %>" rel="stylesheet">
+    <% }); %>
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    <script>
+      var modernBrowser = (
+        'fetch' in window &&
+        'assign' in Object &&
+        'Promise' in window
+      );
+
+      var scripts = [
+        <% for (key in htmlWebpackPlugin.files.chunks) { %>
+        '<%= htmlWebpackPlugin.files.chunks[key].entry%>',
+        <% } %>
+      ];
+
+      if (modernBrowser) {
+        scripts = scripts.filter(function(script) {
+          return !script.includes('polyfill');
+        });
+      }
+
+      scripts.map(function(src) {
+        var scriptElement = document.createElement('script');
+        scriptElement.async = false;
+        scriptElement.src = src;
+        document.head.appendChild(scriptElement);
+      });
+    </script>
   </body>
 </html>

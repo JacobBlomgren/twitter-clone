@@ -10,9 +10,12 @@ import { WDS_PORT, APP_NAME } from './src/shared/config';
 import { isProd } from './src/shared/utils/isProd';
 
 export default {
-  entry: ['react-hot-loader/patch', './src/client'],
+  entry: {
+    polyfills: ['babel-polyfill'],
+    main: ['react-hot-loader/patch', './src/client'],
+  },
   output: {
-    filename: 'js/bundle.js',
+    filename: 'js/[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: isProd ? '/static/' : `http://localhost:${WDS_PORT}/dist/`,
   },
@@ -42,7 +45,7 @@ export default {
               },
             },
             {
-              loader: 'sass-loader', // compiles SASS to CSS
+              loader: 'sass-loader',
             },
           ],
           fallback: 'style-loader',
@@ -89,6 +92,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,
+      inject: false,
       title: APP_NAME,
       template: 'index.ejs',
     }),
