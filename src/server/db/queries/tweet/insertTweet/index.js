@@ -32,7 +32,7 @@ async function insertMentions(transaction, tweetID, mentions) {
 const replyToQueryFile = getQueryFile('tweet/insertTweet/insert_reply_to');
 
 async function insertReplyTo(transaction, tweetID, replyTo) {
-  if (replyTo === null) return Promise.resolve();
+  if (!replyTo) return Promise.resolve();
   return transaction.none(replyToQueryFile, [tweetID, replyTo]);
 }
 
