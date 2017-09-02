@@ -47,3 +47,10 @@ CREATE TABLE reply_to (
 );
 
 CREATE INDEX reply_to_index ON reply_to (original_tweet_id);
+
+CREATE TABLE likes(
+  tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE CASCADE,
+  user_id BIGINT REFERENCES account (user_id) ON DELETE CASCADE,
+  PRIMARY KEY (tweet_id, user_id)
+);
+
