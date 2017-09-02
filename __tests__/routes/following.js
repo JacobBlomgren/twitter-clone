@@ -2,7 +2,7 @@ import session from 'supertest-session';
 
 import app from '../../src/server/app';
 import { resetFollows, reset } from '../../src/server/db/reset';
-import { getUserByUsername } from '../../src/server/db/queries/user';
+import { getUserByUsernameAuth } from '../../src/server/db/queries/user';
 import { follow } from '../../src/server/db/queries/follow';
 import registerUser from '../../src/server/auth/registerUser';
 
@@ -15,8 +15,8 @@ beforeAll(async () => {
   await registerUser('sara', 'password');
 
   // we need the user id
-  sara = await getUserByUsername('sara');
-  jacob = await getUserByUsername('jacob');
+  sara = await getUserByUsernameAuth('sara');
+  jacob = await getUserByUsernameAuth('jacob');
 });
 
 beforeEach(async () => {
@@ -73,7 +73,7 @@ describe('POST /api/following', () => {
 
     const responseNegative = await request
       .post('/api/following')
-      .send({ user_id: -100 });
+      .send({ user_id: '-100' });
     expect(responseNegative.statusCode).toBe(400);
 
     const responseOmitted = await request.post('/api/following').send({});

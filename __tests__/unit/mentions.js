@@ -1,4 +1,4 @@
-import findMentions from '../../src/shared/tweet/findMentions';
+import findMentions from '../../src/server/tweet/findMentions';
 
 it('should match a username', () => {
   expect(findMentions('@jacob')).toEqual(['jacob']);
@@ -17,12 +17,12 @@ it('should remove duplicate mentions', () => {
 });
 
 it('should not match the part of mentions after 15 characters', () => {
-  expect(findMentions('@longerThanFifteen')).toEqual(['longerThanFifte']);
+  expect(findMentions('@longerThanFifteen')).toEqual(['longerthanfifte']);
 });
 
 it('should not match usernames with unallowed characters', () => {
-  expect(findMentions('@mañana')).toEqual(['ma']);
-  expect(findMentions('@aaá')).toEqual(['aa']);
+  expect(findMentions('@hastamañana')).toEqual(['hastama']);
+  expect(findMentions('@aaaá')).toEqual(['aaa']);
 });
 
 it('should not match a single @', () => {
