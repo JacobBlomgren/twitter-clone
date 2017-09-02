@@ -4,8 +4,8 @@ import getQueryFile from '../../getQueryFile';
 
 const getUserQueryFile = getQueryFile('user/get_user');
 
-export function getUserByID(userID) {
-  return db.oneOrNone(getUserQueryFile, userID);
+export function getUserByID(userID, loggedInUserID) {
+  return db.oneOrNone(getUserQueryFile, [userID, loggedInUserID]);
 }
 
 /**
