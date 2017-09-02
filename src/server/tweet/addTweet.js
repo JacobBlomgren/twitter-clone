@@ -13,5 +13,5 @@ export default async function(userID, content, replyTo) {
     mentions,
     replyTo,
   );
-  return getTweet(tweetID);
+  return getTweet(tweetID, userID);
 }

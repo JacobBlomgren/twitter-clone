@@ -6,6 +6,7 @@ import id from '../middleware/validation/id';
 
 import getTweets from './getTweets';
 import getUser from './getUser';
+import loggedInUserID from '../middleware/loggedInUserID';
 
 const router = express.Router();
 
@@ -14,6 +15,8 @@ const validate = celebrate({
     userID: id.required(),
   }),
 });
+
+router.use(loggedInUserID);
 
 router.get('/:userID/tweets', getTweets);
 router.get('/:userID', getUser);

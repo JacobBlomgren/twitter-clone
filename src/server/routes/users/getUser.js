@@ -5,7 +5,7 @@ export default async function(req, res) {
   try {
     const [user, tweets] = await Promise.all([
       getUserByID(req.params.userID),
-      getTweetsFromUser(req.params.userID),
+      getTweetsFromUser(req.params.userID, req.loggedInUserID),
     ]);
     res.status(200).json({
       ...user,

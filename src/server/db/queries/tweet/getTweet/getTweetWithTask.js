@@ -8,8 +8,18 @@ const getMentionsQueryFile = getQueryFile('tweet/getTweet/get_mentions');
 const getReplyToQueryFile = getQueryFile('tweet/getTweet/get_reply_to');
 const getRepliesQueryFile = getQueryFile('tweet/getTweet/get_replies');
 
-export default async function(task, tweetID) {
-  const tweet = await task.oneOrNone(getTweetQueryFile, tweetID);
+/**
+ * Gets a tweet with a database task so that the same connection can be used if many tweets are looked up.
+ * Just create, and pass a new task if just one tweet is looked up.
+ */
+export default async function(task, tweetID, loggedInUserID) {
+  /* Utilize the fact that all ids in the db are strictly positive, so that the query can be used
+  whether a user is logged in or not */
+  const secondUserID = loggedInUserID || '-1';
+  const tweet = await task.oneOrNone(getTweetQueryFile, [
+    tweetID,
+    secondUserID,
+  ]);
   if (tweet === null) return Promise.resolve(null);
   const [replyTo, replies, hashtags, mentions] = await Promise.all([
     task.oneOrNone(getReplyToQueryFile, tweetID),
