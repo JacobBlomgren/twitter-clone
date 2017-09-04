@@ -2,6 +2,9 @@ import R from 'ramda';
 
 import { db } from '../../../connection';
 import getTweetWithTask from './getTweetWithTask';
+import getQueryFile from '../../../getQueryFile';
+
+const getTweetIDS = getQueryFile('tweet/getTweet/get_tweet_ids_from_user');
 
 /**
  * Gets all tweets from the user with id userID.
@@ -10,16 +13,28 @@ import getTweetWithTask from './getTweetWithTask';
  */
 export default async function(userID, loggedInUserID) {
   return db.task('get tweets from user', async task => {
-    const response = await task.any(
-      'SELECT tweet_id FROM tweet WHERE user_id = $1',
-      userID,
-    );
+    const [response, user] = await Promise.all([
+      task.any(getTweetIDS, userID),
+      task.one('SELECT name, username FROM account WHERE user_id = $1', userID),
+    ]);
     /* The response is of the format [{tweet_id:1}, {tweet_id:2}]
     so we get the tweet_id property of every object. */
     const tweetIDs = R.pluck('tweet_id', response);
     const tweetQueries = tweetIDs.map(id =>
       getTweetWithTask(task, id, loggedInUserID),
     );
-    return Promise.all(tweetQueries);
+    const tweets = await Promise.all(tweetQueries);
+    return tweets.map(t => {
+      if (t.user_id === userID) return t;
+      // Add retweet info if the author of the tweet doesn't match userID.
+      return {
+        ...t,
+        retweet: {
+          user_id: userID,
+          username: user.username,
+          name: user.name,
+        },
+      };
+    });
   });
 }

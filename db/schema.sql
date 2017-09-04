@@ -48,6 +48,15 @@ CREATE TABLE reply_to (
 
 CREATE INDEX reply_to_index ON reply_to (original_tweet_id);
 
+CREATE TABLE retweet (
+  tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE CASCADE,
+  user_id BIGINT REFERENCES account (user_id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (tweet_id, user_id)
+);
+
+CREATE INDEX retweet_index ON retweet (user_id);
+
 CREATE TABLE likes(
   tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE CASCADE,
   user_id BIGINT REFERENCES account (user_id) ON DELETE CASCADE,
