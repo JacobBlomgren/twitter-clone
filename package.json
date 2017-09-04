@@ -15,11 +15,9 @@
     "prettier": "prettier --single-quote --trailing-comma all --write \"{src,__tests__}/**/*.{js,jsx}\" webpack.config.babel.js",
     "eslint": "eslint src webpack.config.babel.js __test__ --ext .js,.jsx",
     "stylelint": "stylelint \"public/styles/**/*.scss\"",
-    "lint": "eslint && stylelint",
+    "lint": "yarn eslint && yarn stylelint",
     "pretty-lint": "yarn prettier && yarn eslint",
-    "test": "yarn test:unit && yarn test:integration",
-    "test:unit": "jest --coverage unit",
-    "test:integration": "jest --coverage --runInBand routes",
+    "test": "cross-env NODE_ENV=test babel-node ./db/reset && jest --coverage",
     "docs": "documentation build src/** -f html -o docs"
   },
   "devDependencies": {
