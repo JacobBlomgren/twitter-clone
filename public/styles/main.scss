@@ -1,20 +1,56 @@
 @import 'custom';
 @import '~bootstrap/scss/bootstrap';
 @import 'tweet';
+@import 'profile';
+
+$padding: 0.9rem;
+$large-padding: 1.2rem;
+
+.SmallPadding {
+  padding: $padding;
+}
+
+@include media-breakpoint-up(sm) {
+  .SmallPadding {
+    padding: $large-padding;
+  }
+}
+
+.SmallPadding--Sides {
+  padding-left: $padding;
+  padding-right: $padding;
+}
+
+@include media-breakpoint-up(sm) {
+  .SmallPadding--Sides {
+    padding-left: $large-padding;
+    padding-right: $large-padding;
+  }
+}
 
 body {
   background-color: #ededed;
 }
 
-.TweetList {
+.MainColumn {
   margin: auto;
-  @include ol-no-style;
+  width: 100%;
 }
 
 @include media-breakpoint-up(md) {
-  .TweetList {
+  .MainColumn {
     width: 520px;
   }
+}
+
+@include media-breakpoint-up(lg) {
+  .MainColumn {
+    width: 600px;
+  }
+}
+
+.TweetList {
+  @include ol-no-style;
 }
 
 .ListSkin {
@@ -22,3 +58,6 @@ body {
   border-bottom: 1px solid #f4f4f4;
 }
 
+.LightText {
+  color: $gray-700;
+}

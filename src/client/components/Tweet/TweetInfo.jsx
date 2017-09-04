@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 export default function TweetInfo({ name, username, createdAt }) {
   return (
     <div className="Tweet__Info">
-      <span className="Name Tweet__Info__Name">
+      <span className="Tweet__Info__Name">
         {name}
       </span>
-      <span>
+      <span className="LightText">
         @{username}
       </span>
-      <small>
+      <small className="LightText">
         {moment(createdAt).fromNow()}
       </small>
     </div>

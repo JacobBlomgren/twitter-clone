@@ -15,7 +15,7 @@ export default function Tweet({
   likes,
 }) {
   return (
-    <div className="Tweet">
+    <div className="Tweet SmallPadding">
       <TweetInfo name={name} username={username} createdAt={createdAt} />
       <TweetContent content={content} />
       <TweetActions replies={replies} retweets={retweets} likes={likes} />

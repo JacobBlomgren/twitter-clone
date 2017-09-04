@@ -1,0 +1,55 @@
+@import '~bootstrap/scss/mixins';
+
+.ProfilePage__Header {
+  background-color: #fff;
+  //border-bottom: 1px solid #c3c3c3;
+  margin-bottom: 0.5rem;
+  padding-bottom: 1.4rem;
+  padding-top: 1rem;
+}
+
+@include media-breakpoint-up(lg) {
+  .ProfilePage__Header {
+    margin-bottom: 1rem;
+  }
+}
+
+.ProfilePicture {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 0.2rem;
+  width: 7rem;
+}
+
+@include media-breakpoint-up(lg) {
+  .ProfilePicture {
+    width: 9rem;
+  }
+}
+
+.ProfilePage__Header__ProfilePicture {
+  margin-bottom: 0.6rem;
+}
+
+.ProfilePage__Header__Name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.ProfilePage__Header__Names {
+  margin-bottom: 0.2rem;
+}
+
+.ProfilePage__Header__Description {
+  margin-bottom: 0.4rem;
+}
+
+.FollowingInfo {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+
+.FollowingInfo__Number {
+  font-weight: bold;
+}

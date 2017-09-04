@@ -4,12 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import App from './app';
-import { APP_CONTAINER_ID } from '../shared/config';
+import App from './App';
 
-import '../../public/styles/main.scss';
-
-const rootEl = document.getElementById(APP_CONTAINER_ID);
+const rootEl = document.getElementById('root');
 
 function wrapApp(AppComponent) {
   return (
@@ -22,9 +19,9 @@ function wrapApp(AppComponent) {
 ReactDOM.render(wrapApp(App), rootEl);
 
 if (module.hot) {
-  module.hot.accept('./app', () => {
+  module.hot.accept('./App', () => {
     // eslint-disable-next-line global-require
-    const NextApp = require('./app').default;
+    const NextApp = require('./App').default;
     ReactDOM.render(wrapApp(NextApp), rootEl);
   });
 }
