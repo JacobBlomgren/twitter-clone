@@ -8,9 +8,7 @@ export default function TweetAction({ label, icon, count }) {
     <div className="Tweet__Action">
       <button className="Tweet__Action__Button LightText" aria-label={label}>
         <img src={icon} alt="" className="Tweet__Action__Button__Icon" />
-        <span aria-hidden>
-          {formatNumber(count)}
-        </span>
+        <span aria-hidden>{formatNumber(count)}</span>
       </button>
     </div>
   );

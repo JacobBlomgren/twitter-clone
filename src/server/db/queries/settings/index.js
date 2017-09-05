@@ -1,5 +1,3 @@
-import { db } from '../../connection';
-
 export function updateName(task, userID, name) {
   return task.none('UPDATE account SET name = $1 WHERE user_id = $2', [
     name,

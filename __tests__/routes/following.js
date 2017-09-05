@@ -62,7 +62,11 @@ describe('POST /api/following', () => {
 
   it("shouldn't be possible to send a malformed follow request", async () => {
     await loginUser1();
-    const [responseString, responseNegative, responseOmitted] = await Promise.all([
+    const [
+      responseString,
+      responseNegative,
+      responseOmitted,
+    ] = await Promise.all([
       request.post('/api/following').send({ user_id: 'asdfg' }),
       request.post('/api/following').send({ user_id: '-100' }),
       request.post('/api/following').send({}),

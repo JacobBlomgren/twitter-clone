@@ -15,11 +15,7 @@ export default function TweetContent({ content }) {
   const contentWithHashtagsAndMentions = contentWithHashtags.map(
     elem => (typeof elem === 'string' ? insertMentions(elem) : elem),
   );
-  return (
-    <p className="Tweet__Content">
-      {contentWithHashtagsAndMentions}
-    </p>
-  );
+  return <p className="Tweet__Content">{contentWithHashtagsAndMentions}</p>;
 }
 
 TweetContent.propTypes = {

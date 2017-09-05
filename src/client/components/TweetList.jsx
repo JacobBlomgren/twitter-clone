@@ -6,7 +6,7 @@ import Tweet from './Tweet/Tweet';
 export default function TweetList({ tweets }) {
   return (
     <ol className="TweetList">
-      {tweets.map(tweet =>
+      {tweets.map(tweet => (
         <li key={tweet.id} className="ListSkin">
           <Tweet
             id={tweet.id}
@@ -18,8 +18,8 @@ export default function TweetList({ tweets }) {
             retweets={tweet.retweets}
             likes={tweet.likes}
           />
-        </li>,
-      )}
+        </li>
+      ))}
     </ol>
   );
 }
