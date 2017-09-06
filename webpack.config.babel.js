@@ -93,6 +93,13 @@ export default {
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,
       inject: false,
+      minify: isProd
+        ? {
+            collapseWhitespace: true,
+            minifyJS: true,
+            removeComments: true,
+          }
+        : false,
       title: APP_NAME,
       template: 'index.ejs',
     }),
