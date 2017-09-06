@@ -13,7 +13,7 @@ export default function TweetList({ tweets }) {
             name={tweet.name}
             username={tweet.username}
             content={tweet.content}
-            createdAt={tweet.created_at}
+            createdAt={tweet.createdAt}
             replies={tweet.replies}
             retweets={tweet.retweets}
             likes={tweet.likes}

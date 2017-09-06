@@ -1,27 +1,34 @@
 import 'bootstrap';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 import App from './App';
+import state from './state';
 
 const rootEl = document.getElementById('root');
 
-function wrapApp(AppComponent) {
+const store = createStore(s => s, state);
+
+function wrapApp(AppComponent, reduxStore) {
   return (
-    <AppContainer>
-      <AppComponent />
-    </AppContainer>
+    <Provider store={reduxStore}>
+      <AppContainer>
+        <AppComponent />
+      </AppContainer>
+    </Provider>
   );
 }
 
-ReactDOM.render(wrapApp(App), rootEl);
+render(wrapApp(App, store), rootEl);
 
 if (module.hot) {
   module.hot.accept('./App', () => {
     // eslint-disable-next-line global-require
     const NextApp = require('./App').default;
-    ReactDOM.render(wrapApp(NextApp), rootEl);
+    render(wrapApp(NextApp, store), rootEl);
   });
 }

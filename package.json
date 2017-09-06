@@ -51,7 +51,8 @@
     "pm2": "^2.6.1",
     "popper.js": "^1.12.3",
     "postcss-loader": "^2.0.6",
-    "prettier": "^1.5.3",
+    "prettier": "^1.6.0",
+    "redux-devtools": "^3.4.0",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
@@ -86,6 +87,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-hot-loader": "next",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "string-length": "^2.0.0",
     "xss-filters": "^1.2.7"
   }

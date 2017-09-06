@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProfileHeader from './ProfileHeader';
-import TweetList from './TweetList';
+import TweetListContainer from '../containers/TweetListContainer';
 
 export default function Profile({
+  userID,
   name,
   username,
   profilePictureURL,
@@ -24,18 +25,19 @@ export default function Profile({
         followers={followers}
       />
       <main>
-        <TweetList tweets={tweets} />
+        <TweetListContainer tweetIDs={tweets} />
       </main>
     </div>
   );
 }
 
 Profile.propTypes = {
+  userID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   profilePictureURL: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   following: PropTypes.number.isRequired,
   followers: PropTypes.number.isRequired,
-  tweets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tweetIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
