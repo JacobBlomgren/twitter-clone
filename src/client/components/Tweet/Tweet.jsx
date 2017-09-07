@@ -13,12 +13,18 @@ export default function Tweet({
   replies,
   retweets,
   likes,
+  onLike,
 }) {
   return (
     <div className="Tweet SmallPadding">
       <TweetInfo name={name} username={username} createdAt={createdAt} />
       <TweetContent content={content} />
-      <TweetActions replies={replies} retweets={retweets} likes={likes} />
+      <TweetActions
+        replies={replies}
+        retweets={retweets}
+        likes={likes}
+        onLike={onLike}
+      />
     </div>
   );
 }
@@ -31,4 +37,5 @@ Tweet.propTypes = {
   replies: PropTypes.number.isRequired,
   retweets: PropTypes.number.isRequired,
   likes: PropTypes.number.isRequired,
+  onLike: PropTypes.func.isRequired,
 };

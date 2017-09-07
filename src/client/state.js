@@ -1,6 +1,7 @@
 // State draft
 export default {
   entities: {
+    loggedInUser: '1',
     users: {
       byID: {
         '1': {
@@ -13,14 +14,14 @@ export default {
           following: 10,
           followers: 30,
           follows: true,
-          tweets: ['64', '63'],
+          tweets: ['4', '63'],
         },
       },
       allIDs: ['1'],
     },
     tweets: {
       byID: {
-        '64': {
+        '4': {
           id: '64',
           userID: '1',
           content: '#A #whole #lotta #hashtags',
@@ -28,18 +29,21 @@ export default {
           replies: 0,
           retweets: 2,
           likes: 10,
+          liked: false,
         },
         '63': {
           id: 63,
           userID: '1',
           content: 'Just a tweet with some emojis 🏈 🤾',
-          created_at: '2017-08-16T18:49:02.162Z',
+          createdAt: '2017-08-16T18:49:02.162Z',
           replies: 100000,
           retweets: 200000,
           likes: 950000,
+          liked: false,
         },
       },
-      allIDs: ['64'],
+      allIDs: ['4', '63'],
     },
   },
+  ui: {},
 };

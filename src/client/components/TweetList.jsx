@@ -1,23 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Tweet from './Tweet/Tweet';
+import TweetContainer from '../containers/TweetContainer';
 
 export default function TweetList({ tweets }) {
   return (
     <ol className="TweetList">
-      {tweets.map(tweet => (
-        <li key={tweet.id} className="ListSkin">
-          <Tweet
-            id={tweet.id}
-            name={tweet.name}
-            username={tweet.username}
-            content={tweet.content}
-            createdAt={tweet.createdAt}
-            replies={tweet.replies}
-            retweets={tweet.retweets}
-            likes={tweet.likes}
-          />
+      {tweets.map(tweetID => (
+        <li key={tweetID} className="ListSkin">
+          <TweetContainer tweetID={tweetID} />
         </li>
       ))}
     </ol>
@@ -25,5 +16,5 @@ export default function TweetList({ tweets }) {
 }
 
 TweetList.propTypes = {
-  tweets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tweets: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
