@@ -14,30 +14,32 @@
     </noscript>
     <div id="root"></div>
     <script>
-      var modernBrowser = (
-        'fetch' in window &&
-        'assign' in Object &&
-        'Promise' in window
-      );
+      (function () {
+        var modernBrowser = (
+          'fetch' in window &&
+          'assign' in Object &&
+          'Promise' in window
+        );
 
-      var scripts = [
-        <% for (key in htmlWebpackPlugin.files.chunks) { %>
-        '<%= htmlWebpackPlugin.files.chunks[key].entry%>',
-        <% } %>
-      ];
+        var scripts = [
+          <% for (key in htmlWebpackPlugin.files.chunks) { %>
+          '<%= htmlWebpackPlugin.files.chunks[key].entry%>',
+          <% } %>
+        ];
 
-      if (modernBrowser) {
-        scripts = scripts.filter(function(script) {
-          return !script.includes('polyfill');
+        if (modernBrowser) {
+          scripts = scripts.filter(function(script) {
+            return !script.includes('polyfill');
+          });
+        }
+
+        scripts.map(function(src) {
+          var scriptElement = document.createElement('script');
+          scriptElement.async = false;
+          scriptElement.src = src;
+          document.head.appendChild(scriptElement);
         });
-      }
-
-      scripts.map(function(src) {
-        var scriptElement = document.createElement('script');
-        scriptElement.async = false;
-        scriptElement.src = src;
-        document.head.appendChild(scriptElement);
-      });
+      })();
     </script>
   </body>
 </html>

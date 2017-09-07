@@ -11,8 +11,8 @@ import { isProd } from './src/shared/utils/isProd';
 
 export default {
   entry: {
-    main: ['react-hot-loader/patch', './src/client'],
     polyfills: ['babel-polyfill', 'whatwg-fetch'],
+    main: isProd ? './src/client' : ['react-hot-loader/patch', './src/client'],
   },
   output: {
     filename: 'js/[name].bundle.js',
@@ -63,6 +63,9 @@ export default {
         ],
       },
     ],
+  },
+  watchOptions: {
+    aggregateTimeout: 1000,
   },
   devtool: isProd ? false : 'source-map',
   resolve: {
