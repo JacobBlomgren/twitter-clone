@@ -16,5 +16,8 @@
   "rules": {
     "compat/compat": 2,
     "prettier/prettier":  ["error", {"singleQuote": true, "trailingComma": "all"}]
+  },
+  "settings": {
+    "polyfills": ["fetch"]
   }
 }

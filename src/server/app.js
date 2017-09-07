@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
 import 'babel-polyfill';
+import 'isomorphic-fetch';
 
 import { STATIC_PATH } from '../shared/config';
 import renderApp from './renderApp';
