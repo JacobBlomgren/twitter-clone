@@ -1,7 +1,7 @@
 // State draft
 export default {
   entities: {
-    loggedInUser: '1',
+    loggedInUserID: '1',
     users: {
       byID: {
         '1': {

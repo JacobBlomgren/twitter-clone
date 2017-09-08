@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
+import loggedInUserID from './loggedInUserID';
 import tweets from './tweets';
 
 export default combineReducers({
-  loggedInUser: (s = null) => s,
+  loggedInUserID,
   users: (s = { byID: {}, allIDs: {} }) => s,
   tweets,
 });

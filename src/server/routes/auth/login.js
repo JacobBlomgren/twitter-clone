@@ -8,7 +8,11 @@ import password from '../middleware/validation/password';
 export const authenticate = passport.authenticate('local', {});
 
 export function login(req, res) {
-  res.status(200).json({ status: 'Success' });
+  res.status(200).json({
+    status: `Logged in ${req.user.username}`,
+    username: req.user.username,
+    user_id: req.user.id,
+  });
 }
 
 export const validate = celebrate({
