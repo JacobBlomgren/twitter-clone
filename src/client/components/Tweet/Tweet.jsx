@@ -13,6 +13,7 @@ export default function Tweet({
   replies,
   retweets,
   likes,
+  liked,
   onLike,
 }) {
   return (
@@ -23,6 +24,7 @@ export default function Tweet({
         replies={replies}
         retweets={retweets}
         likes={likes}
+        liked={liked}
         onLike={onLike}
       />
     </div>
@@ -37,5 +39,6 @@ Tweet.propTypes = {
   replies: PropTypes.number.isRequired,
   retweets: PropTypes.number.isRequired,
   likes: PropTypes.number.isRequired,
+  liked: PropTypes.bool.isRequired,
   onLike: PropTypes.func.isRequired,
 };

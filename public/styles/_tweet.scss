@@ -1,4 +1,5 @@
 @import 'no-style';
+@import 'variables';
 @import '~bootstrap/scss/mixins';
 
 .Tweet__Info span {
@@ -44,6 +45,11 @@
     padding: 3px;
   }
 }
+
+.Tweet__Action__Button--Active {
+  color: $main-color;
+}
+
 
 .Tweet__Action__Button__Icon {
   height: 0.9rem;
