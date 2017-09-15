@@ -9,8 +9,8 @@ export default function Profile({
   username,
   profilePictureURL,
   description,
-  following,
-  followers,
+  followingCount,
+  followerCount,
   tweets,
 }) {
   return (
@@ -20,8 +20,8 @@ export default function Profile({
         username={username}
         profilePictureURL={profilePictureURL}
         description={description}
-        following={following}
-        followers={followers}
+        followingCount={followingCount}
+        followerCount={followerCount}
       />
       <main>
         <TweetList tweets={tweets} />
@@ -35,7 +35,7 @@ Profile.propTypes = {
   username: PropTypes.string.isRequired,
   profilePictureURL: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  following: PropTypes.number.isRequired,
-  followers: PropTypes.number.isRequired,
+  followingCount: PropTypes.number.isRequired,
+  followerCount: PropTypes.number.isRequired,
   tweets: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

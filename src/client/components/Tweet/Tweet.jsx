@@ -10,9 +10,9 @@ export default function Tweet({
   username,
   createdAt,
   content,
-  replies,
-  retweets,
-  likes,
+  replyCount,
+  retweetCount,
+  likeCount,
   liked,
   onLike,
 }) {
@@ -21,9 +21,9 @@ export default function Tweet({
       <TweetInfo name={name} username={username} createdAt={createdAt} />
       <TweetContent content={content} />
       <TweetActions
-        replies={replies}
-        retweets={retweets}
-        likes={likes}
+        replyCount={replyCount}
+        retweetCount={retweetCount}
+        likeCount={likeCount}
         liked={liked}
         onLike={onLike}
       />
@@ -36,9 +36,9 @@ Tweet.propTypes = {
   username: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  replies: PropTypes.number.isRequired,
-  retweets: PropTypes.number.isRequired,
-  likes: PropTypes.number.isRequired,
+  replyCount: PropTypes.number.isRequired,
+  retweetCount: PropTypes.number.isRequired,
+  likeCount: PropTypes.number.isRequired,
   liked: PropTypes.bool.isRequired,
   onLike: PropTypes.func.isRequired,
 };

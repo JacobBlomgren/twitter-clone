@@ -9,8 +9,8 @@ export default function ProfileHeader({
   username,
   profilePictureURL,
   description,
-  following,
-  followers,
+  followingCount,
+  followerCount,
 }) {
   return (
     <header className="ProfilePage__Header SmallPadding--Sides">
@@ -22,7 +22,10 @@ export default function ProfileHeader({
         <span className="LightText">@{username}</span>
       </div>
       <div className="ProfilePage__Header__Description">{description}</div>
-      <ProfileFollowingInfo following={following} followers={followers} />
+      <ProfileFollowingInfo
+        followingCount={followingCount}
+        followerCount={followerCount}
+      />
     </header>
   );
 }
@@ -32,6 +35,6 @@ ProfileHeader.propTypes = {
   username: PropTypes.string.isRequired,
   profilePictureURL: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  following: PropTypes.number.isRequired,
-  followers: PropTypes.number.isRequired,
+  followingCount: PropTypes.number.isRequired,
+  followerCount: PropTypes.number.isRequired,
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import formatNumber from '../formatNumber';
+import formatNumber from '../utils/formatNumber';
 
 function FollowingInfo({ number, text }) {
   return (
@@ -17,16 +17,19 @@ FollowingInfo.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-export default function ProfileFollowingInfo({ following, followers }) {
+export default function ProfileFollowingInfo({
+  followingCount,
+  followerCount,
+}) {
   return (
     <div className="ProfilePage__Header__Followings">
-      <FollowingInfo number={following} text={'Following'} />
-      <FollowingInfo number={followers} text={'Followers'} />
+      <FollowingInfo number={followingCount} text={'Following'} />
+      <FollowingInfo number={followerCount} text={'Followers'} />
     </div>
   );
 }
 
 ProfileFollowingInfo.propTypes = {
-  following: PropTypes.number.isRequired,
-  followers: PropTypes.number.isRequired,
+  followingCount: PropTypes.number.isRequired,
+  followerCount: PropTypes.number.isRequired,
 };

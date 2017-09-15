@@ -11,6 +11,7 @@ function mapStateToProps(state, { tweetID }) {
     name: user.name,
     username: user.username,
     ...tweet,
+    replyCount: tweet.replies.length,
   };
 }
 

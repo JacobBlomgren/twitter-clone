@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import formatNumber from '../../formatNumber';
+import formatNumber from '../../utils/formatNumber';
 
 export default function TweetAction({ label, active, icon, count, onClick }) {
   return (
