@@ -1,9 +1,11 @@
+import camelizeKeys from '../utils/camelizeKeys';
+
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 function loginSuccess(json) {
-  const { user_id, username } = json;
+  const { userID, username } = camelizeKeys(json);
   return {
     type: LOGIN_SUCCESS,
-    userID: user_id,
+    userID,
     username,
   };
 }

@@ -75,6 +75,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.4",
     "helmet": "^3.8.1",
+    "humps": "^2.0.1",
     "isomorphic-fetch": "^2.2.1",
     "joi": "^10.6.0",
     "moment": "^2.18.1",
