@@ -1,4 +1,4 @@
-SELECT account.name, account.username, account.description, account.created_at,
+SELECT account.user_id AS id, account.name, account.username, account.description, account.created_at,
   followers.follower_count, following.following_count,
   EXISTS(SELECT * FROM follows WHERE followee = $1 AND follower = $2) AS follows
 FROM account,

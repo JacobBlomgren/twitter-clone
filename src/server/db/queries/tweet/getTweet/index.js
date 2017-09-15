@@ -12,6 +12,7 @@ import getTweetWithTask from './getTweetWithTask';
  * @return {string} tweet.content
  * @return {string}tweet.created_at
  * @return {boolean} tweet.liked
+ * * @return {boolean} tweet.retweeted
  * @return {Object} tweet.reply_to
  * @return {string} tweet.reply_to.original_tweet_id
  * @return {string} tweet.reply_to.original_username

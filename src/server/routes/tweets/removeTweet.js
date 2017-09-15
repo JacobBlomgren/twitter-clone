@@ -7,7 +7,7 @@ import id from '../middleware/validation/id';
 export async function removeTweet(req, res) {
   try {
     const removed = await removeTweetQuery(req.body.tweet_id, req.user.id);
-    if (removed === null) {
+    if (!removed) {
       res.status(404).json({
         error:
           'Tweet either does not exist or the user does not own the tweet and consequently cannot delete it',
