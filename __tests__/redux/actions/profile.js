@@ -4,8 +4,11 @@ import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 import {
-  fetchUser, PROFILE_REQUEST, RECIEVE_PROFILE_SUCCESS, recieveProfileSuccess,
-  requestProfile
+  fetchUser,
+  PROFILE_REQUEST,
+  RECIEVE_PROFILE_SUCCESS,
+  recieveProfileSuccess,
+  requestProfile,
 } from '../../../src/client/actions/profile';
 
 const mockStore = configureMockStore([thunkMiddleware]);
@@ -60,5 +63,5 @@ describe('fetch user sucess', () => {
 
     expect(action.tweets[0]).not.toHaveProperty('name');
     expect(action.tweets[0]).not.toHaveProperty('username');
-  })
+  });
 });
