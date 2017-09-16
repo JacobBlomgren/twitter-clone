@@ -2,7 +2,7 @@ import R from 'ramda';
 import camelizeKeys from '../utils/camelizeKeys';
 
 export const PROFILE_REQUEST = 'PROFILE_REQUEST';
-export function requestProfile(userID) {
+function requestProfile(userID) {
   return {
     type: PROFILE_REQUEST,
     userID,
@@ -10,9 +10,8 @@ export function requestProfile(userID) {
 }
 
 export const RECIEVE_PROFILE_SUCCESS = 'RECIEVE_PROFILE_SUCCESS';
-export function recieveProfileSuccess(user) {
+function recieveProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
-  console.log(userCamelized);
   const userNormalized = R.evolve(
     {
       // Transform the array of tweet objecs to an array of their ids

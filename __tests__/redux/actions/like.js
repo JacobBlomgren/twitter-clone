@@ -4,10 +4,10 @@ import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 import {
+  LIKE_TWEET_FAILURE,
+  LIKE_TWEET_REQUEST,
+  LIKE_TWEET_SUCCESS,
   likeTweet,
-  likeTweetFailure,
-  likeTweetRequest,
-  likeTweetSucess,
 } from '../../../src/client/actions/like';
 
 const mockStore = configureMockStore([thunkMiddleware]);
@@ -22,10 +22,8 @@ test('like success', async () => {
   const store = mockStore();
   await store.dispatch(likeTweet(tweetID));
 
-  expect(store.getActions()).toEqual([
-    likeTweetRequest(tweetID),
-    likeTweetSucess(tweetID),
-  ]);
+  expect(store.getActions()[0].type).toBe(LIKE_TWEET_REQUEST);
+  expect(store.getActions()[0].type).toBe(LIKE_TWEET_SUCCESS);
 });
 
 test('like failure', async () => {
@@ -34,8 +32,6 @@ test('like failure', async () => {
   const store = mockStore();
   await store.dispatch(likeTweet(tweetID));
 
-  expect(store.getActions()).toEqual([
-    likeTweetRequest(tweetID),
-    likeTweetFailure(tweetID),
-  ]);
+  expect(store.getActions()[0].type).toBe(LIKE_TWEET_REQUEST);
+  expect(store.getActions()[0].type).toBe(LIKE_TWEET_FAILURE);
 });

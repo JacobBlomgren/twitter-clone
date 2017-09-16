@@ -1,5 +1,7 @@
+import headers from '../fetch/jsonHeaders';
+
 export const LIKE_TWEET_REQUEST = 'LIKE_TWEET_REQUEST';
-function requestLikeTweet(tweetID) {
+function likeTweetRequest(tweetID) {
   return {
     type: LIKE_TWEET_REQUEST,
     tweetID,
@@ -22,10 +24,11 @@ function likeTweetFailure(tweetID) {
 
 export function likeTweet(tweetID) {
   return dispatch => {
-    dispatch(requestLikeTweet(tweetID));
+    dispatch(likeTweetRequest(tweetID));
     return fetch('/api/likes/', {
       method: 'POST',
-      body: { tweet_id: tweetID },
+      headers,
+      body: JSON.stringify({ tweet_id: tweetID }),
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(likeTweetSucess(tweetID));

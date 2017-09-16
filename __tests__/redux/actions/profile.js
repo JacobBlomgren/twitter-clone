@@ -7,8 +7,6 @@ import {
   fetchUser,
   PROFILE_REQUEST,
   RECIEVE_PROFILE_SUCCESS,
-  recieveProfileSuccess,
-  requestProfile,
 } from '../../../src/client/actions/profile';
 
 const mockStore = configureMockStore([thunkMiddleware]);
@@ -55,7 +53,15 @@ describe('fetch user sucess', () => {
   });
 
   test('normalization', async () => {
-    const action = recieveProfileSuccess(successResponse);
+    const userID = '1';
+    fetchMock.get(`/api/users/${userID}`, {
+      body: successResponse,
+    });
+
+    const store = mockStore();
+    await store.dispatch(fetchUser(userID));
+
+    const action = store.getActions()[1];
 
     expect(action.user.id).toBe('1');
     expect(action.user.tweets).toContain('1');
