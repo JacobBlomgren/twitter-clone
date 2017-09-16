@@ -23,7 +23,7 @@ test('like success', async () => {
   await store.dispatch(likeTweet(tweetID));
 
   expect(store.getActions()[0].type).toBe(LIKE_TWEET_REQUEST);
-  expect(store.getActions()[0].type).toBe(LIKE_TWEET_SUCCESS);
+  expect(store.getActions()[1].type).toBe(LIKE_TWEET_SUCCESS);
 });
 
 test('like failure', async () => {
@@ -33,5 +33,5 @@ test('like failure', async () => {
   await store.dispatch(likeTweet(tweetID));
 
   expect(store.getActions()[0].type).toBe(LIKE_TWEET_REQUEST);
-  expect(store.getActions()[0].type).toBe(LIKE_TWEET_FAILURE);
+  expect(store.getActions()[1].type).toBe(LIKE_TWEET_FAILURE);
 });

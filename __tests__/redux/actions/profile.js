@@ -11,26 +11,24 @@ import {
 
 const mockStore = configureMockStore([thunkMiddleware]);
 
-afterEach(() => {
-  fetchMock.restore();
-});
+const username = 'jacob';
 
 const successResponse = {
   id: '1',
   name: 'Jacob Blomgren',
-  username: 'jacob',
+  username,
   description: "I'm a programmer from Stockholm.",
   tweets: [
     {
       id: '1',
-      username: 'jacob',
+      username,
       name: 'Jacob Blomgren',
       user_id: '7',
       content: 'a tweet',
     },
     {
       id: '2',
-      username: 'jacob',
+      username,
       name: 'Jacob Blomgren',
       user_id: '7',
       content: 'A second tweet',
@@ -38,28 +36,28 @@ const successResponse = {
   ],
 };
 
+afterEach(() => {
+  fetchMock.restore();
+});
+
 describe('fetch user sucess', () => {
   test('action dispatch', async () => {
-    const userID = '1';
-    fetchMock.get(`/api/users/${userID}`, {
+    fetchMock.get(`/api/user?username=${username}`, {
       body: successResponse,
     });
-
     const store = mockStore();
-    await store.dispatch(fetchUser(userID));
+    await store.dispatch(fetchUser(username));
 
     expect(store.getActions()[0].type).toBe(PROFILE_REQUEST);
     expect(store.getActions()[1].type).toBe(RECIEVE_PROFILE_SUCCESS);
   });
 
   test('normalization', async () => {
-    const userID = '1';
-    fetchMock.get(`/api/users/${userID}`, {
+    fetchMock.get(`/api/user?username=${username}`, {
       body: successResponse,
     });
-
     const store = mockStore();
-    await store.dispatch(fetchUser(userID));
+    await store.dispatch(fetchUser(username));
 
     const action = store.getActions()[1];
 
