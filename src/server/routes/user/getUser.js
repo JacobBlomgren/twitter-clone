@@ -7,13 +7,13 @@ import id from '../middleware/validation/id';
 import username from '../middleware/validation/username';
 
 export async function getUser(req, res) {
-  if (!req.body.user_id && !req.body.username) return res.status(400).end();
+  if (!req.query.id && !req.query.username) return res.status(400).end();
   try {
     const [user, tweets] = await Promise.all([
-      getUserQuery(req.body.user_id, req.body.username, req.loggedInUserID),
+      getUserQuery(req.query.id, req.query.username, req.loggedInUserID),
       getTweetsFromUser(
-        req.body.user_id,
-        req.body.username,
+        req.query.id,
+        req.query.username,
         req.loggedInUserID,
       ),
     ]);
@@ -28,8 +28,8 @@ export async function getUser(req, res) {
 }
 
 export const validate = celebrate({
-  body: joi.object().keys({
-    user_id: id,
+  query: {
+    id,
     username,
-  }),
+  },
 });
