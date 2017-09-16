@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './reducers/';
-import state from './state';
 import { isProd } from '../shared/utils/isProd';
 
 /* eslint-disable no-underscore-dangle */
@@ -12,7 +11,7 @@ const composeEnhancers =
 
 const store = createStore(
   rootReducer,
-  state,
+  undefined,
   composeEnhancers(applyMiddleware(thunkMiddleware)),
 );
 
