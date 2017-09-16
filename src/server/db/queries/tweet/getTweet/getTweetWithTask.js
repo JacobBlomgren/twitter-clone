@@ -32,5 +32,7 @@ export default async function(task, tweetID, loggedInUserID) {
     replies: R.pluck('reply_tweet_id', replies),
     hashtags: R.pluck('hashtag', hashtags),
     mentions,
+    like_count: parseInt(tweet.like_count, 10),
+    retweet_count: parseInt(tweet.retweet_count, 10),
   };
 }

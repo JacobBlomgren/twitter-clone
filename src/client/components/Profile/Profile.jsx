@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProfileHeader from './ProfileHeader';
-import TweetList from '../components/TweetList';
+import TweetList from '../TweetList';
 
 export default function Profile({
   name,

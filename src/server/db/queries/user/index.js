@@ -4,8 +4,14 @@ import getQueryFile from '../../getQueryFile';
 
 const getUserQueryFile = getQueryFile('user/get_user');
 
-export function getUserByID(userID, loggedInUserID) {
-  return db.oneOrNone(getUserQueryFile, [userID, loggedInUserID]);
+export async function getUserByID(userID, loggedInUserID) {
+  const user = await db.oneOrNone(getUserQueryFile, [userID, loggedInUserID]);
+  if (!user) return null;
+  return {
+    ...user,
+    follower_count: parseInt(user.follower_count, 10),
+    following_count: parseInt(user.following_count, 10),
+  };
 }
 
 /**
