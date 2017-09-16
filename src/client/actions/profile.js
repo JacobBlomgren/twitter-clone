@@ -2,10 +2,10 @@ import R from 'ramda';
 import camelizeKeys from '../utils/camelizeKeys';
 
 export const PROFILE_REQUEST = 'PROFILE_REQUEST';
-function requestProfile(userID) {
+function requestProfile(username) {
   return {
     type: PROFILE_REQUEST,
-    userID,
+    username,
   };
 }
 
@@ -30,10 +30,10 @@ function recieveProfileSuccess(user) {
   };
 }
 
-export function fetchUser(userID) {
+export function fetchUser(username) {
   return dispatch => {
-    dispatch(requestProfile(userID));
-    return fetch(`/api/users/${userID}`, {
+    dispatch(requestProfile(username));
+    return fetch(`/api/user?username=${username}`, {
       method: 'GET',
       credentials: 'include',
     })

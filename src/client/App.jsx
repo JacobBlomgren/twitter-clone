@@ -5,7 +5,7 @@ import '../../public/styles/main.scss';
 import ProfileContainer from './containers/ProfileContainer';
 
 function App() {
-  return <ProfileContainer userID={'1'} />;
+  return <ProfileContainer username={'jacob'} />;
 }
 
 export default App;

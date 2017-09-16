@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import R from 'ramda';
 
 import Profile from '../components/Profile/Profile';
 import { fetchUser } from '../actions/profile';
@@ -13,20 +14,23 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    if (this.props.isFetching || !this.props.id) return <div>loading...</div>;
+    if (!this.props.id) return <div>loading...</div>;
     return <Profile {...this.props} />;
   }
 }
 /* eslint-enable react/prop-types */
 
-function mapStateToProps(state, { userID }) {
-  const user = state.entities.users.byID[userID];
-  return { ...user };
+const findUser = (users, username) =>
+  R.find(R.propEq('username', username), users);
+
+function mapStateToProps(state, { username }) {
+  const user = findUser(R.values(state.entities.users.byID), username);
+  return user || {};
 }
 
-function mapDispatchToProps(dispatch, { userID }) {
+function mapDispatchToProps(dispatch, { username }) {
   return {
-    fetchUser: () => dispatch(fetchUser(userID)),
+    fetchUser: () => dispatch(fetchUser(username)),
   };
 }
 
