@@ -11,11 +11,14 @@ const getTweetIDS = getQueryFile('tweet/getTweet/get_tweet_ids_from_user');
  * @returns {Promise<array>} tweets - an array of all tweets.
  * @see {@link getTweet}
  */
-export default async function(userID, loggedInUserID) {
+export default async function(userID, username, loggedInUserID) {
   return db.task('get tweets from user', async task => {
     const [response, user] = await Promise.all([
-      task.any(getTweetIDS, userID),
-      task.one('SELECT name, username FROM account WHERE user_id = $1', userID),
+      task.any(getTweetIDS, [userID, username]),
+      task.one(
+        'SELECT name, username FROM account WHERE user_id = $1 OR username = $2',
+        [userID, username],
+      ),
     ]);
     /* The response is of the format [{tweet_id:1}, {tweet_id:2}]
     so we get the tweet_id property of every object. */

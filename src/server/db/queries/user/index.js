@@ -4,8 +4,12 @@ import getQueryFile from '../../getQueryFile';
 
 const getUserQueryFile = getQueryFile('user/get_user');
 
-export async function getUserByID(userID, loggedInUserID) {
-  const user = await db.oneOrNone(getUserQueryFile, [userID, loggedInUserID]);
+export async function getUser(userID, username, loggedInUserID) {
+  const user = await db.oneOrNone(getUserQueryFile, [
+    userID,
+    username,
+    loggedInUserID,
+  ]);
   if (!user) return null;
   return {
     ...user,

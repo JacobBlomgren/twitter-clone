@@ -1,6 +1,6 @@
 SELECT account.user_id AS id, account.name, account.username, account.description, account.created_at,
   followers.follower_count, following.following_count,
-  EXISTS(SELECT * FROM follows WHERE followee = $1 AND follower = $2) AS follows
+  EXISTS(SELECT * FROM follows WHERE followee = $1 AND follower = $3) AS follows
 FROM account,
   (SELECT COUNT(follower) AS follower_count
    FROM follows
@@ -8,4 +8,4 @@ FROM account,
   (SELECT COUNT(followee) AS following_count
    FROM follows
    WHERE follower = $1) AS following
-WHERE account.user_id = $1;
+WHERE account.user_id = $1 OR account.username = $2;

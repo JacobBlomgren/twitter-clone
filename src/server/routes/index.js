@@ -6,7 +6,7 @@ import like from './likes';
 import retweets from './retweets';
 import settings from './settings';
 import tweets from './tweets';
-import users from './users';
+import user from './user';
 import joiError from './middleware/joiError';
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.use('/likes', like);
 router.use('/retweets', retweets);
 router.use('/settings', settings);
 router.use('/tweets', tweets);
-router.use('/users', users);
+router.use('/user', user);
 
 router.use(joiError);
 
