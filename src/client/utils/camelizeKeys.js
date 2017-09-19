@@ -1,17 +1,20 @@
 import { camelizeKeys } from 'humps';
 
-function transformID(key) {
-  return /^id$/i.test(key) ? key : key.replace(/id/i, 'ID');
+function transform(key) {
+  return /^(id|url)$/i.test(key)
+    ? key
+    : key.replace(/id/i, 'ID').replace(/url/i, 'URL');
 }
 
 /**
- * Converts the keys of obj to camel case, except for the abbreviation id,
- * which is transformed to uppercase, if the key is not only id.
+ * Converts the keys of obj to camel case, except for the abbreviations id and url,
+ * which are transformed to uppercase, if the key is not only the abbrevation.
  *
  * @example
  * camelizeKeys({ user_id: '1'}); // => { userID: '1' }
+ * camelizeKeys({ profile_picture_url: 'me.png'}); // => { profilePictureURL: 'me.png' }
  * camelizeKeys({ id: '1'}); // => { id: '1' }
  */
 export default function(obj) {
-  return camelizeKeys(obj, (key, convert) => convert(transformID(key)));
+  return camelizeKeys(obj, (key, convert) => convert(transform(key)));
 }
