@@ -8,7 +8,7 @@ import retweet from '../../../../public/icons/retweet.png';
 import like from '../../../../public/icons/like.png';
 import likeActive from '../../../../public/icons/like-active.png';
 
-function Like({ likeCount, liked, onLike }) {
+function Like({ likeCount, liked, onLike, onUnlike }) {
   if (liked) {
     return (
       <TweetAction
@@ -16,7 +16,7 @@ function Like({ likeCount, liked, onLike }) {
         active
         icon={likeActive}
         count={likeCount}
-        onClick={null}
+        onClick={onUnlike}
       />
     );
   }
@@ -35,6 +35,7 @@ Like.propTypes = {
   likeCount: PropTypes.number.isRequired,
   liked: PropTypes.bool.isRequired,
   onLike: PropTypes.func.isRequired,
+  onUnlike: PropTypes.func.isRequired,
 };
 
 export default function TweetActions({
@@ -43,6 +44,7 @@ export default function TweetActions({
   likeCount,
   liked,
   onLike,
+  onUnlike,
 }) {
   return (
     <div>
@@ -51,16 +53,21 @@ export default function TweetActions({
         active={false}
         icon={reply}
         count={replyCount}
-        onClick={null}
+        onClick={() => null}
       />
       <TweetAction
         label="Retweet"
         active={false}
         icon={retweet}
         count={retweetCount}
-        onClick={null}
+        onClick={() => null}
       />
-      <Like likeCount={likeCount} liked={liked} onLike={onLike} />
+      <Like
+        likeCount={likeCount}
+        liked={liked}
+        onLike={onLike}
+        onUnlike={onUnlike}
+      />
     </div>
   );
 }
@@ -71,4 +78,5 @@ TweetActions.propTypes = {
   likeCount: PropTypes.number.isRequired,
   liked: PropTypes.bool.isRequired,
   onLike: PropTypes.func.isRequired,
+  onUnlike: PropTypes.func.isRequired,
 };

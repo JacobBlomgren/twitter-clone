@@ -15,6 +15,7 @@ export default function Tweet({
   likeCount,
   liked,
   onLike,
+  onUnlike,
 }) {
   return (
     <div className="Tweet SmallPadding">
@@ -26,6 +27,7 @@ export default function Tweet({
         likeCount={likeCount}
         liked={liked}
         onLike={onLike}
+        onUnlike={onUnlike}
       />
     </div>
   );
@@ -41,4 +43,5 @@ Tweet.propTypes = {
   likeCount: PropTypes.number.isRequired,
   liked: PropTypes.bool.isRequired,
   onLike: PropTypes.func.isRequired,
+  onUnlike: PropTypes.func.isRequired,
 };

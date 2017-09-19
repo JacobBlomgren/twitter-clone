@@ -38,6 +38,10 @@
   @include button-no-style;
 }
 
+.Tweet__Action__Button:focus {
+  outline: none;
+}
+
 @include media-breakpoint-down(md) {
   // Increase the hit box of the button that might appear small on mobile
   .Tweet__Action__Button {

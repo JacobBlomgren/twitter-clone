@@ -4,6 +4,9 @@ import {
   LIKE_TWEET_REQUEST,
   LIKE_TWEET_SUCCESS,
   LIKE_TWEET_FAILURE,
+  UNLIKE_TWEET_REQUEST,
+  UNLIKE_TWEET_SUCCESS,
+  UNLIKE_TWEET_FAILURE,
 } from '../../actions/like';
 import { RECIEVE_PROFILE_SUCCESS } from '../../actions/profile';
 
@@ -20,9 +23,9 @@ function replaceTweet(state, tweet) {
   };
 }
 
-function likeTweetRequest(state, action) {
-  const tweet = state.byID[action.tweetID];
-  if (!tweet) return state;
+function addLike(state, tweetID) {
+  const tweet = state.byID[tweetID];
+  if (!tweet || tweet.liked) return state;
   const newTweet = {
     ...tweet,
     likeCount: tweet.likeCount + 1,
@@ -31,9 +34,9 @@ function likeTweetRequest(state, action) {
   return replaceTweet(state, newTweet);
 }
 
-function likeTweetFailure(state, action) {
-  const tweet = state.byID[action.tweetID];
-  if (!tweet) return state;
+function removeLike(state, tweetID) {
+  const tweet = state.byID[tweetID];
+  if (!tweet || !tweet.liked) return state;
   const newTweet = {
     ...tweet,
     likeCount: tweet.likeCount - 1,
@@ -54,12 +57,16 @@ function recieveProfile(state, action) {
   };
 }
 
-export default function(state = { byID: {}, allIDs: {} }, action) {
+export default function(state = { byID: {}, allIDs: [] }, action) {
   switch (action.type) {
     case LIKE_TWEET_REQUEST:
-      return likeTweetRequest(state, action);
+      return addLike(state, action.tweetID);
     case LIKE_TWEET_FAILURE:
-      return likeTweetFailure(state, action);
+      return removeLike(state, action.tweetID);
+    case UNLIKE_TWEET_REQUEST:
+      return removeLike(state, action.tweetID);
+    case UNLIKE_TWEET_FAILURE:
+      return addLike(state, action.tweetID);
     case RECIEVE_PROFILE_SUCCESS:
       return recieveProfile(state, action);
     case LIKE_TWEET_SUCCESS:

@@ -2,26 +2,22 @@ import 'isomorphic-fetch';
 
 import tweets from '../../../src/client/reducers/entities/tweets';
 import {
-  likeTweetRequest,
-  likeTweetSucess,
-  likeTweetFailure,
+  LIKE_TWEET_FAILURE,
+  LIKE_TWEET_REQUEST,
+  UNLIKE_TWEET_FAILURE,
+  UNLIKE_TWEET_REQUEST,
 } from '../../../src/client/actions/like';
 import { RECIEVE_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
 
-let state;
-
-beforeEach(() => {
-  state = tweets(undefined, {});
-});
-
 test('default', () => {
-  expect(state).toHaveProperty('byID');
-  expect(state).toHaveProperty('allIDs');
+  const state = tweets(undefined, {});
+  expect(state.byID).toEqual({});
+  expect(state.allIDs).toEqual([]);
 });
 
 describe('like tweet', () => {
   test('LIKE_TWEET_REQUEST', () => {
-    state = tweets(
+    const initialState = tweets(
       {
         byID: {
           '1': {
@@ -34,13 +30,16 @@ describe('like tweet', () => {
       },
       {},
     );
-    state = tweets(state, likeTweetRequest('1'));
+    const state = tweets(initialState, {
+      type: LIKE_TWEET_REQUEST,
+      tweetID: '1',
+    });
     expect(state.byID['1'].likeCount).toBe(1);
     expect(state.byID['1'].liked).toBe(true);
   });
 
   test('LIKE_TWEET_FAILURE', () => {
-    state = tweets(
+    const initialState = tweets(
       {
         byID: {
           '1': {
@@ -53,15 +52,64 @@ describe('like tweet', () => {
       },
       {},
     );
-    state = tweets(state, likeTweetFailure('1'));
+    const state = tweets(initialState, {
+      type: LIKE_TWEET_FAILURE,
+      tweetID: '1',
+    });
     expect(state.byID['1'].likeCount).toBe(0);
     expect(state.byID['1'].liked).toBe(false);
   });
 });
 
+describe('unlike tweet', () => {
+  test('UNLIKE_TWEET_REQUEST', () => {
+    const initialState = tweets(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            likeCount: 1,
+            liked: true,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = tweets(initialState, {
+      type: UNLIKE_TWEET_REQUEST,
+      tweetID: '1',
+    });
+    expect(state.byID['1'].likeCount).toBe(0);
+    expect(state.byID['1'].liked).toBe(false);
+  });
+
+  test('UNLIKE_TWEET_FAILURE', () => {
+    const initialState = tweets(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            likeCount: 0,
+            liked: false,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = tweets(initialState, {
+      type: UNLIKE_TWEET_FAILURE,
+      tweetID: '1',
+    });
+    expect(state.byID['1'].likeCount).toBe(1);
+    expect(state.byID['1'].liked).toBe(true);
+  });
+});
+
 describe('recieve profile', () => {
   test('RECIEVE_PROFILE_SUCCESS', () => {
-    state = tweets(
+    const initialState = tweets(
       {
         byID: {
           '1': {
@@ -77,7 +125,7 @@ describe('recieve profile', () => {
       {},
     );
 
-    state = tweets(state, {
+    const state = tweets(initialState, {
       type: RECIEVE_PROFILE_SUCCESS,
       tweets: [
         {
@@ -90,13 +138,15 @@ describe('recieve profile', () => {
       ],
     });
 
-    expect(state.allIDs).toContain('1');
-    expect(state.allIDs).toContain('2');
-    expect(state.allIDs).toContain('3');
+    expect(state.allIDs).toEqual(expect.arrayContaining(['1', '2', '3']));
 
-    expect(state.byID).toHaveProperty('1');
-    expect(state.byID).toHaveProperty('2');
-    expect(state.byID).toHaveProperty('3');
+    expect(state.byID).toEqual(
+      expect.objectContaining({
+        '1': expect.any(Object),
+        '2': expect.any(Object),
+        '3': expect.any(Object),
+      }),
+    );
 
     expect(state.byID['1'].likeCount).toBe(3);
   });
