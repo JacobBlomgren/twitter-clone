@@ -17,12 +17,14 @@
 .ProfilePicture {
   background-color: #fff;
   border: 1px solid #ddd;
+  height: 7rem;
   padding: 0.2rem;
   width: 7rem;
 }
 
 @include media-breakpoint-up(lg) {
   .ProfilePicture {
+    height: 9rem;
     width: 9rem;
   }
 }
