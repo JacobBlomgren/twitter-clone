@@ -1,4 +1,5 @@
 import headers from '../fetch/jsonHeaders';
+import { showError } from './error';
 
 export const LIKE_TWEET_REQUEST = 'LIKE_TWEET_REQUEST';
 function likeTweetRequest(tweetID) {
@@ -19,6 +20,7 @@ function likeTweetFailure(tweetID) {
   return {
     type: LIKE_TWEET_FAILURE,
     tweetID,
+    error: 'Like failed',
   };
 }
 
@@ -32,7 +34,9 @@ export function likeTweet(tweetID) {
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(likeTweetSucess(tweetID));
+      dispatch(showError('Like failed'));
       return dispatch(likeTweetFailure(tweetID));
     });
   };
 }
+

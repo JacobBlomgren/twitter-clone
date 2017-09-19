@@ -1,0 +1,29 @@
+@import 'no-style';
+
+.Errors {
+  bottom: 40px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  width: 250px;
+  z-index: 10;
+  @include ol-no-style;
+}
+
+.Errors__Error {
+  background-color: rgba(25, 25, 25, 0.9);
+  border-radius: 0.5rem;
+  border-style: none;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.Errors__Error__Icon {
+  height: 0.8rem;
+  margin-right: 0.3rem;
+  vertical-align: middle;
+}

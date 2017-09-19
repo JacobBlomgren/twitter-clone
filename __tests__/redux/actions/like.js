@@ -9,6 +9,7 @@ import {
   LIKE_TWEET_SUCCESS,
   likeTweet,
 } from '../../../src/client/actions/like';
+import { ADD_ERROR } from '../../../src/client/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 
@@ -33,5 +34,6 @@ test('like failure', async () => {
   await store.dispatch(likeTweet(tweetID));
 
   expect(store.getActions()[0].type).toBe(LIKE_TWEET_REQUEST);
-  expect(store.getActions()[1].type).toBe(LIKE_TWEET_FAILURE);
+  expect(store.getActions()[1].type).toBe(ADD_ERROR);
+  expect(store.getActions()[2].type).toBe(LIKE_TWEET_FAILURE);
 });
