@@ -1,4 +1,4 @@
-import headers from '../fetch/jsonHeaders';
+import headers from '../utils/fetch/jsonHeaders';
 import { showError } from './error';
 
 export const LIKE_TWEET_REQUEST = 'LIKE_TWEET_REQUEST';
@@ -40,3 +40,41 @@ export function likeTweet(tweetID) {
   };
 }
 
+export const UNLIKE_TWEET_REQUEST = 'UNLIKE_TWEET_REQUEST';
+function unlikeTweetRequest(tweetID) {
+  return {
+    type: UNLIKE_TWEET_REQUEST,
+    tweetID,
+  };
+}
+export const UNLIKE_TWEET_SUCCESS = 'UNLIKE_TWEET_SUCCESS';
+function unlikeTweetSucess(tweetID) {
+  return {
+    type: UNLIKE_TWEET_SUCCESS,
+    tweetID,
+  };
+}
+export const UNLIKE_TWEET_FAILURE = 'UNLIKE_TWEET_FAILURE';
+function unlikeTweetFailure(tweetID) {
+  return {
+    type: UNLIKE_TWEET_FAILURE,
+    tweetID,
+    error: 'Unlike failed',
+  };
+}
+
+export function unlikeTweet(tweetID) {
+  return dispatch => {
+    dispatch(unlikeTweetRequest(tweetID));
+    return fetch('/api/likes/', {
+      method: 'DELETE',
+      headers,
+      body: JSON.stringify({ tweet_id: tweetID }),
+      credentials: 'include',
+    }).then(response => {
+      if (response.ok) return dispatch(unlikeTweetSucess(tweetID));
+      dispatch(showError('Unlike failed'));
+      return dispatch(unlikeTweetFailure(tweetID));
+    });
+  };
+}
