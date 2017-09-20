@@ -38,6 +38,57 @@ describe('like tweet', () => {
     expect(state.byID['1'].liked).toBe(true);
   });
 
+  test('LIKE_TWEET_REQUEST multiple times', () => {
+    // Should only add one like
+
+    const initialState = tweets(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            likeCount: 0,
+            liked: false,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state1 = tweets(initialState, {
+      type: LIKE_TWEET_REQUEST,
+      tweetID: '1',
+    });
+    const state2 = tweets(state1, {
+      type: LIKE_TWEET_REQUEST,
+      tweetID: '1',
+    });
+    expect(state2.byID['1'].likeCount).toBe(1);
+    expect(state2.byID['1'].liked).toBe(true);
+  });
+
+  test('LIKE_TWEET_REQUEST non-existent tweet', () => {
+    // Should only add one like
+
+    const initialState = tweets(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            likeCount: 0,
+            liked: false,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = tweets(initialState, {
+      type: LIKE_TWEET_REQUEST,
+      tweetID: '5',
+    });
+    expect(state).toEqual(initialState);
+  });
+
   test('LIKE_TWEET_FAILURE', () => {
     const initialState = tweets(
       {
