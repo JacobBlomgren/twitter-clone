@@ -14,13 +14,12 @@ function replaceUser(state, user) {
 }
 
 function recieveProfile(state, action) {
-  const user = {
-    ...action.user,
-    isFetching: false,
-  };
   return {
-    allIDs: R.union(state.allIDs, [user.id]),
-    byID: R.mergeDeepRight(state.byID, { [user.id]: user }),
+    allIDs: R.union(state.allIDs, [action.user.id]),
+    byID: {
+      ...state.byID,
+      [action.user.id]: action.user,
+    },
   };
 }
 

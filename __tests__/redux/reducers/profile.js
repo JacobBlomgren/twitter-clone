@@ -12,6 +12,65 @@ test('default', () => {
   expect(state.byID).toEqual({});
   expect(state.allIDs).toEqual([]);
 });
+
+test('RECIEVE_PROFILE', () => {
+  const initialState = users(
+    {
+      byID: {
+        '1': {
+          id: '1',
+          name: 'Jacob',
+        },
+      },
+      allIDs: ['1'],
+    },
+    {},
+  );
+  const state = users(initialState, {
+    type: RECIEVE_PROFILE_SUCCESS,
+    user: {
+      id: '2',
+      name: 'Sara',
+    },
+  });
+  expect(state.allIDs).toContain('1');
+  expect(state.allIDs).toContain('2');
+  expect(state.byID['2']).toEqual({
+    id: '2',
+    name: 'Sara',
+  });
+});
+
+test('RECIEVE_PROFILE merging', () => {
+  const initialState = users(
+    {
+      byID: {
+        '1': {
+          id: '1',
+          name: 'Jacob',
+          tweets: ['1', '2'],
+        },
+      },
+      allIDs: ['1'],
+    },
+    {},
+  );
+  const state = users(initialState, {
+    type: RECIEVE_PROFILE_SUCCESS,
+    user: {
+      id: '1',
+      name: 'Jacob Blomgren',
+      tweets: ['2', '3', '4'],
+    },
+  });
+  expect(state.allIDs).toEqual(['1']);
+  expect(state.byID['1']).toEqual({
+    id: '1',
+    name: 'Jacob Blomgren',
+    tweets: ['2', '3', '4'],
+  });
+});
+
 describe('follow user', () => {
   test('FOLLOW_REQUEST', () => {
     const initialState = users(
