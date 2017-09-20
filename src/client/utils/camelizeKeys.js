@@ -1,9 +1,9 @@
+import R from 'ramda';
+
 import { camelizeKeys } from 'humps';
 
 function transform(key) {
-  return /^(id|url)$/i.test(key)
-    ? key
-    : key.replace(/id/i, 'ID').replace(/url/i, 'URL');
+  return /^(id|url)$/i.test(key) ? key : key.replace(/(id|url)/i, R.toUpper);
 }
 
 /**

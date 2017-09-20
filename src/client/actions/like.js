@@ -1,5 +1,6 @@
 import headers from '../utils/fetch/jsonHeaders';
 import { showError } from './error';
+import decamelizeKeys from '../utils/decamelizeKeys';
 
 export const LIKE_TWEET_REQUEST = 'LIKE_TWEET_REQUEST';
 function likeTweetRequest(tweetID) {
@@ -30,7 +31,7 @@ export function likeTweet(tweetID) {
     return fetch('/api/likes/', {
       method: 'POST',
       headers,
-      body: JSON.stringify({ tweet_id: tweetID }),
+      body: JSON.stringify(decamelizeKeys({ tweetID })),
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(likeTweetSucess(tweetID));
@@ -69,7 +70,7 @@ export function unlikeTweet(tweetID) {
     return fetch('/api/likes/', {
       method: 'DELETE',
       headers,
-      body: JSON.stringify({ tweet_id: tweetID }),
+      body: JSON.stringify(decamelizeKeys({ tweetID })),
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(unlikeTweetSucess(tweetID));
