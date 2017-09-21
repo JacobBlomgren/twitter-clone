@@ -5,7 +5,7 @@ export default function FollowButton({ id, followUser, follows }) {
   return (
     <button
       type="button"
-      className="btn btn-primary"
+      className="btn btn-primary ProfilePage__Header__Button"
       onClick={() => followUser(id)}
     >
       Follow

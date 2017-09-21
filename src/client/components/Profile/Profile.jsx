@@ -6,6 +6,7 @@ import TweetList from '../TweetList';
 
 export default function Profile({
   id,
+  loggedInUserID,
   name,
   username,
   profilePictureURL,
@@ -20,6 +21,7 @@ export default function Profile({
     <div className="MainColumn">
       <ProfileHeader
         id={id}
+        loggedInUserID={loggedInUserID}
         name={name}
         username={username}
         profilePictureURL={profilePictureURL}
@@ -38,6 +40,7 @@ export default function Profile({
 
 Profile.propTypes = {
   id: PropTypes.string.isRequired,
+  loggedInUserID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   profilePictureURL: PropTypes.string.isRequired,

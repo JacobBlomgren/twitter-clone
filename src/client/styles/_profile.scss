@@ -33,6 +33,21 @@
   margin-bottom: 0.6rem;
 }
 
+@include media-breakpoint-up(lg) {
+  .ProfilePage__Header__Text {
+    padding-left: 2rem;
+    padding-top: 1rem;
+  }
+}
+
+.ProfilePage__Header__Heading {
+  display: inline-block;
+}
+
+.ProfilePage__Header__Button {
+  float: right;
+}
+
 .ProfilePage__Header__Name {
   font-size: 1.2rem;
   font-weight: bold;
@@ -40,7 +55,9 @@
 }
 
 .ProfilePage__Header__Names {
+  float: left;
   margin-bottom: 0.2rem;
+  padding-right: 1rem;
 }
 
 .ProfilePage__Header__Description {

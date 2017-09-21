@@ -26,7 +26,7 @@ const findUser = (users, username) =>
 
 function mapStateToProps(state, { username }) {
   const user = findUser(R.values(state.entities.users.byID), username);
-  return user || {};
+  return { ...user, loggedInUserID: state.entities.loggedInUserID } || {};
 }
 
 function mapDispatchToProps(dispatch, { username }) {

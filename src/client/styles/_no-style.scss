@@ -1,5 +1,10 @@
 // Mixins to remove default styling of buttons, lists, etc.
 
+.container-fluid--no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 @mixin ol-no-style {
   list-style-type: none;
   padding-left: 0;
