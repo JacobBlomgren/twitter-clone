@@ -3,19 +3,26 @@ import thunkMiddleware from 'redux-thunk';
 import {
   ADD_ERROR,
   REMOVE_ERROR,
-  showError,
+  addError,
+  removeError,
 } from '../../../src/client/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
-jest.useFakeTimers();
 
-test('showError', async () => {
+test('addError', async () => {
   const store = mockStore();
   const msg = 'Something went wrong';
-  await store.dispatch(showError(msg));
+  await store.dispatch(addError(msg));
 
   expect(store.getActions()[0].type).toBe(ADD_ERROR);
 
-  jest.runAllTimers();
-  expect(store.getActions()[1].type).toBe(REMOVE_ERROR);
+  await store.dispatch(addError(msg));
+  expect(store.getActions()[0].id).not.toBe(store.getActions()[1].id);
+});
+
+test('removeError', async () => {
+  const store = mockStore();
+  await store.dispatch(removeError(1));
+
+  expect(store.getActions()[0].type).toBe(REMOVE_ERROR);
 });

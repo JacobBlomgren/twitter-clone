@@ -1,5 +1,5 @@
 import headers from '../utils/fetch/jsonHeaders';
-import { showError } from './error';
+import { addError } from './error';
 import decamelizeKeys from '../utils/decamelizeKeys';
 
 export const LIKE_TWEET_REQUEST = 'LIKE_TWEET_REQUEST';
@@ -35,7 +35,7 @@ export function likeTweet(tweetID) {
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(likeTweetSucess(tweetID));
-      dispatch(showError('Like failed'));
+      dispatch(addError('Like failed'));
       return dispatch(likeTweetFailure(tweetID));
     });
   };
@@ -74,7 +74,7 @@ export function unlikeTweet(tweetID) {
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(unlikeTweetSucess(tweetID));
-      dispatch(showError('Unlike failed'));
+      dispatch(addError('Unlike failed'));
       return dispatch(unlikeTweetFailure(tweetID));
     });
   };

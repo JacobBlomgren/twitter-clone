@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import Error from './Error';
 
-export default function Errors({ errors }) {
-  console.log(errors);
+export default function Errors({ errors, removeError }) {
   return (
     <ol className="Errors" role="alert">
       {errors.map(e => (
         <li key={e.id}>
-          <Error message={e.message} />
+          <Error {...e} removeError={removeError} />
         </li>
       ))}
     </ol>
@@ -23,4 +22,5 @@ Errors.propTypes = {
       id: PropTypes.number.isRequired,
     }).isRequired,
   ).isRequired,
+  removeError: PropTypes.func.isRequired,
 };

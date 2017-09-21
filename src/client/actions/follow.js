@@ -1,5 +1,5 @@
 import headers from '../utils/fetch/jsonHeaders';
-import { showError } from './error';
+import { addError } from './error';
 import decamelizeKeys from '../utils/decamelizeKeys';
 
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
@@ -36,7 +36,7 @@ export function follow(userID) {
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(followSuccess(userID));
-      dispatch(showError('Follow failed'));
+      dispatch(addError('Follow failed'));
       return dispatch(followFailure(userID));
     });
   };

@@ -1,5 +1,5 @@
 import camelizeKeys from '../utils/camelizeKeys';
-import { showError } from './error';
+import { addError } from './error';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 function loginSuccess(json) {
@@ -23,7 +23,7 @@ export function login(username, password) {
       credentials: 'include',
     })
       .then(response => {
-        if (!response.ok) return dispatch(showError('Login failed'));
+        if (!response.ok) return dispatch(addError('Login failed'));
         return response.json();
       })
       .then(json => dispatch(loginSuccess(json)));
