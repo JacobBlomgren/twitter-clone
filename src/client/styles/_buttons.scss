@@ -1,19 +1,4 @@
-@import 'variables';
-
-.btn-primary,
-.btn-primary:hover {
-  border: 1px solid $main-color;
-  border-radius: 0.5rem;
-}
-
-.btn-primary {
-  background-color: transparent;
-  color: inherit;
-  // TODO
-  float: right;
-}
-
-.btn-primary:hover {
-  background-color: $main-color;
-  color: #fff;
+.btn-primary:focus,
+.btn-outline-primary:focus {
+  box-shadow: none;
 }

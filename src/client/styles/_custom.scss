@@ -1,5 +1,13 @@
+@import 'variables';
+
 // Override built-in Bootstrap variables
 
-$btn-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out,
-box-shadow 0.15s ease-in-out !default;
+$btn-transition: background-color 0.08s linear, border-color 0.08s linear, color 0.08s linear,
+  box-shadow 0.08s linear !default;
 
+$btn-border-radius: 0.5rem;
+
+// This is crazy, but this is the only way I found to override the primary color in bootstrap,
+// since theme-colors are defined as a map and there's no way to change just the primary color on its own
+// except to redefine blue, which the primary color in turn points to.
+$blue: $main-color;

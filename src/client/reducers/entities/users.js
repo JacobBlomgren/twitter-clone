@@ -1,7 +1,12 @@
 import R from 'ramda';
 
 import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
-import { FOLLOW_FAILURE, FOLLOW_REQUEST } from '../../actions/follow';
+import {
+  FOLLOW_FAILURE,
+  FOLLOW_REQUEST,
+  UNFOLLOW_FAILURE,
+  UNFOLLOW_REQUEST,
+} from '../../actions/follow';
 
 function replaceUser(state, user) {
   return {
@@ -23,7 +28,7 @@ function recieveProfile(state, action) {
   };
 }
 
-function followUser(state, action) {
+function addFollow(state, action) {
   const user = state.byID[action.userID];
   if (!user || user.follows) return state;
   const newUser = {
@@ -34,8 +39,9 @@ function followUser(state, action) {
   return replaceUser(state, newUser);
 }
 
-function unfollowUser(state, action) {
+function removeFollow(state, action) {
   const user = state.byID[action.userID];
+  console.log(user.follows);
   if (!user || !user.follows) return state;
   const newUser = {
     ...user,
@@ -49,10 +55,13 @@ export default function(state = { byID: {}, allIDs: [] }, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
       return recieveProfile(state, action);
+    // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:
-      return followUser(state, action);
+    case UNFOLLOW_FAILURE:
+      return addFollow(state, action);
+    case UNFOLLOW_REQUEST:
     case FOLLOW_FAILURE:
-      return unfollowUser(state, action);
+      return removeFollow(state, action);
     default:
       return state;
   }

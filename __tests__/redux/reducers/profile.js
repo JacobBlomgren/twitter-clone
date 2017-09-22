@@ -4,6 +4,8 @@ import users from '../../../src/client/reducers/entities/users';
 import {
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
+  UNFOLLOW_FAILURE,
+  UNFOLLOW_REQUEST,
 } from '../../../src/client/actions/follow';
 import { FETCH_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
 
@@ -147,8 +149,8 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: false,
-            followerCount: 0,
+            follows: true,
+            followerCount: 1,
           },
         },
         allIDs: ['1'],
@@ -161,5 +163,49 @@ describe('follow user', () => {
     });
     expect(state.byID['1'].followerCount).toBe(0);
     expect(state.byID['1'].follows).toBe(false);
+  });
+
+  test('UNFOLLOW_REQUEST', () => {
+    const initialState = users(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            follows: true,
+            followerCount: 5,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = users(initialState, {
+      type: UNFOLLOW_REQUEST,
+      userID: '1',
+    });
+    expect(state.byID['1'].followerCount).toBe(4);
+    expect(state.byID['1'].follows).toBe(false);
+  });
+
+  test('UNFOLLOW_FAILURE', () => {
+    const initialState = users(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            follows: false,
+            followerCount: 0,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = users(initialState, {
+      type: UNFOLLOW_FAILURE,
+      userID: '1',
+    });
+    expect(state.byID['1'].followerCount).toBe(1);
+    expect(state.byID['1'].follows).toBe(true);
   });
 });

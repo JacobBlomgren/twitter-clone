@@ -4,7 +4,7 @@ import R from 'ramda';
 
 import Profile from '../components/Profile/Profile';
 import { fetchUser } from '../actions/profile';
-import { follow } from '../actions/follow';
+import { follow, unfollow } from '../actions/follow';
 
 /* eslint-disable react/prop-types */
 class ProfileContainer extends Component {
@@ -33,6 +33,7 @@ function mapDispatchToProps(dispatch, { username }) {
   return {
     fetchUser: () => dispatch(fetchUser(username)),
     followUser: id => dispatch(follow(id)),
+    unfollowUser: id => dispatch(unfollow(id)),
   };
 }
 

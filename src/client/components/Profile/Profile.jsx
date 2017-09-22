@@ -12,6 +12,7 @@ export default function Profile({
   profilePictureURL,
   description,
   followUser,
+  unfollowUser,
   follows,
   followingCount,
   followerCount,
@@ -27,6 +28,7 @@ export default function Profile({
         profilePictureURL={profilePictureURL}
         description={description}
         followUser={followUser}
+        unfollowUser={unfollowUser}
         follows={follows}
         followingCount={followingCount}
         followerCount={followerCount}
@@ -47,6 +49,7 @@ Profile.propTypes = {
   description: PropTypes.string.isRequired,
   follows: PropTypes.bool.isRequired,
   followUser: PropTypes.func.isRequired,
+  unfollowUser: PropTypes.func.isRequired,
   followingCount: PropTypes.number.isRequired,
   followerCount: PropTypes.number.isRequired,
   tweets: PropTypes.arrayOf(PropTypes.string).isRequired,

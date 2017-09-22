@@ -5,9 +5,13 @@ import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 import {
   follow,
+  unfollow,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   FOLLOW_SUCCESS,
+  UNFOLLOW_FAILURE,
+  UNFOLLOW_REQUEST,
+  UNFOLLOW_SUCCESS,
 } from '../../../src/client/actions/follow';
 import { ADD_ERROR } from '../../../src/client/actions/error';
 
@@ -36,4 +40,25 @@ test('follow failure', async () => {
   expect(store.getActions()[0].type).toBe(FOLLOW_REQUEST);
   expect(store.getActions()[1].type).toBe(ADD_ERROR);
   expect(store.getActions()[2].type).toBe(FOLLOW_FAILURE);
+});
+
+test('unfollow success', async () => {
+  fetchMock.delete('/api/following/', 200);
+
+  const store = mockStore();
+  await store.dispatch(unfollow('1'));
+
+  expect(store.getActions()[0].type).toBe(UNFOLLOW_REQUEST);
+  expect(store.getActions()[1].type).toBe(UNFOLLOW_SUCCESS);
+});
+
+test('unfollow failure', async () => {
+  fetchMock.delete('/api/following/', 500);
+
+  const store = mockStore();
+  await store.dispatch(unfollow('1'));
+
+  expect(store.getActions()[0].type).toBe(UNFOLLOW_REQUEST);
+  expect(store.getActions()[1].type).toBe(ADD_ERROR);
+  expect(store.getActions()[2].type).toBe(UNFOLLOW_FAILURE);
 });

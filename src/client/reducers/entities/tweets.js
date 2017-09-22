@@ -2,10 +2,8 @@ import R from 'ramda';
 
 import {
   LIKE_TWEET_REQUEST,
-  LIKE_TWEET_SUCCESS,
   LIKE_TWEET_FAILURE,
   UNLIKE_TWEET_REQUEST,
-  UNLIKE_TWEET_SUCCESS,
   UNLIKE_TWEET_FAILURE,
 } from '../../actions/like';
 import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
@@ -59,17 +57,15 @@ function recieveProfile(state, action) {
 
 export default function(state = { byID: {}, allIDs: [] }, action) {
   switch (action.type) {
+    // We add a like at the request for immediate feedback, and remove it on failure
     case LIKE_TWEET_REQUEST:
-      return addLike(state, action.tweetID);
-    case LIKE_TWEET_FAILURE:
-      return removeLike(state, action.tweetID);
-    case UNLIKE_TWEET_REQUEST:
-      return removeLike(state, action.tweetID);
     case UNLIKE_TWEET_FAILURE:
       return addLike(state, action.tweetID);
+    case UNLIKE_TWEET_REQUEST:
+    case LIKE_TWEET_FAILURE:
+      return removeLike(state, action.tweetID);
     case FETCH_PROFILE_SUCCESS:
       return recieveProfile(state, action);
-    case LIKE_TWEET_SUCCESS:
     default:
       return state;
   }

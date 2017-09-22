@@ -13,6 +13,7 @@ export default function ProfileHeader({
   profilePictureURL,
   description,
   followUser,
+  unfollowUser,
   follows,
   followingCount,
   followerCount,
@@ -31,6 +32,7 @@ export default function ProfileHeader({
                   id={id}
                   loggedInUserID={loggedInUserID}
                   followUser={followUser}
+                  unfollowUser={unfollowUser}
                   follows={follows}
                 />
               )}
@@ -60,6 +62,7 @@ ProfileHeader.propTypes = {
   description: PropTypes.string.isRequired,
   follows: PropTypes.bool.isRequired,
   followUser: PropTypes.func.isRequired,
+  unfollowUser: PropTypes.func.isRequired,
   followingCount: PropTypes.number.isRequired,
   followerCount: PropTypes.number.isRequired,
 };

@@ -11,7 +11,6 @@ export default class FadeInAndOut extends React.Component {
   }
 
   render() {
-    console.log(this.state.show);
     return (
       <Fade in={this.state.show} onExited={this.props.onExited} appear>
         {this.props.children}
