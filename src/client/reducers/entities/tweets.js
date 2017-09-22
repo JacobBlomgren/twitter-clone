@@ -8,7 +8,7 @@ import {
   UNLIKE_TWEET_SUCCESS,
   UNLIKE_TWEET_FAILURE,
 } from '../../actions/like';
-import { RECIEVE_PROFILE_SUCCESS } from '../../actions/profile';
+import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
 
 /*
  * Replaces a tweet in state, that is assumed to exist.
@@ -67,7 +67,7 @@ export default function(state = { byID: {}, allIDs: [] }, action) {
       return removeLike(state, action.tweetID);
     case UNLIKE_TWEET_FAILURE:
       return addLike(state, action.tweetID);
-    case RECIEVE_PROFILE_SUCCESS:
+    case FETCH_PROFILE_SUCCESS:
       return recieveProfile(state, action);
     case LIKE_TWEET_SUCCESS:
     default:

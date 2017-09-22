@@ -5,7 +5,7 @@ import {
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
 } from '../../../src/client/actions/follow';
-import { RECIEVE_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
+import { FETCH_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
 
 test('default', () => {
   const state = users(undefined, {});
@@ -27,7 +27,7 @@ test('RECIEVE_PROFILE', () => {
     {},
   );
   const state = users(initialState, {
-    type: RECIEVE_PROFILE_SUCCESS,
+    type: FETCH_PROFILE_SUCCESS,
     user: {
       id: '2',
       name: 'Sara',
@@ -56,7 +56,7 @@ test('RECIEVE_PROFILE merging', () => {
     {},
   );
   const state = users(initialState, {
-    type: RECIEVE_PROFILE_SUCCESS,
+    type: FETCH_PROFILE_SUCCESS,
     user: {
       id: '1',
       name: 'Jacob Blomgren',

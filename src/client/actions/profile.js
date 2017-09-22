@@ -1,16 +1,16 @@
 import R from 'ramda';
 import camelizeKeys from '../utils/camelizeKeys';
 
-export const PROFILE_REQUEST = 'PROFILE_REQUEST';
-function requestProfile(username) {
+export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST';
+function fetchProfileRequest(username) {
   return {
-    type: PROFILE_REQUEST,
+    type: FETCH_PROFILE_REQUEST,
     username,
   };
 }
 
-export const RECIEVE_PROFILE_SUCCESS = 'RECIEVE_PROFILE_SUCCESS';
-function recieveProfileSuccess(user) {
+export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
+function fetchProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
   const userNormalized = R.evolve(
     {
@@ -21,7 +21,7 @@ function recieveProfileSuccess(user) {
   );
   const tweets = userCamelized.tweets.map(R.omit(['name', 'username']));
   return {
-    type: RECIEVE_PROFILE_SUCCESS,
+    type: FETCH_PROFILE_SUCCESS,
     user: {
       ...userNormalized,
       recievedAt: Date.now(),
@@ -32,12 +32,12 @@ function recieveProfileSuccess(user) {
 
 export function fetchUser(username) {
   return dispatch => {
-    dispatch(requestProfile(username));
+    dispatch(fetchProfileRequest(username));
     return fetch(`/api/user?username=${username}`, {
       method: 'GET',
       credentials: 'include',
     })
       .then(response => response.json())
-      .then(json => dispatch(recieveProfileSuccess(json)));
+      .then(json => dispatch(fetchProfileSuccess(json)));
   };
 }

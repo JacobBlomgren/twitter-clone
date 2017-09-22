@@ -5,8 +5,8 @@ import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 import {
   fetchUser,
-  PROFILE_REQUEST,
-  RECIEVE_PROFILE_SUCCESS,
+  FETCH_PROFILE_REQUEST,
+  FETCH_PROFILE_SUCCESS,
 } from '../../../src/client/actions/profile';
 
 const mockStore = configureMockStore([thunkMiddleware]);
@@ -48,8 +48,8 @@ describe('fetch user sucess', () => {
     const store = mockStore();
     await store.dispatch(fetchUser(username));
 
-    expect(store.getActions()[0].type).toBe(PROFILE_REQUEST);
-    expect(store.getActions()[1].type).toBe(RECIEVE_PROFILE_SUCCESS);
+    expect(store.getActions()[0].type).toBe(FETCH_PROFILE_REQUEST);
+    expect(store.getActions()[1].type).toBe(FETCH_PROFILE_SUCCESS);
   });
 
   test('normalization', async () => {

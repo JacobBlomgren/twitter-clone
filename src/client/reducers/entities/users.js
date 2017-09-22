@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-import { RECIEVE_PROFILE_SUCCESS } from '../../actions/profile';
+import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
 import { FOLLOW_FAILURE, FOLLOW_REQUEST } from '../../actions/follow';
 
 function replaceUser(state, user) {
@@ -47,7 +47,7 @@ function unfollowUser(state, action) {
 
 export default function(state = { byID: {}, allIDs: [] }, action) {
   switch (action.type) {
-    case RECIEVE_PROFILE_SUCCESS:
+    case FETCH_PROFILE_SUCCESS:
       return recieveProfile(state, action);
     case FOLLOW_REQUEST:
       return followUser(state, action);

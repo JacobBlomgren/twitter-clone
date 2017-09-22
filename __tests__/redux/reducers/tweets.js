@@ -7,7 +7,7 @@ import {
   UNLIKE_TWEET_FAILURE,
   UNLIKE_TWEET_REQUEST,
 } from '../../../src/client/actions/like';
-import { RECIEVE_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
+import { FETCH_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
 
 test('default', () => {
   const state = tweets(undefined, {});
@@ -67,8 +67,6 @@ describe('like tweet', () => {
   });
 
   test('LIKE_TWEET_REQUEST non-existent tweet', () => {
-    // Should only add one like
-
     const initialState = tweets(
       {
         byID: {
@@ -159,7 +157,7 @@ describe('unlike tweet', () => {
 });
 
 describe('recieve profile', () => {
-  test('RECIEVE_PROFILE_SUCCESS', () => {
+  test('FETCH_PROFILE_SUCCESS', () => {
     const initialState = tweets(
       {
         byID: {
@@ -177,7 +175,7 @@ describe('recieve profile', () => {
     );
 
     const state = tweets(initialState, {
-      type: RECIEVE_PROFILE_SUCCESS,
+      type: FETCH_PROFILE_SUCCESS,
       tweets: [
         {
           id: '3',

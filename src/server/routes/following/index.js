@@ -25,7 +25,10 @@ router.use(loginRequired);
 router.use(validate);
 router.use(checkFollowYourself);
 
-router.post('/', follow);
-router.delete('/', unfollow);
+router.post('/', (_, res) => res.status(200).end());
+router.delete('/', (_, res) => res.status(200).end());
+
+// router.post('/', follow);
+// router.delete('/', unfollow);
 
 export default router;
