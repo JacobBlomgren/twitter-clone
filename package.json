@@ -64,14 +64,15 @@
     "supertest-session": "^3.1.0",
     "url-loader": "^0.5.9",
     "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^2.6.1",
+    "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "bootstrap": "4.0.0-beta",
-    "celebrate": "^4.0.1",
+    "celebrate": "^5.0.0",
     "compression": "^1.7.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
@@ -91,6 +92,7 @@
     "react-dom": "^15.6.1",
     "react-hot-loader": "next",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
     "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",

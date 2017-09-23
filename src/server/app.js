@@ -13,8 +13,8 @@ import 'babel-polyfill';
 import 'isomorphic-fetch';
 
 import { STATIC_PATH } from '../shared/config';
-import renderApp from './renderApp';
 import routes from './routes';
+import { isProd } from '../shared/utils/isProd';
 
 const app = express();
 
@@ -45,6 +45,11 @@ app.use(passport.session());
 
 app.use('/api', routes);
 
-app.get('/', renderApp);
+/* eslint-disable */
+const renderRoutes = isProd
+  ? require('./rendering/routes').default
+  : require('./rendering/devRoutes').default;
+/* eslint-enable */
+app.use(renderRoutes);
 
 export default app;

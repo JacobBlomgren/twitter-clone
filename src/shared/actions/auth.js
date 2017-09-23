@@ -1,9 +1,13 @@
 import camelizeKeys from '../utils/camelizeKeys';
 import { addError } from './error';
 
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+function loginRequest() {}
+
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 function loginSuccess(json) {
   const { userID, username } = camelizeKeys(json);
+  console.log('login', userID, username);
   return {
     type: LOGIN_SUCCESS,
     userID,

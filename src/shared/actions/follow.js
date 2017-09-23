@@ -41,3 +41,43 @@ export function follow(userID) {
     });
   };
 }
+
+export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
+function unfollowRequest(userID) {
+  return {
+    type: UNFOLLOW_REQUEST,
+    userID,
+  };
+}
+
+export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
+function unfollowSuccess(userID) {
+  return {
+    type: UNFOLLOW_SUCCESS,
+    userID,
+  };
+}
+
+export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
+function unfollowFailure(userID) {
+  return {
+    type: UNFOLLOW_FAILURE,
+    userID,
+  };
+}
+
+export function unfollow(userID) {
+  return dispatch => {
+    dispatch(unfollowRequest(userID));
+    return fetch('/api/following/', {
+      method: 'DELETE',
+      headers,
+      body: JSON.stringify(decamelizeKeys({ userID })),
+      credentials: 'include',
+    }).then(response => {
+      if (response.ok) return dispatch(unfollowSuccess(userID));
+      dispatch(addError('Follow failed'));
+      return dispatch(unfollowFailure(userID));
+    });
+  };
+}

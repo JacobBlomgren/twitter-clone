@@ -10,7 +10,7 @@ function fetchProfileRequest(username) {
 }
 
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
-function fetchProfileSuccess(user) {
+export function fetchProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
   const userNormalized = R.evolve(
     {
