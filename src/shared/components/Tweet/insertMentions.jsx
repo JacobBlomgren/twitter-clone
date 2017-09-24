@@ -15,7 +15,7 @@ function insertMentions(str, acc) {
   return insertMentions(after, [
     ...acc,
     before,
-    <Mention mention={mention} key={mention} />,
+    <Mention mention={mention.replace('@', '')} key={mention} />,
   ]);
 }
 

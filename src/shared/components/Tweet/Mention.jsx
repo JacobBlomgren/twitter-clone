@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default function Mention({ mention }) {
   return (
     <span className="Mention">
-      @<a href="#">{mention.replace('@', '')}</a>
+      @<Link to={`/u/${mention}`}>mention</Link>
     </span>
   );
 }
