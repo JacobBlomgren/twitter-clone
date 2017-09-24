@@ -1,6 +1,5 @@
 import express from 'express';
 
-// import renderApp from './renderApp';
 import renderApp from '../../../lib/server/rendering/renderApp';
 import loggedInUserID from '../routes/middleware/loggedInUserID';
 import { profile } from './controller';

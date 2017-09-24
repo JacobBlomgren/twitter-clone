@@ -5,13 +5,7 @@ import webpack from 'webpack';
 
 import path from 'path';
 
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
-
-import { WDS_PORT, APP_NAME } from './src/shared/config';
-import { isProd } from './src/shared/utils/isProd';
 
 export default {
   name: 'client',

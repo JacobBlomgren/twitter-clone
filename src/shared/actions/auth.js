@@ -7,7 +7,6 @@ function loginRequest() {}
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 function loginSuccess(json) {
   const { userID, username } = camelizeKeys(json);
-  console.log('login', userID, username);
   return {
     type: LOGIN_SUCCESS,
     userID,

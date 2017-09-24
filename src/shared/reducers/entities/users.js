@@ -41,7 +41,6 @@ function addFollow(state, action) {
 
 function removeFollow(state, action) {
   const user = state.byID[action.userID];
-  console.log(user.follows);
   if (!user || !user.follows) return state;
   const newUser = {
     ...user,
