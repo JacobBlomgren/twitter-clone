@@ -20,6 +20,11 @@
   }
 }
 
+.Mention,
+.Hashtag {
+  color: $main-color;
+}
+
 .Tweet__Action {
   box-sizing: border-box;
   display: inline-block;
