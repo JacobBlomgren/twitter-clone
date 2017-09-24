@@ -6,9 +6,9 @@ import './env';
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
-import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
+
 import 'isomorphic-fetch';
 
 import { STATIC_PATH } from '../shared/config';
@@ -22,9 +22,6 @@ app.use(helmet());
 app.use(compression());
 app.use(STATIC_PATH, express.static('dist'));
 app.use(STATIC_PATH, express.static('public'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   session({

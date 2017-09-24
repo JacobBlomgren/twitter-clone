@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
 import auth from './auth';
 import following from './following';
@@ -10,6 +11,9 @@ import user from './user';
 import joiError from './middleware/joiError';
 
 const router = express.Router();
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false }));
 
 router.use('/auth', auth);
 router.use('/following', following);
