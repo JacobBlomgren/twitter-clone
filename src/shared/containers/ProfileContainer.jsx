@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import R from 'ramda';
 
 import Profile from '../components/Profile/Profile';
+import Spinner from '../components/Spinner';
 import { fetchUser } from '../actions/profile';
 import { follow, unfollow } from '../actions/follow';
 
@@ -15,7 +16,7 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    if (!this.props.id) return <div>loading...</div>;
+    if (!this.props.id) return <Spinner />;
     return <Profile {...this.props} />;
   }
 }
