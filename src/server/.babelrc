@@ -8,6 +8,6 @@
     "react",
   ],
   "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": false }]
+    ["transform-object-rest-spread", { "useBuiltIns": true }]
   ]
 }
