@@ -1,3 +1,6 @@
+// airbnb's eslint doesn't yet make an exception for webpack files, other than those that start with
+// webpack.config
+/* eslint-disable import/no-extraneous-dependencies */
 import webpack from 'webpack';
 
 import path from 'path';
@@ -6,21 +9,18 @@ import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
-import nodeExternals from 'webpack-node-externals';
 
 import { WDS_PORT, APP_NAME } from './src/shared/config';
 import { isProd } from './src/shared/utils/isProd';
 
-const config = {
+export default {
   name: 'client',
   entry: {
     polyfills: ['babel-polyfill', 'whatwg-fetch'],
-    main: isProd ? './src/client' : ['react-hot-loader/patch', './src/client'],
   },
   output: {
     filename: 'js/[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: isProd ? '/static/' : `http://localhost:${WDS_PORT}/dist/`,
   },
   module: {
     rules: [
@@ -67,28 +67,11 @@ const config = {
       },
     ],
   },
-  devtool: isProd ? false : 'source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  devServer: {
-    port: WDS_PORT,
-    hot: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
-  },
   plugins: [
-    // TODO
-    new UglifyJSPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-      },
-    }),
-
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
@@ -97,57 +80,5 @@ const config = {
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default'],
     }),
-    new ExtractTextPlugin({
-      filename: 'styles/main-[contenthash].css',
-      disable: !isProd,
-    }),
-    new HtmlWebpackPlugin({
-      alwaysWriteToDisk: true,
-      inject: false,
-      minify: isProd
-        ? {
-            collapseWhitespace: true,
-            minifyJS: true,
-            removeComments: true,
-          }
-        : false,
-      title: APP_NAME,
-      template: 'index.ejs',
-    }),
-    new HtmlWebpackHarddiskPlugin(),
   ],
 };
-
-const serverConfig = {
-  name: 'server',
-  target: 'node',
-  externals: [nodeExternals()],
-  entry: ['./src/server/rendering/serverEntry.jsx'],
-  output: {
-    path: path.join(__dirname, 'lib/server/rendering/'),
-    filename: 'renderApp.js',
-    libraryTarget: 'commonjs2',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-            },
-          },
-        ],
-      },
-    ],
-  },
-};
-
-export default (isProd ? [config, serverConfig] : config);

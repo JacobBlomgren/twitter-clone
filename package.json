@@ -7,16 +7,20 @@
   },
   "scripts": {
     "start": "yarn dev:start",
-    "dev:start": "nodemon -e js,jsx,sql --ignore lib --ignore dist --exec babel-node src/server",
-    "dev:wds": "webpack-dev-server --progress",
-    "prod:build": "rimraf lib dist && babel src -d lib && cross-env NODE_ENV=production webpack -p --progress",
-    "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
+    "dev:start":
+      "nodemon -e js,jsx,sql --ignore lib --ignore dist --ignore src/client --exec babel-node src/server",
+    "dev:wds": "webpack-dev-server --config webpack.dev.babel.js --progress",
+    "prod:build":
+      "rimraf lib dist && babel src -d lib && cross-env NODE_ENV=production webpack --config webpack.prod.babel.js --progress",
+    "prod:start":
+      "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
-    "prettier": "prettier --single-quote --trailing-comma all --write \"{src,__tests__}/**/*.{js,jsx}\" webpack.config.babel.js",
-    "eslint": "eslint src webpack.config.babel.js __test__ --ext .js,.jsx",
+    "prettify": "yarn prettier \"{src,__tests__}/**/*.{js,jsx}\" webpack.*.js",
+    "prettier": "prettier --single-quote --trailing-comma all --write",
+    "eslint": "eslint src webpack.*.js __test__ --ext .js,.jsx",
     "stylelint": "stylelint \"public/styles/**/*.scss\"",
     "lint": "yarn eslint && yarn stylelint",
-    "pretty-lint": "yarn prettier && yarn eslint",
+    "pretty-lint": "yarn prettify && yarn eslint",
     "test": "cross-env NODE_ENV=test babel-node ./db/reset && jest --coverage",
     "docs": "documentation build src/** -f html -o docs"
   },
@@ -66,6 +70,7 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.6.1",
+    "webpack-merge": "^4.1.0",
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
