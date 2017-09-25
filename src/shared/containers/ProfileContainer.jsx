@@ -30,7 +30,7 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    if (!this.props.id) return <Spinner />;
+    if (!this.props.id) return <Spinner fullPage />;
     return <Profile {...this.props} />;
   }
 }

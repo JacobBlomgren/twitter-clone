@@ -1,8 +1,17 @@
 @import 'variables';
 $spinkit-spinner-color: $main-color;
+//$spinkit-spinner-margin: 0 auto;
 
 @import '~spinkit/scss/spinners/3-wave';
 
 .sk-rect:not(:last-child) {
   margin: 0 3px 0 0;
+}
+
+.Spinner--FullPage {
+  padding-top: 35vh;
+
+  .sk-wave {
+    margin: 0 auto;
+  }
 }
