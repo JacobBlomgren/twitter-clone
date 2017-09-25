@@ -10,7 +10,6 @@ CREATE TABLE account (
 
 CREATE INDEX username_index ON account (username);
 
-
 CREATE TABLE follows (
   follower BIGINT REFERENCES account (user_id) ON DELETE CASCADE,
   followee BIGINT REFERENCES account (user_id) ON DELETE CASCADE,
@@ -34,16 +33,17 @@ CREATE INDEX hashtag_index ON hashtag_used (hashtag);
 
 CREATE TABLE mentions (
   tweet_id BIGINT REFERENCES tweet ON DELETE CASCADE,
-  user_id BIGINT REFERENCES account,
+  user_id BIGINT REFERENCES account ON DELETE CASCADE,
   username VARCHAR(15) NOT NULL CONSTRAINT lowercase CHECK (lower(username) = username),
   PRIMARY KEY (tweet_id, user_id)
 );
 
 CREATE TABLE reply_to (
   reply_tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE CASCADE,
+  -- Save some extra data so that even if the tweet is removed, we still have the user_id.
+  -- If the user in turn is removed, we still know that the tweet was a reply.
   original_tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE SET NULL,
   original_user_id BIGINT REFERENCES account (user_id) ON DELETE SET NULL,
-  PRIMARY KEY (reply_tweet_id, original_tweet_id)
 );
 
 CREATE INDEX reply_to_index ON reply_to (original_tweet_id);
