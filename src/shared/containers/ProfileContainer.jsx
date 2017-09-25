@@ -10,9 +10,23 @@ import { follow, unfollow } from '../actions/follow';
 /* eslint-disable react/prop-types */
 class ProfileContainer extends Component {
   componentDidMount() {
+    if (this.shouldFetch(this.props.recievedAt, this.props.id)) {
+      this.props.fetchUser();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.id !== nextProps.id) {
+      if (this.shouldFetch(nextProps.recievedAt, nextProps.id)) {
+        nextProps.fetchUser();
+      }
+    }
+  }
+
+  shouldFetch(recievedAt, id) {
     // elapsed time since last fetch in minutes
-    const time = (Date.now() - this.props.recievedAt) / (60 * 60);
-    if (time > 30 || !this.props.id) this.props.fetchUser();
+    const time = (Date.now() - recievedAt) / (60 * 60);
+    return time > 30 || !id;
   }
 
   render() {
