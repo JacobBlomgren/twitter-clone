@@ -23,15 +23,20 @@ const successResponse = {
       id: '1',
       username,
       name: 'Jacob Blomgren',
-      user_id: '7',
+      user_id: '1',
       content: 'a tweet',
     },
     {
-      id: '2',
+      id: '3',
       username,
       name: 'Jacob Blomgren',
-      user_id: '7',
+      user_id: '1',
       content: 'A second tweet',
+      replyTo: {
+        original_tweet_id: '2',
+        original_user_id: '2',
+        original_username: 'sara',
+      },
     },
   ],
 };
@@ -61,11 +66,15 @@ describe('fetch user sucess', () => {
 
     const action = store.getActions()[1];
 
-    expect(action.user.id).toBe('1');
-    expect(action.user.tweets).toContain('1');
-    expect(action.user.tweets).toContain('2');
+    // Probably shouldn't test based on order.
+    expect(action.users[0].id).toBe('2');
+    expect(action.users[0].username).toBe('sara');
+    expect(action.users[1].id).toBe('1');
+    expect(action.users[1].tweets).toContain('1');
+    expect(action.users[1].tweets).toContain('3');
 
     expect(action.tweets[0]).not.toHaveProperty('name');
     expect(action.tweets[0]).not.toHaveProperty('username');
+    expect(action.tweets[1].replyTo).toBe('2');
   });
 });

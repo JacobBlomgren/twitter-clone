@@ -6,13 +6,13 @@ import { likeTweet, unlikeTweet } from '../actions/like';
 
 function mapStateToProps(state, { tweetID }) {
   const tweet = state.entities.tweets.byID[tweetID];
-  const user = state.entities.users.byID[tweet.userID];
+  const { name, username } = state.entities.users.byID[tweet.userID];
   return {
-    name: user.name,
-    username: user.username,
+    name,
+    username,
     ...tweet,
     replyCount: tweet.replies.length,
-    replyTo: tweet.replyTo && tweet.replyTo.originalUsername,
+    replyTo: tweet.replyTo && state.entities.users.byID[tweet.replyTo].username,
   };
 }
 

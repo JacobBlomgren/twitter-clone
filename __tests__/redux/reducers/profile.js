@@ -30,10 +30,12 @@ test('RECIEVE_PROFILE', () => {
   );
   const state = users(initialState, {
     type: FETCH_PROFILE_SUCCESS,
-    user: {
-      id: '2',
-      name: 'Sara',
-    },
+    users: [
+      {
+        id: '2',
+        name: 'Sara',
+      },
+    ],
   });
   expect(state.allIDs).toContain('1');
   expect(state.allIDs).toContain('2');
@@ -59,11 +61,13 @@ test('RECIEVE_PROFILE merging', () => {
   );
   const state = users(initialState, {
     type: FETCH_PROFILE_SUCCESS,
-    user: {
-      id: '1',
-      name: 'Jacob Blomgren',
-      tweets: ['2', '3', '4'],
-    },
+    users: [
+      {
+        id: '1',
+        name: 'Jacob Blomgren',
+        tweets: ['2', '3', '4'],
+      },
+    ],
   });
   expect(state.allIDs).toEqual(['1']);
   expect(state.byID['1']).toEqual({

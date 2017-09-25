@@ -10,27 +10,31 @@ import { follow, unfollow } from '../actions/follow';
 /* eslint-disable react/prop-types */
 class ProfileContainer extends Component {
   componentDidMount() {
-    if (this.shouldFetch(this.props.recievedAt, this.props.id)) {
+    if (
+      this.shouldFetch(this.props.recievedAt, this.props.id, this.props.partial)
+    ) {
       this.props.fetchUser();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.id !== nextProps.id) {
-      if (this.shouldFetch(nextProps.recievedAt, nextProps.id)) {
+      if (
+        this.shouldFetch(nextProps.recievedAt, nextProps.id, nextProps.partial)
+      ) {
         nextProps.fetchUser();
       }
     }
   }
 
-  shouldFetch(recievedAt, id) {
+  shouldFetch(recievedAt, id, partial) {
     // elapsed time since last fetch in minutes
     const time = (Date.now() - recievedAt) / (60 * 60);
-    return time > 30 || !id;
+    return time > 30 || !id || partial;
   }
 
   render() {
-    if (!this.props.id) return <Spinner fullPage />;
+    if (!this.props.id || this.props.partial) return <Spinner fullPage />;
     return <Profile {...this.props} />;
   }
 }

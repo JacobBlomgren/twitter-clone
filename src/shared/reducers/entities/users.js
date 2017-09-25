@@ -18,13 +18,14 @@ function replaceUser(state, user) {
   };
 }
 
-function recieveProfile(state, action) {
+function recieveUsers(state, action) {
+  const IDs = action.users.map(R.prop('id'));
+  // Remove users for which we already have non-partial data.
+  const filterPartial = R.reject(u => u.partial && state.byID[u.id]);
+  const byID = R.reduce((users, u) => R.merge(users, { [u.id]: u }), {});
   return {
-    allIDs: R.union(state.allIDs, [action.user.id]),
-    byID: {
-      ...state.byID,
-      [action.user.id]: action.user,
-    },
+    allIDs: R.union(state.allIDs, IDs),
+    byID: R.merge(state.byID, R.compose(byID, filterPartial)(action.users)),
   };
 }
 
@@ -53,7 +54,7 @@ function removeFollow(state, action) {
 export default function(state = { byID: {}, allIDs: [] }, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
-      return recieveProfile(state, action);
+      return recieveUsers(state, action);
     // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:
     case UNFOLLOW_FAILURE:
