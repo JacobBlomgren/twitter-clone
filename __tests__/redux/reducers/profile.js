@@ -1,13 +1,13 @@
 import 'isomorphic-fetch';
 
-import users from '../../../src/client/reducers/entities/users';
+import users from '../../../src/shared/reducers/entities/users';
 import {
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
-} from '../../../src/client/actions/follow';
-import { FETCH_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
+} from '../../../src/shared/actions/follow';
+import { FETCH_PROFILE_SUCCESS } from '../../../src/shared/actions/profile';
 
 test('default', () => {
   const state = users(undefined, {});

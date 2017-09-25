@@ -1,13 +1,13 @@
 import 'isomorphic-fetch';
 
-import tweets from '../../../src/client/reducers/entities/tweets';
+import tweets from '../../../src/shared/reducers/entities/tweets';
 import {
   LIKE_TWEET_FAILURE,
   LIKE_TWEET_REQUEST,
   UNLIKE_TWEET_FAILURE,
   UNLIKE_TWEET_REQUEST,
-} from '../../../src/client/actions/like';
-import { FETCH_PROFILE_SUCCESS } from '../../../src/client/actions/profile';
+} from '../../../src/shared/actions/like';
+import { FETCH_PROFILE_SUCCESS } from '../../../src/shared/actions/profile';
 
 test('default', () => {
   const state = tweets(undefined, {});

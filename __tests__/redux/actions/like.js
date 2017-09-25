@@ -12,8 +12,8 @@ import {
   UNLIKE_TWEET_REQUEST,
   UNLIKE_TWEET_SUCCESS,
   unlikeTweet,
-} from '../../../src/client/actions/like';
-import { ADD_ERROR } from '../../../src/client/actions/error';
+} from '../../../src/shared/actions/like';
+import { ADD_ERROR } from '../../../src/shared/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

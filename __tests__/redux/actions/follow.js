@@ -12,8 +12,8 @@ import {
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
   UNFOLLOW_SUCCESS,
-} from '../../../src/client/actions/follow';
-import { ADD_ERROR } from '../../../src/client/actions/error';
+} from '../../../src/shared/actions/follow';
+import { ADD_ERROR } from '../../../src/shared/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 
