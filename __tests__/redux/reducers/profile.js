@@ -52,7 +52,8 @@ test('RECIEVE_PROFILE merging', () => {
         '1': {
           id: '1',
           name: 'Jacob',
-          tweets: ['1', '2'],
+          description: 'Im a programmer',
+          tweets: ['1', '3', '5'],
         },
       },
       allIDs: ['1'],
@@ -65,16 +66,16 @@ test('RECIEVE_PROFILE merging', () => {
       {
         id: '1',
         name: 'Jacob Blomgren',
-        tweets: ['2', '3', '4'],
+        tweets: ['2', '4', '5'],
       },
     ],
   });
   expect(state.allIDs).toEqual(['1']);
-  expect(state.byID['1']).toEqual({
-    id: '1',
-    name: 'Jacob Blomgren',
-    tweets: ['2', '3', '4'],
-  });
+  expect(state.byID['1'].id).toEqual('1');
+  expect(state.byID['1'].name).toEqual('Jacob Blomgren');
+  expect(state.byID['1'].description).toEqual('Im a programmer');
+  // 🖖🖖🖖🖖🖖
+  ['1', '2', '3', '4', '5'].forEach(expect(state.byID['1'].tweets).toContain);
 });
 
 describe('follow user', () => {

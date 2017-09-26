@@ -21,11 +21,14 @@ function replaceUser(state, user) {
 function recieveUsers(state, action) {
   const IDs = action.users.map(R.prop('id'));
   // Remove users for which we already have non-partial data.
-  const filterPartial = R.reject(u => u.partial && state.byID[u.id]);
   const byID = R.reduce((users, u) => R.merge(users, { [u.id]: u }), {});
   return {
     allIDs: R.union(state.allIDs, IDs),
-    byID: R.merge(state.byID, R.compose(byID, filterPartial)(action.users)),
+    byID: R.mergeDeepWith(
+      (left, right) => (Array.isArray(left) ? R.union(left, right) : right),
+      state.byID,
+      byID(action.users),
+    ),
   };
 }
 
