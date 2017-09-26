@@ -33,7 +33,7 @@
           });
         }
 
-        scripts.map(function(src) {
+        scripts.forEach(function(src) {
           var scriptElement = document.createElement('script');
           scriptElement.async = false;
           scriptElement.src = src;
