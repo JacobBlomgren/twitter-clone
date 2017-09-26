@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, NavLink, browserHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import ProfilePage from './components/page/ProfilePage';
 import ErrorsContainer from './containers/ErrorsContainer';

@@ -1,4 +1,4 @@
-import camelizeKeys from '../../src/client/utils/camelizeKeys';
+import camelizeKeys from '../../src/shared/utils/camelizeKeys';
 
 it('should camelize keys', () => {
   const obj = camelizeKeys({ a_random_key: true, another_one: '' });

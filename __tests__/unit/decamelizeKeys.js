@@ -1,4 +1,4 @@
-import decamelizeKeys from '../../src/client/utils/decamelizeKeys';
+import decamelizeKeys from '../../src/shared/utils/decamelizeKeys';
 
 it('should decamelize keys', () => {
   const obj = decamelizeKeys({ aRandomKey: true, another_one: '' });

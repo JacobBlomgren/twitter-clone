@@ -9,6 +9,12 @@ import { follow, unfollow } from '../actions/follow';
 
 /* eslint-disable react/prop-types */
 class ProfileContainer extends Component {
+  static shouldFetch(recievedAt, id, partial) {
+    // elapsed time since last fetch in minutes
+    const time = (Date.now() - recievedAt) / (60 * 60);
+    return time > 30 || !id || partial;
+  }
+
   componentDidMount() {
     if (
       this.shouldFetch(this.props.recievedAt, this.props.id, this.props.partial)
@@ -25,12 +31,6 @@ class ProfileContainer extends Component {
         nextProps.fetchUser();
       }
     }
-  }
-
-  shouldFetch(recievedAt, id, partial) {
-    // elapsed time since last fetch in minutes
-    const time = (Date.now() - recievedAt) / (60 * 60);
-    return time > 30 || !id || partial;
   }
 
   render() {
