@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,6 +8,7 @@ import './styles/main.scss';
 
 import App from '../shared/App';
 import store from './store';
+import { isProd } from '../shared/utils/isProd';
 
 const rootEl = document.getElementById('root');
 
@@ -23,7 +24,11 @@ function wrapApp(AppComponent, reduxStore) {
   );
 }
 
-render(wrapApp(App, store), rootEl);
+if (isProd) {
+  hydrate(wrapApp(App, store), rootEl);
+} else {
+  render(wrapApp(App, store), rootEl);
+}
 
 if (module.hot) {
   module.hot.accept('../shared/App', () => {
