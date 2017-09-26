@@ -15,7 +15,7 @@ function insertHashtags(str, acc) {
   return insertHashtags(after, [
     ...acc,
     before,
-    <Hashtag hashtag={hashtag} key={hashtag} />,
+    <Hashtag hashtag={hashtag.replace('#', '')} key={hashtag} />,
   ]);
 }
 
