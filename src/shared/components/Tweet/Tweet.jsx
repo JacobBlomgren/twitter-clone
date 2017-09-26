@@ -5,6 +5,7 @@ import TweetInfo from './TweetInfo';
 import TweetContent from './TweetContent';
 import TweetActions from './TweetActions';
 import ReplyTo from './ReplyTo';
+import Retweet from './Retweet';
 
 export default function Tweet({
   name,
@@ -13,6 +14,7 @@ export default function Tweet({
   content,
   replyTo,
   replyCount,
+  retweet,
   retweetCount,
   likeCount,
   liked,
@@ -21,6 +23,7 @@ export default function Tweet({
 }) {
   return (
     <div className="Tweet SmallPadding">
+      {retweet ? <Retweet {...retweet} /> : ''}
       <TweetInfo name={name} username={username} createdAt={createdAt} />
       {replyTo ? <ReplyTo username={replyTo} /> : ''}
       <TweetContent content={content} />
@@ -44,6 +47,11 @@ Tweet.propTypes = {
   // eslint-disable-next-line react/require-default-props
   replyTo: PropTypes.string,
   replyCount: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  retweet: PropTypes.shape({
+    name: PropTypes.string,
+    username: PropTypes.string,
+  }),
   retweetCount: PropTypes.number.isRequired,
   likeCount: PropTypes.number.isRequired,
   liked: PropTypes.bool.isRequired,

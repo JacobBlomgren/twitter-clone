@@ -26,8 +26,17 @@
 }
 
 .ReplyTo {
-  margin-top: 0.2rem;
   margin-bottom: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.Retweet__Icon {
+  height: 0.7em;
+  margin-right: 0.2rem;
+}
+
+.Retweet__Link {
+  color: inherit;
 }
 
 .Tweet__Action {

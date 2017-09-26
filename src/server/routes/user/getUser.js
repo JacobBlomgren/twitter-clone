@@ -16,6 +16,9 @@ export async function getUser(req, res) {
     if (!user) return res.status(404).end();
     return res.status(200).json({
       ...user,
+      // REMOVE
+      name: user.name || user.username,
+      profile_picture_url: '/static/drake.png',
       tweets,
     });
   } catch (err) {

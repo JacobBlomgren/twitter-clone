@@ -16,7 +16,7 @@ export default async function(userID, username, loggedInUserID) {
     const [response, user] = await Promise.all([
       task.any(getTweetIDS, [userID, username]),
       task.one(
-        'SELECT name, username FROM account WHERE user_id = $1 OR username = $2',
+        'SELECT name, username, user_id FROM account WHERE user_id = $1 OR username = $2',
         [userID, username],
       ),
     ]);
@@ -28,12 +28,13 @@ export default async function(userID, username, loggedInUserID) {
     );
     const tweets = await Promise.all(tweetQueries);
     return tweets.map(t => {
-      if (t.user_id === userID) return t;
+      if (t.user_id === user.user_id) return t;
+      console.log(user.user_id)
       // Add retweet info if the author of the tweet doesn't match userID.
       return {
         ...t,
         retweet: {
-          user_id: userID,
+          user_id: user.user_id,
           username: user.username,
           name: user.name,
         },
