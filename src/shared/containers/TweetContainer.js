@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Tweet from '../components/Tweet/Tweet';
 
 import { likeTweet, unlikeTweet } from '../actions/like';
+import { removeRetweet, retweet } from '../actions/retweet';
 
 function mapStateToProps(state, { tweetID }) {
   const tweet = state.entities.tweets.byID[tweetID];
@@ -24,6 +25,8 @@ function mapDispatchToProps(dispatch, { tweetID }) {
   return {
     onLike: () => dispatch(likeTweet(tweetID)),
     onUnlike: () => dispatch(unlikeTweet(tweetID)),
+    onRetweet: () => dispatch(retweet(tweetID)),
+    onRemoveRetweet: () => dispatch(removeRetweet(tweetID)),
   };
 }
 

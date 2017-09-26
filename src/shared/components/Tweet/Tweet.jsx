@@ -16,6 +16,9 @@ export default function Tweet({
   replyCount,
   retweet,
   retweetCount,
+  retweeted,
+  onRetweet,
+  onRemoveRetweet,
   likeCount,
   liked,
   onLike,
@@ -30,6 +33,9 @@ export default function Tweet({
       <TweetActions
         replyCount={replyCount}
         retweetCount={retweetCount}
+        retweeted={retweeted}
+        onRetweet={onRetweet}
+        onRemoveRetweet={onRemoveRetweet}
         likeCount={likeCount}
         liked={liked}
         onLike={onLike}
@@ -53,6 +59,9 @@ Tweet.propTypes = {
     username: PropTypes.string,
   }),
   retweetCount: PropTypes.number.isRequired,
+  retweeted: PropTypes.bool.isRequired,
+  onRetweet: PropTypes.func.isRequired,
+  onRemoveRetweet: PropTypes.func.isRequired,
   likeCount: PropTypes.number.isRequired,
   liked: PropTypes.bool.isRequired,
   onLike: PropTypes.func.isRequired,

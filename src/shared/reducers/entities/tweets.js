@@ -7,6 +7,12 @@ import {
   UNLIKE_TWEET_FAILURE,
 } from '../../actions/like';
 import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
+import {
+  REMOVE_RETWEET_FAILURE,
+  REMOVE_RETWEET_REQUEST,
+  RETWEET_FAILURE,
+  RETWEET_REQUEST,
+} from '../../actions/retweet';
 
 /*
  * Replaces a tweet in state, that is assumed to exist.
@@ -43,6 +49,28 @@ function removeLike(state, tweetID) {
   return replaceTweet(state, newTweet);
 }
 
+function addRetweet(state, tweetID) {
+  const tweet = state.byID[tweetID];
+  if (!tweet || tweet.retweeted) return state;
+  const newTweet = {
+    ...tweet,
+    retweetCount: tweet.retweetCount + 1,
+    retweeted: true,
+  };
+  return replaceTweet(state, newTweet);
+}
+
+function removeRetweet(state, tweetID) {
+  const tweet = state.byID[tweetID];
+  if (!tweet || !tweet.retweeted) return state;
+  const newTweet = {
+    ...tweet,
+    retweetCount: tweet.retweetCount - 1,
+    retweeted: false,
+  };
+  return replaceTweet(state, newTweet);
+}
+
 function recieveProfile(state, action) {
   const byID = {};
   action.tweets.forEach(t => {
@@ -64,6 +92,12 @@ export default function(state = { byID: {}, allIDs: [] }, action) {
     case UNLIKE_TWEET_REQUEST:
     case LIKE_TWEET_FAILURE:
       return removeLike(state, action.tweetID);
+    case RETWEET_REQUEST:
+    case REMOVE_RETWEET_FAILURE:
+      return addRetweet(state, action.tweetID);
+    case RETWEET_FAILURE:
+    case REMOVE_RETWEET_REQUEST:
+      return removeRetweet(state, action.tweetID);
     case FETCH_PROFILE_SUCCESS:
       return recieveProfile(state, action);
     default:

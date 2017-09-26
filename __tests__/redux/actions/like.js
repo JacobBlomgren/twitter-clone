@@ -44,7 +44,7 @@ test('like failure', async () => {
 
 test('unlike success', async () => {
   const tweetID = '1';
-  fetchMock.delete('/api/likes/', { body: { status: `Liked ${tweetID}` } });
+  fetchMock.delete('/api/likes/', 200);
   const store = mockStore();
   await store.dispatch(unlikeTweet(tweetID));
 
