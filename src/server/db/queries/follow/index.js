@@ -8,8 +8,8 @@ export function follow(follower, followee) {
 }
 
 export function unfollow(follower, followee) {
-  return db.none('DELETE FROM follows WHERE follower = $1 and followee = $2', [
-    follower,
-    followee,
-  ]);
+  return db.oneOrNone(
+    'DELETE FROM follows WHERE follower = $1 and followee = $2 RETURNING *',
+    [follower, followee],
+  );
 }

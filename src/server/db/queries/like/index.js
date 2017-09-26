@@ -8,8 +8,8 @@ export function addLike(tweetID, userID) {
 }
 
 export function removeLike(tweetID, userID) {
-  return db.none('DELETE FROM likes WHERE tweet_id = $1 and user_id = $2', [
-    tweetID,
-    userID,
-  ]);
+  return db.oneOrNone(
+    'DELETE FROM likes WHERE tweet_id = $1 and user_id = $2 RETURNING *',
+    [tweetID, userID],
+  );
 }

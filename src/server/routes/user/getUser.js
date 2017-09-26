@@ -11,11 +11,7 @@ export async function getUser(req, res) {
   try {
     const [user, tweets] = await Promise.all([
       getUserQuery(req.query.id, req.query.username, req.loggedInUserID),
-      getTweetsFromUser(
-        req.query.id,
-        req.query.username,
-        req.loggedInUserID,
-      ),
+      getTweetsFromUser(req.query.id, req.query.username, req.loggedInUserID),
     ]);
     if (!user) return res.status(404).end();
     return res.status(200).json({
@@ -28,8 +24,8 @@ export async function getUser(req, res) {
 }
 
 export const validate = celebrate({
-  query: {
+  query: joi.object().keys({
     id,
     username,
-  },
+  }),
 });
