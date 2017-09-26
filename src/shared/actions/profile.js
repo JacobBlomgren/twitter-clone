@@ -12,7 +12,6 @@ function fetchProfileRequest(username) {
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
 export function fetchProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
-  console.log(userCamelized);
   const userNormalized = R.evolve(
     {
       // Transform the array of tweet objecs to an array of their ids
@@ -53,13 +52,12 @@ export function fetchProfileSuccess(user) {
 
   return {
     type: FETCH_PROFILE_SUCCESS,
-    users: [...replyUsers, ...retweetUsers, userNormalized],
+    users: [...R.uniq(replyUsers), ...R.uniq(retweetUsers), userNormalized],
     tweets,
   };
 }
 
 export function fetchUser(username) {
-  console.log('fetching user');
   return dispatch => {
     dispatch(fetchProfileRequest(username));
     return fetch(`/api/user?username=${username}`, {

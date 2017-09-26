@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import R from 'ramda';
 
 import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
@@ -38,6 +39,30 @@ const successResponse = {
         original_username: 'sara',
       },
     },
+    {
+      id: '4',
+      username,
+      name: 'Jacob Blomgren',
+      user_id: '1',
+      content: 'Another reply to the same person',
+      replyTo: {
+        original_tweet_id: '2',
+        original_user_id: '2',
+        original_username: 'sara',
+      },
+    },
+    {
+      id: '5',
+      username: 'john',
+      name: 'John',
+      user_id: '3',
+      content: 'A retweeted tweet',
+      retweet: {
+        user_id: '1',
+        original_user_id: '1',
+        original_username: 'jacob',
+      },
+    },
   ],
 };
 
@@ -66,12 +91,18 @@ describe('fetch user sucess', () => {
 
     const action = store.getActions()[1];
 
-    // Probably shouldn't test based on order.
-    expect(action.users[0].id).toBe('2');
-    expect(action.users[0].username).toBe('sara');
-    expect(action.users[1].id).toBe('1');
-    expect(action.users[1].tweets).toContain('1');
-    expect(action.users[1].tweets).toContain('3');
+    const jacob = R.find(R.propEq('id', '1'), action.users);
+    expect(jacob.username).toBe('jacob');
+    expect(jacob.tweets).toContain('1');
+    expect(jacob.tweets).toContain('3');
+
+    const sara = R.find(R.propEq('id', '2'), action.users);
+    expect(sara.username).toBe('sara');
+    expect(sara.partial).toBe(true);
+
+    const john = R.find(R.propEq('id', '3'), action.users);
+    expect(john.username).toBe('john');
+    expect(john.partial).toBe(true);
 
     expect(action.tweets[0]).not.toHaveProperty('name');
     expect(action.tweets[0]).not.toHaveProperty('username');
