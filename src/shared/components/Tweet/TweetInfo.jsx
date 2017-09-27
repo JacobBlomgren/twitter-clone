@@ -1,12 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default function TweetInfo({ name, username, createdAt }) {
   return (
     <div className="Tweet__Info">
-      <span className="Tweet__Info__Name">{name}</span>
-      <span className="LightText">@{username}</span>
+      <Link to={`/u/${username}`} className="Tweet__Info__Name">
+        {name}
+      </Link>
+      <span className="LightText Tweet__Info__Username">@{username}</span>
       <small className="LightText">{moment(createdAt).fromNow()}</small>
     </div>
   );

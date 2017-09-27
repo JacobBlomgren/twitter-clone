@@ -2,11 +2,13 @@
 @import 'variables';
 @import '~bootstrap/scss/mixins';
 
-.Tweet__Info span {
+.Tweet__Info__Name,
+.Tweet__Info__Username {
   margin-right: 0.3rem;
 }
 
 .Tweet__Info__Name {
+  color: inherit;
   font-weight: bold;
 }
 
