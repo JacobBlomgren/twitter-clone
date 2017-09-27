@@ -12,35 +12,43 @@ function fetchProfileRequest(username) {
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
 export function fetchProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
-  const userNormalized = R.evolve(
-    {
-      // Transform the array of tweet objecs to an array of their ids
-      tweets: R.map(R.prop('id')),
-    },
-    userCamelized,
-  );
-  userNormalized.recievedAt = Date.now();
-  // Normalize all tweets by removing all user related data.
+  const userNormalized = {
+    ...userCamelized,
+    // Transform the array of tweet objecs to an array of their ids
+    tweets: userCamelized.tweets
+      .filter(R.propEq('userID', userCamelized.id))
+      .map(R.prop('id')),
+    partial: false,
+    recievedAt: Date.now(),
+  };
+
   const tweets = userCamelized.tweets.map(
     R.compose(
       t => ({ ...t, replyTo: t.replyTo ? t.replyTo.originalUserID : null }),
       t => ({ ...t, retweet: t.retweet ? t.retweet.userID : null }),
+      // Normalize all tweets by removing all user related data.
       R.omit(['name', 'username']),
     ),
   );
-  // extract the user data from all the tweets that were replies to other tweets.
-  const replyUsers = userCamelized.tweets
-    .filter(t => t.replyTo && t.replyTo.originalUserID !== user.id)
-    .map(({ replyTo }) => ({
-      id: replyTo.originalUserID,
-      username: replyTo.originalUsername,
-      partial: true,
-    }));
 
-  // TODO add tweets array to retweetUsers
+  const replies = userCamelized.tweets.filter(
+    t => t.replyTo && t.replyTo.originalUserID !== user.id,
+  );
+
+  // extract the user data from all the tweets that were replies to other tweets.
+  const replyUsers = replies.map(({ replyTo }) => ({
+    id: replyTo.originalUserID,
+    username: replyTo.originalUsername,
+    partial: true,
+  }));
+
   const retweets = userCamelized.tweets.filter(R.has('retweet'));
 
   const retweetUsers = R.compose(
+    R.map(u => ({
+      ...u,
+      tweets: retweets.filter(R.propEq('userID', u.id)).map(R.prop('id')),
+    })),
     R.uniq,
     R.map(({ username, name, userID }) => ({
       username,

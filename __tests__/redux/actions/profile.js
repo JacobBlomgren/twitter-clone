@@ -90,11 +90,16 @@ describe('fetch user sucess', () => {
     await store.dispatch(fetchUser(username));
 
     const action = store.getActions()[1];
+    console.log(action.users)
+    console.log(action.tweets)
 
     const jacob = R.find(R.propEq('id', '1'), action.users);
     expect(jacob.username).toBe('jacob');
     expect(jacob.tweets).toContain('1');
+    expect(jacob.tweets).not.toContain('2');
     expect(jacob.tweets).toContain('3');
+    expect(jacob.tweets).toContain('4');
+    expect(jacob.tweets).not.toContain('5');
 
     const sara = R.find(R.propEq('id', '2'), action.users);
     expect(sara.username).toBe('sara');
@@ -103,6 +108,7 @@ describe('fetch user sucess', () => {
     const john = R.find(R.propEq('id', '3'), action.users);
     expect(john.username).toBe('john');
     expect(john.partial).toBe(true);
+    expect(john.tweets).toContain('5');
 
     expect(action.tweets[0]).not.toHaveProperty('name');
     expect(action.tweets[0]).not.toHaveProperty('username');
