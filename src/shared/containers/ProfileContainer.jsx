@@ -17,7 +17,11 @@ class ProfileContainer extends Component {
 
   componentDidMount() {
     if (
-      this.shouldFetch(this.props.recievedAt, this.props.id, this.props.partial)
+      ProfileContainer.shouldFetch(
+        this.props.recievedAt,
+        this.props.id,
+        this.props.partial,
+      )
     ) {
       this.props.fetchUser();
     }
@@ -26,7 +30,11 @@ class ProfileContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.id !== nextProps.id) {
       if (
-        this.shouldFetch(nextProps.recievedAt, nextProps.id, nextProps.partial)
+        ProfileContainer.shouldFetch(
+          nextProps.recievedAt,
+          nextProps.id,
+          nextProps.partial,
+        )
       ) {
         nextProps.fetchUser();
       }
@@ -45,7 +53,19 @@ const findUser = (users, username) =>
 
 function mapStateToProps(state, { username }) {
   const user = findUser(R.values(state.entities.users.byID), username);
-  return { ...user, loggedInUserID: state.entities.loggedInUserID } || {};
+  if (!user) return {};
+  const tweetsWithTimestamp = user.tweets.map(id => ({
+    id,
+    createdAt: state.entities.tweets.byID[id].createdAt,
+    retweet: null,
+  }));
+  const retweets = user.retweets.map(t => ({ ...t, retweet: user.id }));
+  const tweets = R.compose(
+    R.map(({ id, retweet }) => ({ id, retweet })),
+    R.sortBy(R.prop('createdAt')),
+    R.union,
+  )(tweetsWithTimestamp, retweets);
+  return { ...user, tweets, loggedInUserID: state.entities.loggedInUserID };
 }
 
 function mapDispatchToProps(dispatch, { username }) {

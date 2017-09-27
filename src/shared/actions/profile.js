@@ -12,23 +12,9 @@ function fetchProfileRequest(username) {
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
 export function fetchProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
-  const userNormalized = {
-    ...userCamelized,
-    // Transform the array of tweet objecs to an array of their ids
-    tweets: userCamelized.tweets
-      .filter(R.propEq('userID', userCamelized.id))
-      .map(R.prop('id')),
-    partial: false,
-    recievedAt: Date.now(),
-  };
-
+  // Normalize all tweets by removing all user and retweet related data.
   const tweets = userCamelized.tweets.map(
-    R.compose(
-      t => ({ ...t, replyTo: t.replyTo ? t.replyTo.originalUserID : null }),
-      t => ({ ...t, retweet: t.retweet ? t.retweet.userID : null }),
-      // Normalize all tweets by removing all user related data.
-      R.omit(['name', 'username']),
-    ),
+    R.omit(['name', 'username', 'retweet']),
   );
 
   const replies = userCamelized.tweets.filter(
@@ -57,6 +43,18 @@ export function fetchProfileSuccess(user) {
       partial: true,
     })),
   )(retweets);
+
+  const userNormalized = {
+    ...userCamelized,
+    // Transform the array of tweet objecs to an array of their ids
+    tweets: userCamelized.tweets
+      .filter(R.propEq('userID', userCamelized.id))
+      .map(R.prop('id')),
+    // store retweets separately and their timestamp to allow sorting.
+    retweets: retweets.map(t => ({ id: t.id, createdAt: t.retweet.createdAt })),
+    partial: false,
+    recievedAt: Date.now(),
+  };
 
   return {
     type: FETCH_PROFILE_SUCCESS,

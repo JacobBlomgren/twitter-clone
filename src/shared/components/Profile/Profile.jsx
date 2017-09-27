@@ -52,5 +52,5 @@ Profile.propTypes = {
   unfollowUser: PropTypes.func.isRequired,
   followingCount: PropTypes.number.isRequired,
   followerCount: PropTypes.number.isRequired,
-  tweets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tweets: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

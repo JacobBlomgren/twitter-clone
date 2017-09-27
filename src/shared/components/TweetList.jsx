@@ -6,9 +6,9 @@ import TweetContainer from '../containers/TweetContainer';
 export default function TweetList({ tweets }) {
   return (
     <ol className="TweetList">
-      {tweets.map(tweetID => (
-        <li key={tweetID} className="ListSkin">
-          <TweetContainer tweetID={tweetID} />
+      {tweets.map(({ id, retweet }) => (
+        <li key={id} className="ListSkin">
+          <TweetContainer id={id} retweet={retweet} />
         </li>
       ))}
     </ol>
@@ -16,5 +16,10 @@ export default function TweetList({ tweets }) {
 }
 
 TweetList.propTypes = {
-  tweets: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tweets: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      retweet: PropTypes.string,
+    }),
+  ).isRequired,
 };

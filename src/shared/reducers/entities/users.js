@@ -20,7 +20,6 @@ function replaceUser(state, user) {
 
 function recieveUsers(state, action) {
   const IDs = action.users.map(R.prop('id'));
-  // Remove users for which we already have non-partial data.
   const byID = R.reduce((users, u) => R.merge(users, { [u.id]: u }), {});
   return {
     allIDs: R.union(state.allIDs, IDs),
