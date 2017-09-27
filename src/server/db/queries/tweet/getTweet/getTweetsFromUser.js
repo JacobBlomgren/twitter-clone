@@ -28,8 +28,8 @@ export default async function(userID, username, loggedInUserID) {
     );
     const tweets = await Promise.all(tweetQueries);
     return tweets.map(t => {
-      if (t.user_id === user.user_id) return t;
-      console.log(user.user_id)
+      const retweetInfo = R.find(R.propEq('tweet_id', t.id), response);
+      if (!retweetInfo.retweet) return t;
       // Add retweet info if the author of the tweet doesn't match userID.
       return {
         ...t,
@@ -37,6 +37,7 @@ export default async function(userID, username, loggedInUserID) {
           user_id: user.user_id,
           username: user.username,
           name: user.name,
+          created_at: retweetInfo.created_at,
         },
       };
     });
