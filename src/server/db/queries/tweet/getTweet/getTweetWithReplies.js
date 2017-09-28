@@ -2,22 +2,30 @@ import { db } from '../../../connection';
 import getQueryFile from '../../../getQueryFile';
 import getTweetWithTask from './getTweetWithTask';
 
-const getReplies = getQueryFile('tweet/getTweet/get_replies');
+const getParents = getQueryFile('tweet/getTweet/get_parents');
+const getChildren = getQueryFile('tweet/getTweet/get_children');
 
 export default async function(tweetID, loggedInUserID) {
   return db.task('get tweet', async task => {
-    const [tweet, { parent_ids, children_ids }] = await Promise.all([
+    const [
+      tweet,
+      { parent_ids: parentIDs },
+      { child_ids: childIDs },
+    ] = await Promise.all([
       getTweetWithTask(task, tweetID, loggedInUserID),
-      task.one(getReplies, tweetID),
+      task.one(getParents, tweetID),
+      task.one(getChildren, tweetID),
     ]);
     if (!tweet) return Promise.resolve(null);
-
+    console.log(parentIDs, childIDs);
     const idToQuery = id => getTweetWithTask(task, id, loggedInUserID);
-    const parentQueries = parent_ids.map(idToQuery);
-    const childrenQueries = children_ids.map(idToQuery);
     const [parents, children] = await Promise.all([
-      await Promise.all(parentQueries),
-      await Promise.all(childrenQueries),
+      parentIDs
+        ? await Promise.all(parentIDs.map(idToQuery))
+        : Promise.resolve([]),
+      childIDs
+        ? await Promise.all(childIDs.map(idToQuery))
+        : Promise.resolve([]),
     ]);
     return {
       tweet,
