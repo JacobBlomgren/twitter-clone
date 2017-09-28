@@ -15,6 +15,9 @@ export default async function(task, tweetID, loggedInUserID) {
   if (!tweet) return Promise.resolve(null);
   return {
     ...tweet,
+    reply_count: parseInt(tweet.reply_count, 10),
+    retweet_count: parseInt(tweet.retweet_count, 10),
+    like_count: parseInt(tweet.like_count, 10),
     reply_to: replyTo,
   };
 }
