@@ -17,15 +17,10 @@ export default async function(tweetID, loggedInUserID) {
       task.one(getChildren, tweetID),
     ]);
     if (!tweet) return Promise.resolve(null);
-    console.log(parentIDs, childIDs);
     const idToQuery = id => getTweetWithTask(task, id, loggedInUserID);
     const [parents, children] = await Promise.all([
-      parentIDs
-        ? await Promise.all(parentIDs.map(idToQuery))
-        : Promise.resolve([]),
-      childIDs
-        ? await Promise.all(childIDs.map(idToQuery))
-        : Promise.resolve([]),
+      parentIDs ? Promise.all(parentIDs.map(idToQuery)) : Promise.resolve([]),
+      childIDs ? Promise.all(childIDs.map(idToQuery)) : Promise.resolve([]),
     ]);
     return {
       tweet,
