@@ -54,12 +54,16 @@ const findUser = (users, username) =>
 function mapStateToProps(state, { username }) {
   const user = findUser(R.values(state.entities.users.byID), username);
   if (!user) return {};
-  const tweetsWithTimestamp = user.tweets.map(id => ({
-    id,
-    createdAt: state.entities.tweets.byID[id].createdAt,
-    retweet: null,
-  }));
-  const retweets = user.retweets.map(t => ({ ...t, retweet: user.id }));
+  const tweetsWithTimestamp = user.tweets
+    ? user.tweets.map(id => ({
+        id,
+        createdAt: state.entities.tweets.byID[id].createdAt,
+        retweet: null,
+      }))
+    : [];
+  const retweets = user.retweets
+    ? user.retweets.map(t => ({ ...t, retweet: user.id }))
+    : [];
   const tweets = R.compose(
     R.map(({ id, retweet }) => ({ id, retweet })),
     R.sortBy(R.prop('createdAt')),
