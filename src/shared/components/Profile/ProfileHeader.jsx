@@ -53,16 +53,17 @@ export default function ProfileHeader({
   );
 }
 
+ProfileHeader.defaultProps = {
+  description: '',
+};
+
 ProfileHeader.propTypes = {
   id: PropTypes.string.isRequired,
   loggedInUserID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   profilePictureURL: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  follows: PropTypes.bool.isRequired,
-  followUser: PropTypes.func.isRequired,
-  unfollowUser: PropTypes.func.isRequired,
-  followingCount: PropTypes.number.isRequired,
-  followerCount: PropTypes.number.isRequired,
+  description: PropTypes.string,
+  ...FollowButton.propTypes,
+  ...ProfileFollowingInfo.propTypes,
 };

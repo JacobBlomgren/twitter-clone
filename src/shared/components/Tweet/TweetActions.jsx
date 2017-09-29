@@ -9,7 +9,6 @@ import retweetActive from '../../../../public/icons/retweet-active.png';
 import like from '../../../../public/icons/like.png';
 import likeActive from '../../../../public/icons/like-active.png';
 
-// eslint-disable-next-line react/prop-types
 function Like({ likeCount, liked, onLike, onUnlike }) {
   return (
     <TweetAction
@@ -22,7 +21,13 @@ function Like({ likeCount, liked, onLike, onUnlike }) {
   );
 }
 
-// eslint-disable-next-line react/prop-types
+Like.propTypes = {
+  likeCount: PropTypes.number.isRequired,
+  liked: PropTypes.bool.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onUnlike: PropTypes.func.isRequired,
+};
+
 function Retweet({ retweetCount, retweeted, onRetweet, onRemoveRetweet }) {
   return (
     <TweetAction
@@ -34,6 +39,13 @@ function Retweet({ retweetCount, retweeted, onRetweet, onRemoveRetweet }) {
     />
   );
 }
+
+Retweet.propTypes = {
+  retweetCount: PropTypes.number.isRequired,
+  retweeted: PropTypes.bool.isRequired,
+  onRetweet: PropTypes.func.isRequired,
+  onRemoveRetweet: PropTypes.func.isRequired,
+};
 
 export default function TweetActions({
   replyCount,
@@ -73,12 +85,6 @@ export default function TweetActions({
 
 TweetActions.propTypes = {
   replyCount: PropTypes.number.isRequired,
-  retweetCount: PropTypes.number.isRequired,
-  retweeted: PropTypes.bool.isRequired,
-  onRetweet: PropTypes.func.isRequired,
-  onRemoveRetweet: PropTypes.func.isRequired,
-  likeCount: PropTypes.number.isRequired,
-  liked: PropTypes.bool.isRequired,
-  onLike: PropTypes.func.isRequired,
-  onUnlike: PropTypes.func.isRequired,
+  ...Retweet.propTypes,
+  ...Like.propTypes,
 };

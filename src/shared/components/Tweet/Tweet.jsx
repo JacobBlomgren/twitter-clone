@@ -45,25 +45,15 @@ export default function Tweet({
   );
 }
 
+Tweet.defaultProps = {
+  replyTo: '',
+  retweet: null,
+};
+
 Tweet.propTypes = {
-  name: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/require-default-props
+  ...TweetInfo.propTypes,
+  ...TweetContent.propTypes,
   replyTo: PropTypes.string,
-  replyCount: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/require-default-props
-  retweet: PropTypes.shape({
-    name: PropTypes.string,
-    username: PropTypes.string,
-  }),
-  retweetCount: PropTypes.number.isRequired,
-  retweeted: PropTypes.bool.isRequired,
-  onRetweet: PropTypes.func.isRequired,
-  onRemoveRetweet: PropTypes.func.isRequired,
-  likeCount: PropTypes.number.isRequired,
-  liked: PropTypes.bool.isRequired,
-  onLike: PropTypes.func.isRequired,
-  onUnlike: PropTypes.func.isRequired,
+  retweet: PropTypes.shape(Retweet.propTypes),
+  ...TweetActions.propTypes,
 };
