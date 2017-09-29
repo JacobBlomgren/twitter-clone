@@ -8,6 +8,10 @@ import { fetchUser } from '../actions/profile';
 import { follow, unfollow } from '../actions/follow';
 
 /* eslint-disable react/prop-types */
+/**
+ * Component to wrap a profile, that fetches new data for the requested user
+ * if the current data is old, non-existent, or partial.
+ */
 class ProfileContainer extends Component {
   static shouldFetch(recievedAt, id, partial) {
     // elapsed time since last fetch in minutes

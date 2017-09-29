@@ -10,6 +10,14 @@ function fetchProfileRequest(username) {
 }
 
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
+
+/**
+ * Transforms a user response of the format { ...user, tweets }
+ * to an action with all the data of the format { users, tweets }, where users
+ * is an array of all the data about users from the response, both the full main user data,
+ * and partial user data from tweets (replies and retweets). Tweets is an array of tweets,
+ * stripped of their respective user data, e.g. usernames, etc.
+ */
 export function fetchProfileSuccess(user) {
   const userCamelized = camelizeKeys(user);
   // Normalize all tweets by removing all user and retweet related data.
