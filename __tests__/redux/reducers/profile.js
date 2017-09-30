@@ -15,72 +15,132 @@ test('default', () => {
   expect(state.allIDs).toEqual([]);
 });
 
-test('RECIEVE_PROFILE', () => {
-  const initialState = users(
-    {
-      byID: {
-        '1': {
-          id: '1',
-          name: 'Jacob',
-        },
-      },
-      allIDs: ['1'],
-    },
-    {},
-  );
-  const state = users(initialState, {
-    type: FETCH_PROFILE_SUCCESS,
-    users: [
+describe('recieve profile', () => {
+  test('new information', () => {
+    const initialState = users(
       {
-        id: '2',
-        name: 'Sara',
+        byID: {
+          '1': {
+            id: '1',
+            name: 'Jacob',
+          },
+        },
+        allIDs: ['1'],
       },
-    ],
+      {},
+    );
+    const state = users(initialState, {
+      type: FETCH_PROFILE_SUCCESS,
+      users: [
+        {
+          id: '2',
+          name: 'Sara',
+        },
+      ],
+    });
+    expect(state.allIDs).toContain('1');
+    expect(state.allIDs).toContain('2');
+    expect(state.byID['2']).toEqual({
+      id: '2',
+      name: 'Sara',
+    });
   });
-  expect(state.allIDs).toContain('1');
-  expect(state.allIDs).toContain('2');
-  expect(state.byID['2']).toEqual({
-    id: '2',
-    name: 'Sara',
-  });
-});
 
-test('RECIEVE_PROFILE merging', () => {
-  const initialState = users(
-    {
-      byID: {
-        '1': {
-          id: '1',
-          name: 'Jacob',
-          description: 'Im a programmer',
-          tweets: ['1', '3', '5'],
+  test('merging with existent data', () => {
+    const initialState = users(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            name: 'Jacob',
+            description: 'Im a programmer',
+            tweets: ['1', '3', '5'],
+          },
         },
+        allIDs: ['1'],
       },
-      allIDs: ['1'],
-    },
-    {},
-  );
-  const state = users(initialState, {
-    type: FETCH_PROFILE_SUCCESS,
-    users: [
-      {
-        id: '1',
-        name: 'Jacob Blomgren',
-        tweets: ['2'],
-      },
-      {
-        id: '1',
-        name: 'Jacob Blomgren',
-        tweets: ['2', '4', '5'],
-      },
-    ],
+      {},
+    );
+    const state = users(initialState, {
+      type: FETCH_PROFILE_SUCCESS,
+      users: [
+        {
+          id: '1',
+          name: 'Jacob Blomgren',
+          tweets: ['2', '4', '5'],
+        },
+      ],
+    });
+    expect(state.allIDs).toEqual(['1']);
+    expect(state.byID['1'].id).toEqual('1');
+    expect(state.byID['1'].name).toEqual('Jacob Blomgren');
+    expect(state.byID['1'].description).toEqual('Im a programmer');
+    // 🖖🖖🖖🖖🖖
+    ['1', '2', '3', '4', '5'].forEach(expect(state.byID['1'].tweets).toContain);
   });
-  expect(state.allIDs).toEqual(['1']);
-  expect(state.byID['1'].id).toEqual('1');
-  expect(state.byID['1'].name).toEqual('Jacob Blomgren');
-  expect(state.byID['1'].description).toEqual('Im a programmer');
-  // 🖖🖖🖖🖖🖖
-  ['1', '2', '3', '4', '5'].forEach(expect(state.byID['1'].tweets).toContain);
+
+  test('merging duplicate data', () => {
+    const initialState = users(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            name: 'Jacob Blomgren',
+            tweets: ['1'],
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = users(initialState, {
+      type: FETCH_PROFILE_SUCCESS,
+      users: [
+        {
+          id: '1',
+          name: 'Jacob Blomgren',
+          tweets: ['1', '2'],
+        },
+        {
+          id: '1',
+          name: 'Jacob Blomgren',
+          tweets: ['1', '2', '3'],
+        },
+      ],
+    });
+    ['1', '2', '3'].forEach(expect(state.byID['1'].tweets).toContain);
+  });
+
+  test('merge partial data when full already exists', () => {
+    const initialState = users(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            name: 'Jacob Blomgren',
+            description: 'Im a programmer',
+            tweets: ['1'],
+            partial: false,
+          },
+        },
+        allIDs: ['1'],
+      },
+      {},
+    );
+    const state = users(initialState, {
+      type: FETCH_PROFILE_SUCCESS,
+      users: [
+        {
+          id: '1',
+          name: 'Jacob Blomgren',
+          tweets: ['1', '2'],
+          partial: true,
+        },
+      ],
+    });
+    expect(state.byID['1'].partial).toBe(false);
+    ['1', '2'].forEach(expect(state.byID['1'].tweets).toContain);
+  });
 });
 
 describe('follow user', () => {

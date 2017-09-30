@@ -18,8 +18,11 @@ function replaceUser(state, user) {
   };
 }
 
-const merge = (left, right) =>
-  Array.isArray(left) ? R.union(left, right) : right;
+function merge(key, left, right) {
+  if (Array.isArray(left)) return R.union(left, right);
+  if (key === 'partial' && !left) return false;
+  return right;
+}
 
 function mergeUsers(state, users) {
   if (users.length === 0) return state;
@@ -28,7 +31,7 @@ function mergeUsers(state, users) {
     {
       // TODO use set
       allIDs: R.union(state.allIDs, [user.id]),
-      byID: R.mergeDeepWith(merge, state.byID, { [user.id]: user }),
+      byID: R.mergeDeepWithKey(merge, state.byID, { [user.id]: user }),
     },
     tail,
   );
