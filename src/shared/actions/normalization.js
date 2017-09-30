@@ -1,14 +1,12 @@
 import R from 'ramda';
 
-const isRetweet = R.has('retweet');
-
 export function normalizeProfileToUser(profile) {
   return {
     // remove tweet property
     ...R.dissoc('tweets', profile),
     // store retweets separately and their timestamp to allow sorting.
     retweets: profile.tweets
-      .filter(isRetweet)
+      .filter(R.prop('retweet'))
       .map(t => ({ id: t.id, createdAt: t.retweet.createdAt })),
     partial: false,
     recievedAt: Date.now(),
@@ -16,7 +14,7 @@ export function normalizeProfileToUser(profile) {
 }
 
 export function normalizeTweets(tweets) {
-  const replies = tweets.filter(R.has('replyTo'));
+  const replies = tweets.filter(R.prop('replyTo'));
   const replyUsers = R.pipe(
     // extract the user data from replyTo
     R.map(({ replyTo }) => ({

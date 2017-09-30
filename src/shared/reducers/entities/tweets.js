@@ -75,8 +75,7 @@ function mergeTweets(state, tweets) {
   return mergeTweets(R.mergeDeepRight(state, { [tweet.id]: tweet }), tail);
 }
 
-// TODO recieve tweets?
-function recieveProfile(state, action) {
+function recieveTweets(state, action) {
   return mergeTweets(state, action.tweets);
 }
 
@@ -96,7 +95,7 @@ function byID(state = {}, action) {
     case REMOVE_RETWEET_REQUEST:
       return removeRetweet(state, action.tweetID);
     case FETCH_PROFILE_SUCCESS:
-      return recieveProfile(state, action);
+      return recieveTweets(state, action);
     default:
       return state;
   }
