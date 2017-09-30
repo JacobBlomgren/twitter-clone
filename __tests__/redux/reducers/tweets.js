@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import deepFreeze from 'deep-freeze';
 
 import tweets from '../../../src/shared/reducers/entities/tweets';
 import {
@@ -36,6 +37,7 @@ describe('like tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: LIKE_TWEET_REQUEST,
       tweetID: '1',
@@ -60,6 +62,7 @@ describe('like tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state1 = tweets(initialState, {
       type: LIKE_TWEET_REQUEST,
       tweetID: '1',
@@ -86,6 +89,7 @@ describe('like tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: LIKE_TWEET_REQUEST,
       tweetID: '5',
@@ -107,6 +111,7 @@ describe('like tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: LIKE_TWEET_FAILURE,
       tweetID: '1',
@@ -131,6 +136,7 @@ describe('unlike tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: UNLIKE_TWEET_REQUEST,
       tweetID: '1',
@@ -153,6 +159,7 @@ describe('unlike tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: UNLIKE_TWEET_FAILURE,
       tweetID: '1',
@@ -179,6 +186,7 @@ describe('recieve profile', () => {
       },
       {},
     );
+    deepFreeze(initialState);
 
     const state = tweets(initialState, {
       type: FETCH_PROFILE_SUCCESS,
@@ -222,6 +230,7 @@ describe('retweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: RETWEET_REQUEST,
       tweetID: '1',
@@ -244,10 +253,12 @@ describe('retweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state1 = tweets(initialState, {
       type: RETWEET_REQUEST,
       tweetID: '1',
     });
+    deepFreeze(state1);
     const state2 = tweets(state1, {
       type: RETWEET_REQUEST,
       tweetID: '1',
@@ -270,6 +281,7 @@ describe('retweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: LIKE_TWEET_REQUEST,
       tweetID: '5',
@@ -291,6 +303,7 @@ describe('retweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: RETWEET_FAILURE,
       tweetID: '1',
@@ -315,6 +328,7 @@ describe('remove retweet of tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: REMOVE_RETWEET_REQUEST,
       tweetID: '1',
@@ -337,6 +351,7 @@ describe('remove retweet of tweet', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = tweets(initialState, {
       type: REMOVE_RETWEET_FAILURE,
       tweetID: '1',
@@ -363,6 +378,7 @@ describe('recieve profile', () => {
       },
       {},
     );
+    deepFreeze(initialState);
 
     const state = tweets(initialState, {
       type: FETCH_PROFILE_SUCCESS,

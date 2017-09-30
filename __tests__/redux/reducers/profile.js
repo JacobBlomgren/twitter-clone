@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import deepFreeze from 'deep-freeze';
 
 import users from '../../../src/shared/reducers/entities/users';
 import {
@@ -29,6 +30,7 @@ describe('recieve profile', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FETCH_PROFILE_SUCCESS,
       users: [
@@ -61,6 +63,7 @@ describe('recieve profile', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FETCH_PROFILE_SUCCESS,
       users: [
@@ -93,6 +96,7 @@ describe('recieve profile', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FETCH_PROFILE_SUCCESS,
       users: [
@@ -127,6 +131,7 @@ describe('recieve profile', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FETCH_PROFILE_SUCCESS,
       users: [
@@ -158,6 +163,7 @@ describe('follow user', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FOLLOW_REQUEST,
       userID: '1',
@@ -180,6 +186,7 @@ describe('follow user', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state1 = users(initialState, {
       type: FOLLOW_REQUEST,
       userID: '1',
@@ -206,6 +213,7 @@ describe('follow user', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FOLLOW_REQUEST,
       userID: '5',
@@ -227,6 +235,7 @@ describe('follow user', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: FOLLOW_FAILURE,
       userID: '1',
@@ -249,6 +258,7 @@ describe('follow user', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: UNFOLLOW_REQUEST,
       userID: '1',
@@ -271,6 +281,7 @@ describe('follow user', () => {
       },
       {},
     );
+    deepFreeze(initialState);
     const state = users(initialState, {
       type: UNFOLLOW_FAILURE,
       userID: '1',

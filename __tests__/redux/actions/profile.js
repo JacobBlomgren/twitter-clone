@@ -95,7 +95,6 @@ describe('fetch user sucess', () => {
     const jacob = R.find(u => u.id === '1' && !u.partial, action.users);
     expect(jacob.username).toBe('jacob');
     expect(jacob.retweets[0].id).toBe('5');
-    console.log(jacob);
 
     const jacobPartial = R.find(u => u.id === '1' && u.partial, action.users);
     expect(jacobPartial.tweets).toContain('1');
@@ -103,7 +102,6 @@ describe('fetch user sucess', () => {
     expect(jacobPartial.tweets).toContain('3');
     expect(jacobPartial.tweets).toContain('4');
     expect(jacobPartial.tweets).not.toContain('5');
-    console.log(jacobPartial);
 
     const sara = R.find(R.propEq('id', '2'), action.users);
     expect(sara.username).toBe('sara');
