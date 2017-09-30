@@ -4,11 +4,8 @@ const isRetweet = R.has('retweet');
 
 export function normalizeProfileToUser(profile) {
   return {
-    ...profile,
-    // Transform the array of tweet objecs to an array of their ids
-    tweets: profile.tweets
-      .filter(R.propEq('userID', profile.id))
-      .map(R.prop('id')),
+    // remove tweet property
+    ...R.dissoc('tweets', profile),
     // store retweets separately and their timestamp to allow sorting.
     retweets: profile.tweets
       .filter(isRetweet)
