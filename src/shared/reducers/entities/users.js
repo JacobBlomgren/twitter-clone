@@ -1,4 +1,5 @@
 import R from 'ramda';
+import { combineReducers } from 'redux';
 
 import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
 import {
@@ -7,16 +8,6 @@ import {
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
 } from '../../actions/follow';
-
-function replaceUser(state, user) {
-  return {
-    ...state,
-    byID: {
-      ...state.byID,
-      [user.id]: user,
-    },
-  };
-}
 
 function merge(key, left, right) {
   if (Array.isArray(left)) return R.union(left, right);
@@ -28,11 +19,7 @@ function mergeUsers(state, users) {
   if (users.length === 0) return state;
   const [user, ...tail] = users;
   return mergeUsers(
-    {
-      // TODO use set
-      allIDs: R.union(state.allIDs, [user.id]),
-      byID: R.mergeDeepWithKey(merge, state.byID, { [user.id]: user }),
-    },
+    R.mergeDeepWithKey(merge, state, { [user.id]: user }),
     tail,
   );
 }
@@ -41,8 +28,15 @@ function recieveUsers(state, action) {
   return mergeUsers(state, action.users);
 }
 
+function replaceUser(state, user) {
+  return {
+    ...state,
+    [user.id]: user,
+  };
+}
+
 function addFollow(state, action) {
-  const user = state.byID[action.userID];
+  const user = state[action.userID];
   if (!user || user.follows) return state;
   const newUser = {
     ...user,
@@ -53,7 +47,7 @@ function addFollow(state, action) {
 }
 
 function removeFollow(state, action) {
-  const user = state.byID[action.userID];
+  const user = state[action.userID];
   if (!user || !user.follows) return state;
   const newUser = {
     ...user,
@@ -63,7 +57,7 @@ function removeFollow(state, action) {
   return replaceUser(state, newUser);
 }
 
-export default function(state = { byID: {}, allIDs: [] }, action) {
+function byID(state = {}, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
       return recieveUsers(state, action);
@@ -78,3 +72,17 @@ export default function(state = { byID: {}, allIDs: [] }, action) {
       return state;
   }
 }
+
+function allIDs(state = [], action) {
+  switch (action.type) {
+    case FETCH_PROFILE_SUCCESS:
+      return R.union(state, action.users.map(R.prop('id')));
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  byID,
+  allIDs,
+});

@@ -1,4 +1,5 @@
 import R from 'ramda';
+import { combineReducers } from 'redux';
 
 import {
   LIKE_TWEET_REQUEST,
@@ -20,15 +21,12 @@ import {
 function replaceTweet(state, tweet) {
   return {
     ...state,
-    byID: {
-      ...state.byID,
-      [tweet.id]: tweet,
-    },
+    [tweet.id]: tweet,
   };
 }
 
 function addLike(state, tweetID) {
-  const tweet = state.byID[tweetID];
+  const tweet = state[tweetID];
   if (!tweet || tweet.liked) return state;
   const newTweet = {
     ...tweet,
@@ -39,7 +37,7 @@ function addLike(state, tweetID) {
 }
 
 function removeLike(state, tweetID) {
-  const tweet = state.byID[tweetID];
+  const tweet = state[tweetID];
   if (!tweet || !tweet.liked) return state;
   const newTweet = {
     ...tweet,
@@ -50,7 +48,7 @@ function removeLike(state, tweetID) {
 }
 
 function addRetweet(state, tweetID) {
-  const tweet = state.byID[tweetID];
+  const tweet = state[tweetID];
   if (!tweet || tweet.retweeted) return state;
   const newTweet = {
     ...tweet,
@@ -61,7 +59,7 @@ function addRetweet(state, tweetID) {
 }
 
 function removeRetweet(state, tweetID) {
-  const tweet = state.byID[tweetID];
+  const tweet = state[tweetID];
   if (!tweet || !tweet.retweeted) return state;
   const newTweet = {
     ...tweet,
@@ -74,21 +72,15 @@ function removeRetweet(state, tweetID) {
 function mergeTweets(state, tweets) {
   if (tweets.length === 0) return state;
   const [tweet, ...tail] = tweets;
-  return mergeTweets(
-    {
-      // TODO use set
-      allIDs: R.union(state.allIDs, [tweet.id]),
-      byID: R.mergeDeepRight(state.byID, { [tweet.id]: tweet }),
-    },
-    tail,
-  );
+  return mergeTweets(R.mergeDeepRight(state, { [tweet.id]: tweet }), tail);
 }
 
+// TODO recieve tweets?
 function recieveProfile(state, action) {
   return mergeTweets(state, action.tweets);
 }
 
-export default function(state = { byID: {}, allIDs: [] }, action) {
+function byID(state = {}, action) {
   switch (action.type) {
     // We add a like at the request for immediate feedback, and remove it on failure
     case LIKE_TWEET_REQUEST:
@@ -109,3 +101,17 @@ export default function(state = { byID: {}, allIDs: [] }, action) {
       return state;
   }
 }
+
+function allIDs(state = [], action) {
+  switch (action.type) {
+    case FETCH_PROFILE_SUCCESS:
+      return R.union(state, action.tweets.map(R.prop('id')));
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  byID,
+  allIDs,
+});
