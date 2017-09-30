@@ -60,7 +60,8 @@ const successResponse = {
       retweet: {
         user_id: '1',
         original_user_id: '1',
-        original_username: 'jacob',
+        username: 'jacob',
+        created_at: '2017-09-27T09:47:20.776Z',
       },
     },
   ],
@@ -90,8 +91,9 @@ describe('fetch user sucess', () => {
     await store.dispatch(fetchUser(username));
 
     const action = store.getActions()[1];
+    console.log(action);
 
-    const jacob = R.find(R.propEq('id', '1'), action.users);
+    const jacob = R.find(u => u.id === '1' && !u.partial, action.users);
     expect(jacob.username).toBe('jacob');
     expect(jacob.tweets).toContain('1');
     expect(jacob.tweets).not.toContain('2');
@@ -102,6 +104,7 @@ describe('fetch user sucess', () => {
 
     const sara = R.find(R.propEq('id', '2'), action.users);
     expect(sara.username).toBe('sara');
+    expect(sara.tweets).toContain('2');
     expect(sara.partial).toBe(true);
 
     const john = R.find(R.propEq('id', '3'), action.users);
