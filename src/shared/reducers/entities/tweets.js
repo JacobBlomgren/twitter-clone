@@ -71,16 +71,21 @@ function removeRetweet(state, tweetID) {
   return replaceTweet(state, newTweet);
 }
 
+function mergeTweets(state, tweets) {
+  if (tweets.length === 0) return state;
+  const [tweet, ...tail] = tweets;
+  return mergeTweets(
+    {
+      // TODO use set
+      allIDs: R.union(state.allIDs, [tweet.id]),
+      byID: R.mergeDeepRight(state.byID, { [tweet.id]: tweet }),
+    },
+    tail,
+  );
+}
+
 function recieveProfile(state, action) {
-  const byID = {};
-  action.tweets.forEach(t => {
-    byID[t.id] = t;
-  });
-  const allIDs = action.tweets.map(R.prop('id'));
-  return {
-    allIDs: R.union(state.allIDs, allIDs),
-    byID: R.mergeDeepRight(state.byID, byID),
-  };
+  return mergeTweets(state, action.tweets);
 }
 
 export default function(state = { byID: {}, allIDs: [] }, action) {

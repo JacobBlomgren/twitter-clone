@@ -66,6 +66,11 @@ test('RECIEVE_PROFILE merging', () => {
       {
         id: '1',
         name: 'Jacob Blomgren',
+        tweets: ['2'],
+      },
+      {
+        id: '1',
+        name: 'Jacob Blomgren',
         tweets: ['2', '4', '5'],
       },
     ],

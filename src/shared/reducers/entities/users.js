@@ -18,17 +18,24 @@ function replaceUser(state, user) {
   };
 }
 
+const merge = (left, right) =>
+  Array.isArray(left) ? R.union(left, right) : right;
+
+function mergeUsers(state, users) {
+  if (users.length === 0) return state;
+  const [user, ...tail] = users;
+  return mergeUsers(
+    {
+      // TODO use set
+      allIDs: R.union(state.allIDs, [user.id]),
+      byID: R.mergeDeepWith(merge, state.byID, { [user.id]: user }),
+    },
+    tail,
+  );
+}
+
 function recieveUsers(state, action) {
-  const IDs = action.users.map(R.prop('id'));
-  const byID = R.reduce((users, u) => R.merge(users, { [u.id]: u }), {});
-  return {
-    allIDs: R.union(state.allIDs, IDs),
-    byID: R.mergeDeepWith(
-      (left, right) => (Array.isArray(left) ? R.union(left, right) : right),
-      state.byID,
-      byID(action.users),
-    ),
-  };
+  return mergeUsers(state, action.users);
 }
 
 function addFollow(state, action) {
