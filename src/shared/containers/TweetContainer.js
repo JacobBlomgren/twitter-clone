@@ -12,10 +12,11 @@ function mapStateToProps(state, { id, retweet }) {
     name,
     username,
     ...tweet,
-    replyCount: tweet.replies.length,
     replyTo:
       tweet.replyTo &&
-      state.entities.users.byID[tweet.replyTo.originalUserID].username,
+      state.entities.users.byID[
+        state.entities.tweets.byID[tweet.replyTo].userID
+      ].username,
     retweet: retweet && {
       username: state.entities.users.byID[retweet].username,
       name: state.entities.users.byID[retweet].name,

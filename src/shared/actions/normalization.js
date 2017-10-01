@@ -4,10 +4,6 @@ export function normalizeProfileToUser(profile) {
   return {
     // remove tweet property
     ...R.dissoc('tweets', profile),
-    // store retweets separately and their timestamp to allow sorting.
-    retweets: profile.tweets
-      .filter(R.prop('retweet'))
-      .map(t => ({ id: t.id, createdAt: t.retweet.createdAt })),
     partial: false,
     recievedAt: Date.now(),
   };
@@ -31,6 +27,22 @@ function normalizeUsersFromTweets(tweets) {
     })),
   )(replies);
 
+  const retweets = tweets.filter(R.prop('retweet'));
+  const retweetUsers = R.pipe(
+    R.map(({ retweet: { userID, name, username } }) => ({
+      id: userID,
+      name,
+      username,
+      partial: true,
+      // store retweets separately and their timestamp to allow sorting.
+      retweets: retweets.filter(t => t.retweet.userID === userID).map(t => ({
+        id: t.id,
+        createdAt: t.retweet.createdAt,
+      })),
+    })),
+    R.uniq,
+  )(retweets);
+
   const extractedUsers = R.pipe(
     R.map(({ username, name, userID }) => ({
       username,
@@ -44,7 +56,7 @@ function normalizeUsersFromTweets(tweets) {
       tweets: tweets.filter(R.propEq('userID', u.id)).map(R.prop('id')),
     })),
   )(tweets);
-  return [...replyUsers, ...extractedUsers];
+  return [...replyUsers, ...retweetUsers, ...extractedUsers];
 }
 
 function normalizeTweetData(tweets) {

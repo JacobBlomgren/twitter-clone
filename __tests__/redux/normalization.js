@@ -129,6 +129,31 @@ describe('normalizeTweets', () => {
     expect(replies['1']).not.toContain('4');
   });
 
+  test('extract retweet data', () => {
+    const { users } = normalizeTweets([
+      {
+        id: '1',
+        username: 'jacobblomgren',
+        name: 'Jacob Blomgren',
+        userID: '1',
+        content: 'a tweet',
+        retweet: {
+          userID: '2',
+          name: 'Sara',
+          username: 'sara',
+          createdAt: '2017-09-27T09:47:20.776Z',
+        },
+      },
+    ]);
+    expect(users).toContainEqual({
+      id: '2',
+      name: 'Sara',
+      username: 'sara',
+      partial: true,
+      retweets: [{ id: '1', createdAt: '2017-09-27T09:47:20.776Z' }],
+    });
+  });
+
   test('null properties', () => {
     const { users } = normalizeTweets([
       {
@@ -172,12 +197,6 @@ test('normalizeProfileToUser', () => {
         name: 'Sara',
         userID: '2',
         content: 'A retweeted tweet',
-        retweet: {
-          userID: '1',
-          username: 'jacob',
-          name: 'Jacob Blomgren',
-          createdAt: '2017-09-30T09:47:20.776Z',
-        },
       },
     ],
   });
@@ -187,7 +206,4 @@ test('normalizeProfileToUser', () => {
   expect(user.username).toBe('jacobblomgren');
   expect(user.description).toBe("I'm a programmer from Stockholm.");
   expect(user.partial).toBe(false);
-  expect(user.retweets).toEqual([
-    { id: '1', createdAt: '2017-09-30T09:47:20.776Z' },
-  ]);
 });
