@@ -10,11 +10,11 @@ function fetchProfileRequest(username) {
 }
 
 function normalizeProfileResponse(user) {
-  const { users, tweets } = normalizeTweets(user.tweets);
+  const { users, ...rest } = normalizeTweets(user.tweets);
   const profile = normalizeProfileToUser(user);
   return {
     users: [...users, profile],
-    tweets,
+    ...rest,
   };
 }
 

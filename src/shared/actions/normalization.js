@@ -13,6 +13,28 @@ export function normalizeProfileToUser(profile) {
   };
 }
 
+function normalizeReplies(replyTweets) {
+  const replyTo = replyTweets.reduce(
+    (acc, t) => ({
+      ...acc,
+      [t.id]: t.replyTo.originalTweetID,
+    }),
+    {},
+  );
+
+  const replies = replyTweets.reduce((acc, t) => {
+    const list = acc[t.replyTo.originalTweetID] || [];
+    return {
+      ...acc,
+      [t.replyTo.originalTweetID]: [...list, t.id],
+    };
+  }, {});
+  return {
+    replyTo,
+    replies,
+  };
+}
+
 export function normalizeTweets(tweets) {
   const replies = tweets.filter(R.prop('replyTo'));
   const replyUsers = R.pipe(
@@ -47,6 +69,7 @@ export function normalizeTweets(tweets) {
 
   return {
     users: [...replyUsers, ...extractedUsers],
-    tweets: tweets.map(R.omit(['name', 'username', 'retweet'])),
+    tweets: tweets.map(R.omit(['name', 'username', 'retweet', 'replyTo'])),
+    ...normalizeReplies(replies),
   };
 }
