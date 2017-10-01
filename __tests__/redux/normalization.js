@@ -1,3 +1,5 @@
+import R from 'ramda';
+
 import {
   normalizeProfileToUser,
   normalizeTweets,
@@ -76,27 +78,55 @@ describe('normalizeTweets', () => {
   });
 
   test('extract replyTo data', () => {
-    const { users } = normalizeTweets([
+    const { users, tweets, replies } = normalizeTweets([
       {
-        id: '1',
+        id: '2',
         username: 'jacobblomgren',
         name: 'Jacob Blomgren',
         userID: '1',
-        content: 'a tweet',
+        content: 'a reply',
         replyTo: {
-          originalTweetID: '2',
+          originalTweetID: '1',
           originalUserID: '2',
           originalUsername: 'sara',
         },
       },
+      {
+        id: '3',
+        username: 'jacobblomgren',
+        name: 'Jacob Blomgren',
+        userID: '1',
+        content: 'a second reply',
+        replyTo: {
+          originalTweetID: '1',
+          originalUserID: '2',
+          originalUsername: 'sara',
+        },
+      },
+      {
+        id: '4',
+        username: 'sara',
+        name: 'Sara Eriksson',
+        userID: '2',
+        content: 'reply back',
+        replyTo: {
+          originalTweetID: '2',
+          originalUserID: '1',
+          originalUsername: 'jacob',
+        },
+      },
     ]);
 
-    expect(users).toContainEqual({
-      id: '2',
-      username: 'sara',
-      tweets: ['2'],
-      partial: true,
-    });
+    expect(
+      R.any(
+        u => u.username === 'sara' && u.partial && u.tweets.includes('1'),
+        users,
+      ),
+    ).toBe(true);
+    expect(tweets).toContainEqual({ id: '1', userID: '2' });
+    expect(replies['1']).toContain('2');
+    expect(replies['1']).toContain('3');
+    expect(replies['1']).not.toContain('4');
   });
 
   test('null properties', () => {
@@ -122,9 +152,10 @@ describe('normalizeTweets', () => {
   });
 
   test('empty argument', () => {
-    const { users, tweets } = normalizeTweets([]);
+    const { users, tweets, replies } = normalizeTweets([]);
     expect(users).toEqual([]);
     expect(tweets).toEqual([]);
+    expect(replies).toEqual({});
   });
 });
 

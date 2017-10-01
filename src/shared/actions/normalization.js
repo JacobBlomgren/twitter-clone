@@ -13,29 +13,7 @@ export function normalizeProfileToUser(profile) {
   };
 }
 
-function normalizeReplies(replyTweets) {
-  const replyTo = replyTweets.reduce(
-    (acc, t) => ({
-      ...acc,
-      [t.id]: t.replyTo.originalTweetID,
-    }),
-    {},
-  );
-
-  const replies = replyTweets.reduce((acc, t) => {
-    const list = acc[t.replyTo.originalTweetID] || [];
-    return {
-      ...acc,
-      [t.replyTo.originalTweetID]: [...list, t.id],
-    };
-  }, {});
-  return {
-    replyTo,
-    replies,
-  };
-}
-
-export function normalizeTweets(tweets) {
+function normalizeUsersFromTweets(tweets) {
   const replies = tweets.filter(R.prop('replyTo'));
   const replyUsers = R.pipe(
     // extract the user data from replyTo
@@ -66,10 +44,37 @@ export function normalizeTweets(tweets) {
       tweets: tweets.filter(R.propEq('userID', u.id)).map(R.prop('id')),
     })),
   )(tweets);
+  return [...replyUsers, ...extractedUsers];
+}
 
+function normalizeTweetData(tweets) {
+  const normalized = tweets.map(
+    R.pipe(R.omit(['name', 'username', 'retweet']), t => ({
+      ...t,
+      replyTo: t.replyTo && t.replyTo.originalTweetID,
+    })),
+  );
+  const replies = tweets.filter(R.prop('replyTo')).map(t => ({
+    id: t.replyTo.originalTweetID,
+    userID: t.replyTo.originalUserID,
+  }));
+  return [...normalized, ...replies];
+}
+
+function normalizeReplies(tweets) {
+  return tweets.filter(R.prop('replyTo')).reduce((acc, t) => {
+    const list = acc[t.replyTo.originalTweetID] || [];
+    return {
+      ...acc,
+      [t.replyTo.originalTweetID]: [...list, t.id],
+    };
+  }, {});
+}
+
+export function normalizeTweets(tweets) {
   return {
-    users: [...replyUsers, ...extractedUsers],
-    tweets: tweets.map(R.omit(['name', 'username', 'retweet', 'replyTo'])),
-    ...normalizeReplies(replies),
+    users: normalizeUsersFromTweets(tweets),
+    tweets: normalizeTweetData(tweets),
+    replies: normalizeReplies(tweets),
   };
 }
