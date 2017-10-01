@@ -1,5 +1,8 @@
 import R from 'ramda';
 
+/**
+ * Normalizes a profile response.
+ */
 export function normalizeProfileToUser(profile) {
   return {
     // remove tweet property
@@ -9,6 +12,10 @@ export function normalizeProfileToUser(profile) {
   };
 }
 
+/*
+  Extracts all user data contained in an array of tweet, i.e. data for author of tweets,
+  replies and retweets.
+*/
 function normalizeUsersFromTweets(tweets) {
   const replies = tweets.filter(R.prop('replyTo'));
   const replyUsers = R.pipe(
@@ -59,6 +66,10 @@ function normalizeUsersFromTweets(tweets) {
   return [...replyUsers, ...retweetUsers, ...extractedUsers];
 }
 
+/*
+  Removes all non-tweet data, that is data pertaining to the author of the tweet, username, etc,
+  and also extracts the data from replyTo
+ */
 function normalizeTweetData(tweets) {
   const normalized = tweets.map(
     R.pipe(R.omit(['name', 'username', 'retweet']), t => ({
@@ -73,7 +84,12 @@ function normalizeTweetData(tweets) {
   return [...normalized, ...replies];
 }
 
-function normalizeReplies(tweets) {
+/*
+ Computes an array of the IDs of all replies to every tweet, akin to a view table in SQL.
+ Although this is data duplication, it eliminates the need for expensive loops through the whole
+ tweet table, to find all replies to a tweet.
+ */
+function computeReplies(tweets) {
   return tweets.filter(R.prop('replyTo')).reduce((acc, t) => {
     const list = acc[t.replyTo.originalTweetID] || [];
     return {
@@ -83,10 +99,14 @@ function normalizeReplies(tweets) {
   }, {});
 }
 
+/**
+ * Normalizes an array of tweets.
+ * @returns {{users, tweets, replies}}
+ */
 export function normalizeTweets(tweets) {
   return {
     users: normalizeUsersFromTweets(tweets),
     tweets: normalizeTweetData(tweets),
-    replies: normalizeReplies(tweets),
+    replies: computeReplies(tweets),
   };
 }
