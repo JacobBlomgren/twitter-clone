@@ -6,6 +6,7 @@ import Profile from '../components/Profile/Profile';
 import Spinner from '../components/Spinner';
 import { fetchUser } from '../actions/profile';
 import { follow, unfollow } from '../actions/follow';
+import NotFoundPage from '../components/page/NotFoundPage';
 
 /* eslint-disable react/prop-types */
 /**
@@ -19,13 +20,17 @@ class ProfileContainer extends Component {
     return time > 30 || !id || partial;
   }
 
+  static shouldFetchNotFound(notFound) {
+    return notFound && (Date.now() - notFound.time) / (60 * 60) > 5;
+  }
+
   componentDidMount() {
     if (
       ProfileContainer.shouldFetch(
         this.props.recievedAt,
         this.props.id,
         this.props.partial,
-      )
+      ) || ProfileContainer.shouldFetchNotFound(this.props.notFound)
     ) {
       this.props.fetchUser();
     }
@@ -38,7 +43,7 @@ class ProfileContainer extends Component {
           nextProps.recievedAt,
           nextProps.id,
           nextProps.partial,
-        )
+        ) || ProfileContainer.shouldFetchNotFound(this.props.notFound)
       ) {
         nextProps.fetchUser();
       }
@@ -46,6 +51,7 @@ class ProfileContainer extends Component {
   }
 
   render() {
+    if (this.props.notFound) return <NotFoundPage message={'User not found'} />;
     if (!this.props.id || this.props.partial) return <Spinner fullPage />;
     return <Profile {...this.props} />;
   }
@@ -57,7 +63,11 @@ const findUser = (users, username) =>
 
 function mapStateToProps(state, { username }) {
   const user = findUser(R.values(state.entities.users.byID), username);
-  if (!user) return {};
+  if (!user) {
+    if (state.entities.users.notFound[username])
+      return { notFound: state.entities.users.notFound[username] };
+    return {};
+  }
   const tweetsWithTimestamp = user.tweets
     ? user.tweets.map(id => ({
         id,

@@ -1,7 +1,10 @@
 import R from 'ramda';
 import { combineReducers } from 'redux';
 
-import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
+import {
+  FETCH_PROFILE_NOT_FOUND,
+  FETCH_PROFILE_SUCCESS,
+} from '../../actions/profile';
 import {
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
@@ -82,7 +85,28 @@ function allIDs(state = [], action) {
   }
 }
 
+// updates the list of not found users with the newly recieved users.
+function updateNotFound(state, users) {
+  if (Object.keys(state).length === 0) return state;
+  return R.filter(u => R.none(R.propEq('username', u.username), users), state);
+}
+
+function notFound(state = {}, action) {
+  switch (action.type) {
+    case FETCH_PROFILE_NOT_FOUND:
+      return {
+        ...state,
+        [action.username]: { username: action.username, time: action.time },
+      };
+    case FETCH_PROFILE_SUCCESS:
+      return updateNotFound(state, action.users);
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   byID,
   allIDs,
+  notFound,
 });

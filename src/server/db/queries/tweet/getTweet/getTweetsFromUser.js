@@ -15,11 +15,12 @@ export default async function(userID, username, loggedInUserID) {
   return db.task('get tweets from user', async task => {
     const [response, user] = await Promise.all([
       task.any(getTweetIDS, [userID, username]),
-      task.one(
+      task.oneOrNone(
         'SELECT name, username, user_id FROM account WHERE user_id = $1 OR username = $2',
         [userID, username],
       ),
     ]);
+    if (!user) return null;
     /* The response is of the format [{tweet_id:1}, {tweet_id:2}]
     so we get the tweet_id property of every object. */
     const tweetIDs = R.pluck('tweet_id', response);

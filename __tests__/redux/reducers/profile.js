@@ -8,7 +8,7 @@ import {
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
 } from '../../../src/shared/actions/follow';
-import { FETCH_PROFILE_SUCCESS } from '../../../src/shared/actions/profile';
+import { FETCH_PROFILE_NOT_FOUND, FETCH_PROFILE_SUCCESS } from '../../../src/shared/actions/profile';
 
 test('default', () => {
   const state = users(undefined, {});
@@ -145,6 +145,35 @@ describe('recieve profile', () => {
     });
     expect(state.byID['1'].partial).toBe(false);
     ['1', '2'].forEach(expect(state.byID['1'].tweets).toContain);
+  });
+
+  test('remove notFound users that are now recieved', () => {
+    const initialState = {
+      notFound: {
+        jacob: {
+          username: 'jacob',
+          time: Date.now(),
+        },
+        sara: {
+          username: 'sara',
+          time: Date.now(),
+        },
+      },
+    };
+    deepFreeze(initialState);
+    const state = users(initialState, {
+      type: FETCH_PROFILE_SUCCESS,
+      users: [
+        {
+          id: '1',
+          name: 'Jacob Blomgren',
+          username: 'jacob',
+          description: 'Im a programmer',
+        },
+      ],
+    });
+    expect(state.notFound.jacob).toBeUndefined();
+    expect(state.notFound.sara).toBeDefined();
   });
 });
 
@@ -288,5 +317,18 @@ describe('follow user', () => {
     });
     expect(state.byID['1'].followerCount).toBe(1);
     expect(state.byID['1'].follows).toBe(true);
+  });
+});
+
+test('user not found', () => {
+  const time = Date.now();
+  const state = users(undefined, {
+    type: FETCH_PROFILE_NOT_FOUND,
+    username: 'jacob',
+    time,
+  });
+  expect(state.notFound.jacob).toEqual({
+    username: 'jacob',
+    time,
   });
 });
