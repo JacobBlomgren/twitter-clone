@@ -30,7 +30,8 @@ class ProfileContainer extends Component {
         this.props.recievedAt,
         this.props.id,
         this.props.partial,
-      ) || ProfileContainer.shouldFetchNotFound(this.props.notFound)
+      ) ||
+      ProfileContainer.shouldFetchNotFound(this.props.notFound)
     ) {
       this.props.fetchUser();
     }
@@ -43,7 +44,8 @@ class ProfileContainer extends Component {
           nextProps.recievedAt,
           nextProps.id,
           nextProps.partial,
-        ) || ProfileContainer.shouldFetchNotFound(this.props.notFound)
+        ) ||
+        ProfileContainer.shouldFetchNotFound(this.props.notFound)
       ) {
         nextProps.fetchUser();
       }

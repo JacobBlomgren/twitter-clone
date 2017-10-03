@@ -1,10 +1,11 @@
 import { db } from '../../connection';
 
 import getQueryFile from '../../getQueryFile';
+import getTweetsFromUser from '../tweet/getTweet/getTweetsFromUser';
 
 const getUserQueryFile = getQueryFile('user/get_user');
 
-export async function getUser(userID, username, loggedInUserID) {
+async function getUserQuery(userID, username, loggedInUserID) {
   const user = await db.oneOrNone(getUserQueryFile, [
     userID,
     username,
@@ -15,6 +16,19 @@ export async function getUser(userID, username, loggedInUserID) {
     ...user,
     follower_count: parseInt(user.follower_count, 10),
     following_count: parseInt(user.following_count, 10),
+  };
+}
+
+export async function getUser(userID, username, loggedInUserID) {
+  const [user, tweets] = await Promise.all([
+    getUserQuery(userID, username, loggedInUserID),
+    getTweetsFromUser(userID, username, loggedInUserID),
+  ]);
+  if (!user) return null;
+  return {
+    ...user,
+    profile_picture_url: '/static/drake.png',
+    tweets,
   };
 }
 
