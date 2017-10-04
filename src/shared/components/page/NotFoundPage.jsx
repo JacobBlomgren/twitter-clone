@@ -5,9 +5,9 @@ import notFound from '../../../../public/icons/not-found.png';
 
 export default function NotFoundPage({ message }) {
   return (
-    <div>
-      <img src={notFound} alt="" />
-      <span>{message || 'Page not found'}</span>
+    <div className="NotFound">
+      <img src={notFound} alt="" className="NotFound__Icon" />
+      <p className="LightText NotFound__Text">{message || 'Page not found'}</p>
     </div>
   );
 }
