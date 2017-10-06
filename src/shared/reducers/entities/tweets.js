@@ -14,6 +14,7 @@ import {
   RETWEET_FAILURE,
   RETWEET_REQUEST,
 } from '../../actions/retweet';
+import { FETCH_TWEET_SUCCESS } from '../../actions/tweetDetails';
 
 /*
  * Replaces a tweet in state, that is assumed to exist.
@@ -69,10 +70,18 @@ function removeRetweet(state, tweetID) {
   return replaceTweet(state, newTweet);
 }
 
+function merge(key, left, right) {
+  if (key === 'partial' && !left) return false;
+  return right;
+}
+
 function mergeTweets(state, tweets) {
   if (tweets.length === 0) return state;
   const [tweet, ...tail] = tweets;
-  return mergeTweets(R.mergeDeepRight(state, { [tweet.id]: tweet }), tail);
+  return mergeTweets(
+    R.mergeDeepWithKey(merge, state, { [tweet.id]: tweet }),
+    tail,
+  );
 }
 
 function recieveTweets(state, action) {
@@ -95,6 +104,7 @@ function byID(state = {}, action) {
     case REMOVE_RETWEET_REQUEST:
       return removeRetweet(state, action.tweetID);
     case FETCH_PROFILE_SUCCESS:
+    case FETCH_TWEET_SUCCESS:
       return recieveTweets(state, action);
     default:
       return state;

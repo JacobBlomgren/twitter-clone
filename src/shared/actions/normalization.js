@@ -1,7 +1,7 @@
 import R from 'ramda';
 
 /**
- * Normalizes a profile response.
+ * Normalizes the user data from a profile response.
  */
 export function normalizeProfileToUser(profile) {
   return {
@@ -74,12 +74,14 @@ function normalizeTweetData(tweets) {
   const normalized = tweets.map(
     R.pipe(R.omit(['name', 'username', 'retweet']), t => ({
       ...t,
+      partial: typeof t.partial !== 'undefined' ? t.partial : true,
       replyTo: t.replyTo && t.replyTo.originalTweetID,
     })),
   );
   const replies = tweets.filter(R.prop('replyTo')).map(t => ({
     id: t.replyTo.originalTweetID,
     userID: t.replyTo.originalUserID,
+    partial: true,
   }));
   return [...normalized, ...replies];
 }

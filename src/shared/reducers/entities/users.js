@@ -11,6 +11,7 @@ import {
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
 } from '../../actions/follow';
+import { FETCH_TWEET_SUCCESS } from '../../actions/tweetDetails';
 
 function merge(key, left, right) {
   if (Array.isArray(left)) return R.union(left, right);
@@ -63,6 +64,7 @@ function removeFollow(state, action) {
 function byID(state = {}, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
+    case FETCH_TWEET_SUCCESS:
       return recieveUsers(state, action);
     // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:

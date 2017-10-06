@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 function findParents(tweets, parents, id) {
   if (!tweets[id].replyTo) return [tweets[id].id, ...parents];
   return findParents(tweets, [tweets[id].id, ...parents], tweets[id].replyTo);
@@ -23,8 +21,14 @@ function findChildren(replies, id) {
 
 export default function mapStateToProps(state, { id }) {
   const tweet = state.entities.tweets.byID[id];
-  if (!tweet) return {};
-  if (tweet.partial) return tweet;
+  if (!tweet) return { shouldFetch: true };
+  if (tweet.partial) {
+    return {
+      id: tweet.id,
+      partial: true,
+      shouldFetch: true,
+    };
+  }
   const parents = tweet.replyTo
     ? findParents(state.entities.tweets.byID, [], tweet.replyTo)
     : [];
@@ -33,6 +37,8 @@ export default function mapStateToProps(state, { id }) {
     : [];
   return {
     id,
+    shouldFetch: false,
+    recievedAt: tweet.recievedAt,
     parents,
     children,
   };

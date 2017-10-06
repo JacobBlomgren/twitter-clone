@@ -24,12 +24,12 @@ function mapStateToProps(state, { id, retweet }) {
   };
 }
 
-function mapDispatchToProps(dispatch, { tweetID }) {
+function mapDispatchToProps(dispatch, { id }) {
   return {
-    onLike: () => dispatch(likeTweet(tweetID)),
-    onUnlike: () => dispatch(unlikeTweet(tweetID)),
-    onRetweet: () => dispatch(addRetweet(tweetID)),
-    onRemoveRetweet: () => dispatch(removeRetweet(tweetID)),
+    onLike: () => dispatch(likeTweet(id)),
+    onUnlike: () => dispatch(unlikeTweet(id)),
+    onRetweet: () => dispatch(addRetweet(id)),
+    onRemoveRetweet: () => dispatch(removeRetweet(id)),
   };
 }
 
