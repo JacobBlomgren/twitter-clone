@@ -12,6 +12,7 @@ describe('normalizeTweets', () => {
         id: '1',
         username: 'jacobblomgren',
         name: 'Jacob Blomgren',
+        profilePictureURL: '/static/me.png',
         userID: '1',
         content: 'a tweet',
       },
@@ -19,6 +20,7 @@ describe('normalizeTweets', () => {
         id: '2',
         username: 'jacobblomgren',
         name: 'Jacob Blomgren',
+        profilePictureURL: '/static/me.png',
         userID: '1',
         content: 'a second tweet',
       },
@@ -28,6 +30,7 @@ describe('normalizeTweets', () => {
       id: '1',
       username: 'jacobblomgren',
       name: 'Jacob Blomgren',
+      profilePictureURL: '/static/me.png',
       tweets: ['1', '2'],
       partial: true,
     });
@@ -35,11 +38,13 @@ describe('normalizeTweets', () => {
       id: '1',
       userID: '1',
       content: 'a tweet',
+      partial: true,
     });
     expect(tweets).toContainEqual({
       id: '2',
       userID: '1',
       content: 'a second tweet',
+      partial: true,
     });
   });
 
@@ -51,6 +56,7 @@ describe('normalizeTweets', () => {
         name: 'Jacob Blomgren',
         userID: '1',
         content: 'a tweet',
+        profilePictureURL: '/static/me.png',
       },
       {
         id: '2',
@@ -58,6 +64,7 @@ describe('normalizeTweets', () => {
         name: 'Sara',
         userID: '2',
         content: 'a second tweet',
+        profilePictureURL: '/static/me.png',
       },
     ]);
 
@@ -65,6 +72,7 @@ describe('normalizeTweets', () => {
       id: '1',
       username: 'jacobblomgren',
       name: 'Jacob Blomgren',
+      profilePictureURL: '/static/me.png',
       tweets: ['1'],
       partial: true,
     });
@@ -72,6 +80,7 @@ describe('normalizeTweets', () => {
       id: '2',
       username: 'sara',
       name: 'Sara',
+      profilePictureURL: '/static/me.png',
       tweets: ['2'],
       partial: true,
     });
@@ -123,7 +132,7 @@ describe('normalizeTweets', () => {
         users,
       ),
     ).toBe(true);
-    expect(tweets).toContainEqual({ id: '1', userID: '2' });
+    expect(tweets).toContainEqual({ id: '1', userID: '2', partial: true });
     expect(replies['1']).toContain('2');
     expect(replies['1']).toContain('3');
     expect(replies['1']).not.toContain('4');

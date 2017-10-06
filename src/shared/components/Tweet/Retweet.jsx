@@ -6,13 +6,15 @@ import retweet from '../../../../public/icons/retweet.png';
 
 export default function Retweet({ name, username }) {
   return (
-    <small className="LightText">
-      <img src={retweet} className="Retweet__Icon" alt="" />
-      <Link to={`/u/${username}`} className="Retweet__Link">
-        {name}
-      </Link>
-      {' Retweeted'}
-    </small>
+    <div className="Retweet">
+      <small className="LightText">
+        <img src={retweet} className="Retweet__Icon" alt="" />
+        <Link to={`/u/${username}`} className="Retweet__Link">
+          {name}
+        </Link>
+        {' Retweeted'}
+      </small>
+    </div>
   );
 }
 

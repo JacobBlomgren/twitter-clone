@@ -7,10 +7,13 @@ import { removeRetweet, retweet as addRetweet } from '../actions/retweet';
 
 function mapStateToProps(state, { id, retweet }) {
   const tweet = state.entities.tweets.byID[id];
-  const { name, username } = state.entities.users.byID[tweet.userID];
+  const { name, username, profilePictureURL } = state.entities.users.byID[
+    tweet.userID
+  ];
   return {
     name,
     username,
+    profilePictureURL,
     ...tweet,
     replyTo:
       tweet.replyTo &&

@@ -51,11 +51,12 @@ function normalizeUsersFromTweets(tweets) {
   )(retweets);
 
   const extractedUsers = R.pipe(
-    R.map(({ username, name, userID }) => ({
+    R.map(({ username, name, userID, profilePictureURL }) => ({
       username,
       name,
       id: userID,
       partial: true,
+      profilePictureURL,
     })),
     R.uniq,
     R.map(u => ({
@@ -72,7 +73,7 @@ function normalizeUsersFromTweets(tweets) {
  */
 function normalizeTweetData(tweets) {
   const normalized = tweets.map(
-    R.pipe(R.omit(['name', 'username', 'retweet']), t => ({
+    R.pipe(R.omit(['name', 'username', 'profilePictureURL', 'retweet']), t => ({
       ...t,
       partial: typeof t.partial !== 'undefined' ? t.partial : true,
       replyTo: t.replyTo && t.replyTo.originalTweetID,

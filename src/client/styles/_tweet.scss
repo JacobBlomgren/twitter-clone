@@ -2,6 +2,50 @@
 @import 'variables';
 @import '~bootstrap/scss/mixins';
 
+$tweet-profile-picture-col-width: 3.4rem;
+$tweet-profile-picture-col-width-lg-mobile: 3.6rem;
+$tweet-profile-picture-col-width-lg: 3.8rem;
+
+.TweetProfilePicture {
+  height: auto;
+  width: 100%;
+}
+
+.TweetProfilePicture__Column {
+  padding-right: 0.4rem;
+  width: $tweet-profile-picture-col-width;
+}
+
+.Retweet {
+  margin-left: $tweet-profile-picture-col-width;
+}
+
+.NoUpperPadding {
+  padding-top: 3px !important;
+}
+
+@media (min-width: 375px) {
+  .TweetProfilePicture__Column {
+    padding-right: 0.6rem;
+    width: $tweet-profile-picture-col-width-lg-mobile;
+  }
+
+  .Retweet {
+    margin-left: $tweet-profile-picture-col-width-lg-mobile;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .TweetProfilePicture__Column {
+    padding-right: 0.8rem;
+    width: $tweet-profile-picture-col-width-lg;
+  }
+
+  .Retweet {
+    margin-left: $tweet-profile-picture-col-width-lg;
+  }
+}
+
 .Tweet__Info__Name,
 .Tweet__Info__Username {
   margin-right: 0.3rem;
