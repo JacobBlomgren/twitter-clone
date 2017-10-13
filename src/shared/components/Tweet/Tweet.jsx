@@ -6,7 +6,6 @@ import TweetContent from './TweetContent';
 import TweetActions from './TweetActions';
 import ReplyTo from './ReplyTo';
 import Retweet from './Retweet';
-import ProfilePicture from '../Profile/ProfilePicture';
 import TweetProfilePicture from './TweetProfilePicture';
 
 export default function Tweet({
@@ -34,10 +33,10 @@ export default function Tweet({
         : ''} clearfix`}
     >
       {retweet ? <Retweet {...retweet} /> : ''}
-      <div className="float-left clearfix">
+      <div className="float-left">
         <TweetProfilePicture url={profilePictureURL} username={username} />
       </div>
-      <div className="float-left clearfix">
+      <div className="float-left">
         <TweetInfo name={name} username={username} createdAt={createdAt} />
         {replyTo ? <ReplyTo username={replyTo} /> : ''}
         <TweetContent content={content} />

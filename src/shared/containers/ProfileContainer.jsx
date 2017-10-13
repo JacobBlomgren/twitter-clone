@@ -64,7 +64,7 @@ const findUser = (users, username) =>
   R.find(R.propEq('username', username), users);
 
 function mapStateToProps(state, { username }) {
-  const user = findUser(R.values(state.entities.users.byID), username);
+  const user = findUser(Object.values(state.entities.users.byID), username);
   if (!user) {
     if (state.entities.users.notFound[username])
       return { notFound: state.entities.users.notFound[username] };

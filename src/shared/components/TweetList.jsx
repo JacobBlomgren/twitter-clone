@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Tweet from './Tweet/Tweet';
 import TweetContainer from '../containers/TweetContainer';
 
 export default function TweetList({ tweets }) {
@@ -8,7 +9,7 @@ export default function TweetList({ tweets }) {
     <ol className="TweetList">
       {tweets.map(({ id, retweet }) => (
         <li key={id} className="ListSkin">
-          <TweetContainer id={id} retweet={retweet} />
+          <TweetContainer Tweet={Tweet} id={id} retweet={retweet} />
         </li>
       ))}
     </ol>

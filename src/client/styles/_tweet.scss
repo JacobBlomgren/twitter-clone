@@ -56,6 +56,11 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   font-weight: bold;
 }
 
+.Tweet__Info--Main {
+  margin-top: 0.2rem;
+  line-height: 1.2;
+}
+
 .Tweet__Content {
   margin-bottom: 0;
 }
@@ -72,6 +77,8 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
 }
 
 .ReplyTo {
+  font-size: 0.9rem;
+  line-height: 1;
   margin-bottom: 0.3rem;
   margin-top: 0.2rem;
 }
@@ -128,4 +135,8 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
 
 .Tweet__Action__Button:hover {
   opacity: 0.7;
+}
+
+.MainTweet__Header {
+  margin-bottom: 0.8rem;
 }

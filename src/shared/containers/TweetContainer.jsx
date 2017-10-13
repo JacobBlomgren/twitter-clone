@@ -1,6 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import Tweet from '../components/Tweet/Tweet';
 
 import { likeTweet, unlikeTweet } from '../actions/like';
 import { removeRetweet, retweet as addRetweet } from '../actions/retweet';
@@ -36,4 +36,13 @@ function mapDispatchToProps(dispatch, { id }) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tweet);
+export default function TweetContainer({ Tweet, ...props }) {
+  return React.createElement(
+    connect(mapStateToProps, mapDispatchToProps)(Tweet),
+    props,
+  );
+}
+
+TweetContainer.propTypes = {
+  Tweet: PropTypes.func.isRequired,
+};
