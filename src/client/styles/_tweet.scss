@@ -2,6 +2,10 @@
 @import 'variables';
 @import '~bootstrap/scss/mixins';
 
+.TweetList {
+  @include ol-no-style;
+}
+
 $tweet-profile-picture-col-width: 3.4rem;
 $tweet-profile-picture-col-width-lg-mobile: 3.6rem;
 $tweet-profile-picture-col-width-lg: 3.8rem;

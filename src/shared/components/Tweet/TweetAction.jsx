@@ -14,7 +14,7 @@ export default function TweetAction({ label, active, icon, count, onClick }) {
         onClick={onClick}
       >
         <img src={icon} alt="" className="Tweet__Action__Button__Icon" />
-        <span aria-hidden>{formatNumber(count)}</span>
+        <span aria-hidden="true">{formatNumber(count)}</span>
       </button>
     </div>
   );

@@ -5,9 +5,9 @@ import MainTweet from './MainTweet';
 
 export default function DetailedTweet({ id }) {
   return (
-    <div className="MainColumn ListSkin">
+    <main className="MainColumn ListSkin">
       <TweetContainer Tweet={MainTweet} id={id} />
-    </div>
+    </main>
   );
 }
 
