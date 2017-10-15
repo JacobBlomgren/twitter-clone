@@ -11,3 +11,12 @@ $btn-border-radius: 0.5rem;
 // since theme-colors are defined as a map and there's no way to change just the primary color on its own
 // except to redefine blue, which the primary color in turn points to.
 $blue: $main-color;
+
+$grid-breakpoints: (
+  xs: 0,
+  md-mobile: 375px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);

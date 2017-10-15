@@ -7,7 +7,7 @@
 }
 
 $tweet-profile-picture-col-width: 3.4rem;
-$tweet-profile-picture-col-width-lg-mobile: 3.6rem;
+$tweet-profile-picture-col-width-md-mobile: 3.6rem;
 $tweet-profile-picture-col-width-lg: 3.8rem;
 
 .TweetProfilePicture {
@@ -28,14 +28,14 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   padding-top: 3px !important;
 }
 
-@media (min-width: 375px) {
+@include media-breakpoint-up(md-mobile) {
   .TweetProfilePicture__Column {
     padding-right: 0.6rem;
-    width: $tweet-profile-picture-col-width-lg-mobile;
+    width: $tweet-profile-picture-col-width-md-mobile;
   }
 
   .Retweet {
-    margin-left: $tweet-profile-picture-col-width-lg-mobile;
+    margin-left: $tweet-profile-picture-col-width-md-mobile;
   }
 }
 
