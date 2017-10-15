@@ -1,4 +1,5 @@
 @import 'no-style';
+@import '~bootstrap/scss/variables';
 
 .Errors {
   bottom: 40px;
@@ -7,7 +8,7 @@
   position: absolute;
   right: 0;
   width: 250px;
-  z-index: 10;
+  z-index: $zindex-popover;
   @include ol-no-style;
 }
 
