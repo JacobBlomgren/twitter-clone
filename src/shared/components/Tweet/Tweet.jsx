@@ -27,7 +27,7 @@ export default function Tweet({
   onUnlike,
 }) {
   return (
-    <div
+    <article
       className={`Tweet SmallPadding ${retweet
         ? 'NoUpperPadding'
         : ''} clearfix`}
@@ -52,7 +52,7 @@ export default function Tweet({
           onUnlike={onUnlike}
         />
       </div>
-    </div>
+    </article>
   );
 }
 

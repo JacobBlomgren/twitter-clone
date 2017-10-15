@@ -11,8 +11,10 @@ export default function TweetInfo({ name, username, createdAt }) {
       <Link to={`/u/${username}`} className="Tweet__Info__Name">
         {name}
       </Link>
-      <small className="LightText">{moment(createdAt).fromNow()}</small>
       <Username username={username} />
+      <time dateTime={createdAt}>
+        <small className="LightText">{moment(createdAt).fromNow()}</small>
+      </time>
     </div>
   );
 }
