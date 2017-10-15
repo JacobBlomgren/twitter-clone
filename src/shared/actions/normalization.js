@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 /**
  * Normalizes the user data from a profile response.
@@ -107,6 +107,11 @@ function computeReplies(tweets) {
  * @returns {{users, tweets, replies}}
  */
 export function normalizeTweets(tweets) {
+  console.log({
+    users: normalizeUsersFromTweets(tweets),
+    tweets: normalizeTweetData(tweets),
+    replies: computeReplies(tweets),
+  });
   return {
     users: normalizeUsersFromTweets(tweets),
     tweets: normalizeTweetData(tweets),

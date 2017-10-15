@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { ADD_ERROR, REMOVE_ERROR } from '../actions/error';
 

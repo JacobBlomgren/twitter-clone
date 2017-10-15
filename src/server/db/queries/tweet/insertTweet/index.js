@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { db, pgpHelpers } from '../../../connection';
 import getQueryFile from '../../../getQueryFile';

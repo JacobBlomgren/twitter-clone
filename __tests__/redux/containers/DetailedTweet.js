@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 
 import mapStateToProps from '../../../src/shared/containers/DetailedTweet/mapStateToProps';
 
