@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function MainTweetInfo({ name, username }) {
   return (
-    <div className="Tweet__Info Tweet__Info--Main">
+    <div className="Tweet__Info--Main">
       <Link to={`/u/${username}`} className="Tweet__Info__Name">
         {name}
       </Link>

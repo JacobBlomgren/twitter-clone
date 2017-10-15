@@ -5,6 +5,7 @@ import ReplyTo from '../ReplyTo';
 import TweetContent from '../TweetContent';
 import TweetActions from '../TweetActions';
 import MainTweetInfo from './MainTweetInfo';
+import MainTweetDate from './MainTweetDate';
 
 export default function MainTweet({
   name,
@@ -39,6 +40,7 @@ export default function MainTweet({
       </div>
       <div>
         <TweetContent content={content} />
+        <MainTweetDate createdAt={createdAt} />
         <TweetActions
           replyCount={replyCount}
           retweetCount={retweetCount}
