@@ -1,7 +1,6 @@
 import React from 'react';
 import Tweet from '../Tweet';
 import TweetProfilePicture from '../TweetProfilePicture';
-import ReplyTo from '../ReplyTo';
 import TweetContent from '../TweetContent';
 import TweetActions from '../TweetActions';
 import MainTweetInfo from './MainTweetInfo';
@@ -13,7 +12,6 @@ export default function MainTweet({
   profilePictureURL,
   createdAt,
   content,
-  replyTo,
   replyCount,
   retweetCount,
   retweeted,

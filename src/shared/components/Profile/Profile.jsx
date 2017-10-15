@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ProfileHeader from './ProfileHeader';
 import TweetList from '../TweetList';

@@ -23,8 +23,8 @@ export default function ProfileFollowingInfo({
 }) {
   return (
     <div className="ProfilePage__Header__Followings">
-      <FollowingInfo number={followingCount} text={'Following'} />
-      <FollowingInfo number={followerCount} text={'Followers'} />
+      <FollowingInfo number={followingCount} text="Following" />
+      <FollowingInfo number={followerCount} text="Followers" />
     </div>
   );
 }

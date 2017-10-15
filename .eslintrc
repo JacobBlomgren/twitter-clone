@@ -15,7 +15,13 @@
   },
   "rules": {
     "compat/compat": 2,
-    "prettier/prettier":  ["error", {"singleQuote": true, "trailingComma": "all"}]
+    "prettier/prettier":  ["error", {"singleQuote": true, "trailingComma": "all"}],
+    // Override Airbnb config to disable error on React Router's Links, which do render href attributes.
+    "jsx-a11y/anchor-is-valid": ["error", {
+      "components": [],
+      "specialLink": [],
+      "aspects": ["noHref", "invalidHref", "preferButton"]
+    }]
   },
   "settings": {
     "polyfills": ["fetch"]
