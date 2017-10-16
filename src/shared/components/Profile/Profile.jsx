@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ProfileHeader from './ProfileHeader';
-import TweetList from '../TweetList';
+import TweetList from '../Tweet/TweetList';
 
 export default function Profile({
   id,

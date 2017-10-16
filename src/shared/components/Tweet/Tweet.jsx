@@ -34,7 +34,9 @@ export default function Tweet({
     >
       {retweet ? <Retweet {...retweet} /> : ''}
       <div className="float-left">
-        <TweetProfilePicture url={profilePictureURL} username={username} />
+        <div className="TweetProfilePicture__Column">
+          <TweetProfilePicture url={profilePictureURL} username={username} />
+        </div>
       </div>
       <div className="float-left">
         <TweetInfo name={name} username={username} createdAt={createdAt} />

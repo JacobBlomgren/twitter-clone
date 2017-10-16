@@ -6,8 +6,8 @@
   @include ol-no-style;
 }
 
-$tweet-profile-picture-col-width: 3.4rem;
-$tweet-profile-picture-col-width-md-mobile: 3.6rem;
+$tweet-profile-picture-col-width: 2.6rem;
+$tweet-profile-picture-col-width-md-mobile: 3.4rem;
 $tweet-profile-picture-col-width-lg: 3.8rem;
 
 .TweetProfilePicture {
@@ -20,8 +20,22 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   width: $tweet-profile-picture-col-width;
 }
 
+.TweetProfilePicture__Column--Main {
+  padding-right: 0.6rem;
+  width: 3.6rem;
+}
+
 .Retweet {
   margin-left: $tweet-profile-picture-col-width;
+}
+
+.ReplyToReply {
+  padding-left: $tweet-profile-picture-col-width;
+}
+
+.TweetProfilePicture__Column--ReplyToReply {
+  padding-right: 0.4rem;
+  width: $tweet-profile-picture-col-width * 0.6;
 }
 
 .NoUpperPadding {
@@ -37,6 +51,10 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   .Retweet {
     margin-left: $tweet-profile-picture-col-width-md-mobile;
   }
+
+  .ReplyToReply {
+    padding-left: $tweet-profile-picture-col-width-md-mobile;
+  }
 }
 
 @include media-breakpoint-up(sm) {
@@ -45,8 +63,21 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
     width: $tweet-profile-picture-col-width-lg;
   }
 
+  .TweetProfilePicture__Column--Main {
+    padding-right: 0.6rem;
+  }
+
   .Retweet {
     margin-left: $tweet-profile-picture-col-width-lg;
+  }
+
+  .ReplyToReply {
+    padding-left: $tweet-profile-picture-col-width-lg;
+  }
+
+  .TweetProfilePicture__Column--ReplyToReply {
+    padding-right: 0.6rem;
+    width: $tweet-profile-picture-col-width-lg * 0.65;
   }
 }
 

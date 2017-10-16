@@ -23,17 +23,15 @@ export default function MainTweet({
   onUnlike,
 }) {
   return (
-    <div className="Tweet SmallPadding">
+    <div className="Tweet SmallPadding Header">
       <div className="MainTweet__Header clearfix">
         <div className="float-left">
-          <TweetProfilePicture url={profilePictureURL} username={username} />
+          <div className="TweetProfilePicture__Column TweetProfilePicture__Column--Main">
+            <TweetProfilePicture url={profilePictureURL} username={username} />
+          </div>
         </div>
         <div className="float-left">
-          <MainTweetInfo
-            name={name}
-            username={username}
-            createdAt={createdAt}
-          />
+          <MainTweetInfo name={name} username={username} />
         </div>
       </div>
       <div>

@@ -19,7 +19,7 @@ export default function ProfileHeader({
   followerCount,
 }) {
   return (
-    <header className="ProfilePage__Header">
+    <header className="ProfilePage__Header Header">
       <div className="container-fluid container-fluid--no-padding SmallPadding--Sides">
         <div className="row">
           <div className="ProfilePage__Header__ProfilePicture col-md-3">

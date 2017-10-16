@@ -107,11 +107,6 @@ function computeReplies(tweets) {
  * @returns {{users, tweets, replies}}
  */
 export function normalizeTweets(tweets) {
-  console.log({
-    users: normalizeUsersFromTweets(tweets),
-    tweets: normalizeTweetData(tweets),
-    replies: computeReplies(tweets),
-  });
   return {
     users: normalizeUsersFromTweets(tweets),
     tweets: normalizeTweetData(tweets),
