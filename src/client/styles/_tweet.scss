@@ -30,7 +30,7 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
 }
 
 .ReplyToReply {
-  padding-left: $tweet-profile-picture-col-width;
+  margin-left: $tweet-profile-picture-col-width;
 }
 
 .TweetProfilePicture__Column--ReplyToReply {
@@ -53,7 +53,7 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   }
 
   .ReplyToReply {
-    padding-left: $tweet-profile-picture-col-width-md-mobile;
+    margin-left: $tweet-profile-picture-col-width-md-mobile;
   }
 }
 
@@ -72,7 +72,7 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   }
 
   .ReplyToReply {
-    padding-left: $tweet-profile-picture-col-width-lg;
+    margin-left: $tweet-profile-picture-col-width-lg;
   }
 
   .TweetProfilePicture__Column--ReplyToReply {

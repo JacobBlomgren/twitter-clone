@@ -25,31 +25,29 @@ export default function ReplyToReply({
   onUnlike,
 }) {
   return (
-    <div className="ReplyToReply">
-      <article className="Tweet SmallPadding clearfix">
-        <div className="float-left">
-          <div className="TweetProfilePicture__Column--ReplyToReply">
-            <TweetProfilePicture url={profilePictureURL} username={username} />
-          </div>
+    <article className="Tweet clearfix ReplyToReply SmallPadding--Sides SmallPadding--Bottom">
+      <div className="float-left">
+        <div className="TweetProfilePicture__Column--ReplyToReply">
+          <TweetProfilePicture url={profilePictureURL} username={username} />
         </div>
-        <div className="float-left">
-          <TweetInfo name={name} username={username} createdAt={createdAt} />
-          {replyTo ? <ReplyTo username={replyTo} /> : ''}
-          <TweetContent content={content} />
-          <TweetActions
-            replyCount={replyCount}
-            retweetCount={retweetCount}
-            retweeted={retweeted}
-            onRetweet={onRetweet}
-            onRemoveRetweet={onRemoveRetweet}
-            likeCount={likeCount}
-            liked={liked}
-            onLike={onLike}
-            onUnlike={onUnlike}
-          />
-        </div>
-      </article>
-    </div>
+      </div>
+      <div className="float-left">
+        <TweetInfo name={name} username={username} createdAt={createdAt} />
+        {replyTo ? <ReplyTo username={replyTo} /> : ''}
+        <TweetContent content={content} />
+        <TweetActions
+          replyCount={replyCount}
+          retweetCount={retweetCount}
+          retweeted={retweeted}
+          onRetweet={onRetweet}
+          onRemoveRetweet={onRemoveRetweet}
+          likeCount={likeCount}
+          liked={liked}
+          onLike={onLike}
+          onUnlike={onUnlike}
+        />
+      </div>
+    </article>
   );
 }
 
