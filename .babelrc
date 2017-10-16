@@ -3,7 +3,5 @@
     "env",
     "react"
   ],
-  "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": false }]
-  ]
+  "plugins": ["transform-object-rest-spread"]
 }

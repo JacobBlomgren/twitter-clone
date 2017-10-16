@@ -5,6 +5,37 @@ import { Link } from 'react-router-dom';
 
 import Username from './Username';
 
+moment.defineLocale('en-abbr', {
+  parentLocale: 'en',
+  relativeTime: {
+    future: 'in %s',
+    past: '%s',
+    s: '2s',
+    ss: '%ds',
+    m: '1m',
+    mm: '%dm',
+    h: '1h',
+    hh: '%dh',
+    d: '1d',
+    dd: '%dd',
+    M: 'a month',
+    MM: '%d months',
+    y: 'a year',
+    yy: '%d years',
+  },
+});
+
+function time(createdAt) {
+  const m = moment(createdAt).locale('en');
+  if (m.isBefore(moment().subtract(1, 'months'))) return m.format('MMM D');
+  return (
+    <span>
+      <span className="d-none d-sm-inline">{m.fromNow()}</span>
+      <span className="d-sm-none">{m.locale('en-abbr').fromNow()}</span>
+    </span>
+  );
+}
+
 export default function TweetInfo({ name, username, createdAt }) {
   return (
     <div className="Tweet__Info">
@@ -13,7 +44,12 @@ export default function TweetInfo({ name, username, createdAt }) {
       </Link>
       <Username username={username} />
       <time dateTime={createdAt}>
-        <small className="LightText">{moment(createdAt).fromNow()}</small>
+        <span className="sr-only">
+          Tweet created {moment(createdAt).fromNow()}.
+        </span>
+        <small className="LightText" aria-hidden="true">
+          {time(createdAt)}
+        </small>
       </time>
     </div>
   );
