@@ -10,6 +10,13 @@ export default class TweetLink extends Component {
     super(props);
     this.state = { redirect: false };
     this.handleClick = this.handleClick.bind(this);
+    this.navigateLink = this.navigateLink.bind(this);
+  }
+
+  navigateLink(e) {
+    const keycodes = { SPACE: 32, ENTER: 13 };
+    if (e.keyCode === keycodes.SPACE || e.keyCode === keycodes.ENTER)
+      this.setState({ redirect: true });
   }
 
   handleClick() {
@@ -20,7 +27,12 @@ export default class TweetLink extends Component {
     if (this.state.redirect)
       return <Redirect push to={`/t/${this.props.id}`} />;
     return (
-      <div onClick={this.handleClick} role="button">
+      <div
+        onClick={this.handleClick}
+        onKeyDown={this.navigateLink}
+        role="link"
+        tabIndex="0"
+      >
         {this.props.children}
       </div>
     );
