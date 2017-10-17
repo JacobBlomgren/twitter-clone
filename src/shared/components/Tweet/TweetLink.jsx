@@ -28,6 +28,7 @@ export default class TweetLink extends Component {
       return <Redirect push to={`/t/${this.props.id}`} />;
     return (
       <div
+        className="TweetLink"
         onClick={this.handleClick}
         onKeyDown={this.navigateLink}
         role="link"
