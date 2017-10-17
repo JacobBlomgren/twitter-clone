@@ -1,15 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import Username from '../Username';
+import { Name, Username } from '../TweetInfo';
 
 export default function MainTweetInfo({ name, username }) {
   return (
     <div className="Tweet__Info--Main">
-      <Link to={`/u/${username}`} className="Tweet__Info__Name">
-        {name}
-      </Link>
+      <Name name={name} username={username} />
       <div>
         <Username username={username} />
       </div>
@@ -19,5 +15,5 @@ export default function MainTweetInfo({ name, username }) {
 
 MainTweetInfo.propTypes = {
   ...Username.propTypes,
-  name: PropTypes.string.isRequired,
+  ...Name.propTypes,
 };

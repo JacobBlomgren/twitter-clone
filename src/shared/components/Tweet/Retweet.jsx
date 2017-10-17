@@ -9,7 +9,11 @@ export default function Retweet({ name, username }) {
     <div className="Retweet">
       <small className="LightText">
         <img src={retweet} className="Retweet__Icon" alt="" />
-        <Link to={`/u/${username}`} className="Retweet__Link">
+        <Link
+          to={`/u/${username}`}
+          className="Retweet__Link"
+          onClick={e => e.stopPropagation()}
+        >
           {name}
         </Link>
         {' Retweeted'}

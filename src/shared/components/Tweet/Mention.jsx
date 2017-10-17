@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 export default function Mention({ mention }) {
   return (
     <span className="Mention">
-      @<Link to={`/u/${mention}`}>{mention}</Link>
+      @<Link to={`/u/${mention}`} onClick={e => e.stopPropagation()}>
+        {mention}
+      </Link>
     </span>
   );
 }
