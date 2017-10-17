@@ -7,8 +7,10 @@ import TweetActions from './TweetActions';
 import ReplyTo from './ReplyTo';
 import Retweet from './Retweet';
 import TweetProfilePicture from './TweetProfilePicture';
+import TweetLink from './TweetLink';
 
 export default function Tweet({
+  id,
   name,
   username,
   profilePictureURL,
@@ -27,34 +29,36 @@ export default function Tweet({
   onUnlike,
 }) {
   return (
-    <article
-      className={`Tweet SmallPadding ${retweet
-        ? 'NoUpperPadding'
-        : ''} clearfix`}
-    >
-      {retweet ? <Retweet {...retweet} /> : ''}
-      <div className="float-left">
-        <div className="TweetProfilePicture__Column">
-          <TweetProfilePicture url={profilePictureURL} username={username} />
+    <TweetLink id={id}>
+      <article
+        className={`Tweet SmallPadding ${retweet
+          ? 'NoUpperPadding'
+          : ''} clearfix`}
+      >
+        {retweet ? <Retweet {...retweet} /> : ''}
+        <div className="float-left">
+          <div className="TweetProfilePicture__Column">
+            <TweetProfilePicture url={profilePictureURL} username={username} />
+          </div>
         </div>
-      </div>
-      <div className="float-left">
-        <TweetInfo name={name} username={username} createdAt={createdAt} />
-        {replyTo ? <ReplyTo username={replyTo} /> : ''}
-        <TweetContent content={content} />
-        <TweetActions
-          replyCount={replyCount}
-          retweetCount={retweetCount}
-          retweeted={retweeted}
-          onRetweet={onRetweet}
-          onRemoveRetweet={onRemoveRetweet}
-          likeCount={likeCount}
-          liked={liked}
-          onLike={onLike}
-          onUnlike={onUnlike}
-        />
-      </div>
-    </article>
+        <div className="float-left">
+          <TweetInfo name={name} username={username} createdAt={createdAt} />
+          {replyTo ? <ReplyTo username={replyTo} /> : ''}
+          <TweetContent content={content} />
+          <TweetActions
+            replyCount={replyCount}
+            retweetCount={retweetCount}
+            retweeted={retweeted}
+            onRetweet={onRetweet}
+            onRemoveRetweet={onRemoveRetweet}
+            likeCount={likeCount}
+            liked={liked}
+            onLike={onLike}
+            onUnlike={onUnlike}
+          />
+        </div>
+      </article>
+    </TweetLink>
   );
 }
 
@@ -64,6 +68,7 @@ Tweet.defaultProps = {
 };
 
 Tweet.propTypes = {
+  id: PropTypes.string.isRequired,
   ...TweetInfo.propTypes,
   ...TweetContent.propTypes,
   replyTo: PropTypes.string,
