@@ -26,6 +26,21 @@ $large-padding: 1.2rem;
   padding-bottom: $padding;
 }
 
+@include media-breakpoint-up(md-mobile) {
+  .SmallPadding {
+    padding: $large-padding $padding;
+  }
+
+  .SmallPadding--Sides {
+    padding-left: $padding;
+    padding-right: $padding;
+  }
+
+  .SmallPadding--Bottom {
+    padding-bottom: $large-padding;
+  }
+}
+
 @include media-breakpoint-up(sm) {
   .SmallPadding {
     padding: $large-padding;
@@ -34,10 +49,6 @@ $large-padding: 1.2rem;
   .SmallPadding--Sides {
     padding-left: $large-padding;
     padding-right: $large-padding;
-  }
-
-  .SmallPadding--Bottom {
-    padding-bottom: $large-padding;
   }
 }
 
