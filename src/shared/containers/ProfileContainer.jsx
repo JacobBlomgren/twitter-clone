@@ -14,10 +14,9 @@ import NotFoundPage from '../components/page/NotFoundPage';
  * if the current data is old, non-existent, or partial.
  */
 class ProfileContainer extends Component {
-  static shouldFetch(recievedAt, id, partial) {
+  static isStale(recievedAt) {
     // elapsed time since last fetch in minutes
-    const time = (Date.now() - recievedAt) / (60 * 60);
-    return time > 30 || !id || partial;
+    return (Date.now() - recievedAt) / (60 * 60) > 30;
   }
 
   static shouldFetchNotFound(notFound) {
@@ -26,11 +25,8 @@ class ProfileContainer extends Component {
 
   componentDidMount() {
     if (
-      ProfileContainer.shouldFetch(
-        this.props.recievedAt,
-        this.props.id,
-        this.props.partial,
-      ) ||
+      ProfileContainer.isStale(this.props.recievedAt) ||
+      this.props.shouldFetch ||
       ProfileContainer.shouldFetchNotFound(this.props.notFound)
     ) {
       this.props.fetchUser();
@@ -40,12 +36,9 @@ class ProfileContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.id !== nextProps.id) {
       if (
-        ProfileContainer.shouldFetch(
-          nextProps.recievedAt,
-          nextProps.id,
-          nextProps.partial,
-        ) ||
-        ProfileContainer.shouldFetchNotFound(this.props.notFound)
+        ProfileContainer.isStale(nextProps.recievedAt) ||
+        nextProps.shouldFetch ||
+        ProfileContainer.shouldFetchNotFound(nextProps.notFound)
       ) {
         nextProps.fetchUser();
       }
@@ -53,8 +46,9 @@ class ProfileContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     if (this.props.notFound) return <NotFoundPage message="User not found" />;
-    if (!this.props.id || this.props.partial) return <Spinner fullPage />;
+    if (this.props.shouldFetch) return <Spinner fullPage />;
     return <Profile {...this.props} />;
   }
 }
@@ -68,8 +62,17 @@ function mapStateToProps(state, { username }) {
   if (!user) {
     if (state.entities.users.notFound[username])
       return { notFound: state.entities.users.notFound[username] };
-    return {};
+    return { shouldFetch: true };
   }
+
+  if (user.partial) {
+    return {
+      id: user.id,
+      partial: true,
+      shouldFetch: true,
+    };
+  }
+
   const tweetsWithTimestamp = user.tweets
     ? user.tweets.map(id => ({
         id,
