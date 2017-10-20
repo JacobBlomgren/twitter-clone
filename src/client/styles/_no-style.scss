@@ -16,3 +16,11 @@
   outline: none;
   padding: 0;
 }
+
+@mixin textarea-no-style {
+  background-color: transparent;
+  border-width: 0;
+  font: inherit;
+  outline: none;
+  resize: none;
+}

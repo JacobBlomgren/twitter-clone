@@ -1,0 +1,49 @@
+@import 'no-style';
+
+.ComposeTweet {
+  background-color: #fff;
+  height: 100vh;
+  position: relative;
+}
+
+.ComposeTweet__Textarea {
+  @include textarea-no-style;
+  resize: none;
+  width: 100%;
+}
+
+.ComposeTweet__Bottom {
+  border-top: 1px solid #616161;
+  bottom: 0;
+  left: 0;
+  padding: inherit;
+  position: absolute;
+  width: 100%;
+}
+
+.ComposeTweet__Count {
+  font-size: 1.2rem;
+  margin-right: 0.8rem;
+}
+
+.ComposeTweet__Submit,
+.ComposeTweet__Textarea {
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+@include media-breakpoint-up(sm) {
+  .ComposeTweet__Bottom {
+    padding: 1.2rem 0;
+    position: relative;
+  }
+
+  .ComposeTweet__Submit,
+  .ComposeTweet__Textarea {
+    font-size: 1rem;
+  }
+
+  .ComposeTweet__Count {
+    font-size: 0.9rem;
+  }
+}
