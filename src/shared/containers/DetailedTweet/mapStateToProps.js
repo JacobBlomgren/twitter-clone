@@ -3,20 +3,20 @@ function findParents(tweets, parents, id) {
   return findParents(tweets, [tweets[id].id, ...parents], tweets[id].replyTo);
 }
 
-function findChildrenRecursion(levels, limit, replies, id) {
+function findRepliesRecursion(levels, limit, replyTable, id) {
   if (levels === limit) return { id };
   return {
     id,
-    children:
-      replies[id] &&
-      replies[id].map(id2 =>
-        findChildrenRecursion(levels + 1, limit, replies, id2),
+    replies:
+      replyTable[id] &&
+      replyTable[id].map(id2 =>
+        findRepliesRecursion(levels + 1, limit, replyTable, id2),
       ),
   };
 }
 
-function findChildren(replies, id) {
-  return findChildrenRecursion(0, 3, replies, id).children;
+function findReplies(replyTable, id) {
+  return findRepliesRecursion(0, 3, replyTable, id).replies;
 }
 
 export default function mapStateToProps(state, { id }) {
@@ -32,14 +32,14 @@ export default function mapStateToProps(state, { id }) {
   const parents = tweet.replyTo
     ? findParents(state.entities.tweets.byID, [], tweet.replyTo)
     : [];
-  const children = state.entities.replies.byID[id]
-    ? findChildren(state.entities.replies.byID, id)
+  const replies = state.entities.replies.byID[id]
+    ? findReplies(state.entities.replies.byID, id)
     : [];
   return {
     id,
     shouldFetch: false,
     recievedAt: tweet.recievedAt,
     parents,
-    children,
+    replies,
   };
 }

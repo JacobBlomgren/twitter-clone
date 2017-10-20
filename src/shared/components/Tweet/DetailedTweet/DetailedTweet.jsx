@@ -6,23 +6,23 @@ import MainTweet from './MainTweet';
 import ReplyList from './ReplyList';
 import Reply from './Reply';
 
-export default function DetailedTweet({ id, children }) {
+export default function DetailedTweet({ id, replies }) {
   return (
     <main className="MainColumn">
       <article>
         <TweetContainer Tweet={MainTweet} id={id} />
-        <ReplyList replies={children} />
+        <ReplyList replies={replies} />
       </article>
     </main>
   );
 }
 
 DetailedTweet.defaultProps = {
-  children: [],
+  replies: [],
 };
 
 DetailedTweet.propTypes = {
   id: PropTypes.string.isRequired,
   // parents: PropTypes.arrayOf(PropTypes.string).isRequired,
-  children: PropTypes.arrayOf(PropTypes.shape(Reply.propTypes)),
+  replies: PropTypes.arrayOf(PropTypes.shape(Reply.propTypes)),
 };

@@ -6,7 +6,7 @@ import Reply from './Reply';
 export default function ReplyList({ replies }) {
   return (
     <ol className="TweetList">
-      {replies.map(({ id, children: replyList }) => (
+      {replies.map(({ id, replies: replyList }) => (
         <li key={id} className="ListSkin">
           <Reply id={id} replies={replyList} />
         </li>
