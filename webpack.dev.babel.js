@@ -5,12 +5,10 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
 
 import common from './webpack.common';
 
-import { WDS_PORT, APP_NAME } from './src/shared/config';
+import { WDS_PORT  } from './src/shared/config';
 
 export default merge(common, {
   entry: {
@@ -34,13 +32,5 @@ export default merge(common, {
       filename: 'styles/main-[contenthash].css',
       disable: true,
     }),
-    new HtmlWebpackPlugin({
-      alwaysWriteToDisk: true,
-      inject: false,
-      minify: false,
-      title: APP_NAME,
-      template: 'index.ejs',
-    }),
-    new HtmlWebpackHarddiskPlugin(),
   ],
 });
