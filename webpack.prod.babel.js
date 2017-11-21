@@ -9,6 +9,7 @@ import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import common from './webpack.common';
 
@@ -42,6 +43,10 @@ const clientConfig = merge(common, {
       },
       title: APP_NAME,
       template: 'index.ejs',
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: path.join(__dirname, 'report.html'),
     }),
   ],
 });
