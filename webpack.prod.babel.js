@@ -20,6 +20,7 @@ const clientConfig = merge(common, {
     main: './src/client',
   },
   output: {
+    filename: 'js/[name].[chunkhash].js',
     publicPath: '/static/',
   },
   plugins: [
@@ -30,6 +31,7 @@ const clientConfig = merge(common, {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
+    new webpack.HashedModuleIdsPlugin(),
     new ExtractTextPlugin({
       filename: 'styles/main-[contenthash].css',
     }),

@@ -14,6 +14,7 @@ router.get('*', (req, res) => {
       </head>
       <body>
         <div id="root"></div>
+        <script src="http://localhost:7000/dist/js/vendor.bundle.js"></script>
         <script src="http://localhost:7000/dist/js/main.bundle.js"></script>
         <script src="http://localhost:7000/dist/js/polyfills.bundle.js"></script>
       </body>

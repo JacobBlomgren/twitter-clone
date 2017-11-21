@@ -11,6 +11,19 @@ export default {
   name: 'client',
   entry: {
     polyfills: ['babel-polyfill', 'whatwg-fetch'],
+    vendor: [
+      'ramda',
+      'react',
+      'react-dom',
+      'react-redux',
+      'redux',
+      'react-router',
+      'react-router-dom',
+      'history',
+      'react-transition-group',
+      'numeral',
+      'moment',
+    ],
   },
   output: {
     filename: 'js/[name].bundle.js',
@@ -66,6 +79,9 @@ export default {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({

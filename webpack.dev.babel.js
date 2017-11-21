@@ -8,7 +8,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 import common from './webpack.common';
 
-import { WDS_PORT  } from './src/shared/config';
+import { WDS_PORT } from './src/shared/config';
 
 export default merge(common, {
   entry: {
