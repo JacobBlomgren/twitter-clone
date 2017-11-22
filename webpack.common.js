@@ -21,7 +21,6 @@ export default {
       'react-router',
       'react-router-dom',
       'react-transition-group',
-      'draft-js',
       'numeral',
       'moment',
     ],
@@ -32,6 +31,10 @@ export default {
   },
   module: {
     rules: [
+      {
+        test: /ComposeTweet\.jsx$/,
+        use: 'bundle-loader',
+      },
       { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
       {
         test: /\.(scss)$/,

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Editor, EditorState } from 'draft-js';
 import stringLength from 'string-length';
 
+// import 'draft-js/dist/Draft.css';
+
 export default class ComposeTweet extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,8 @@ export default class ComposeTweet extends Component {
     e.preventDefault();
   }
   render() {
+    console.log(this.state.editorState.getCurrentContent());
+    console.log('asdasdasd');
     return (
       <main>
         <form
