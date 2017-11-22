@@ -6,6 +6,7 @@ import webpack from 'webpack';
 import path from 'path';
 
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import prefixer from 'autoprefixer';
 
 export default {
   name: 'client',
@@ -19,8 +20,8 @@ export default {
       'redux',
       'react-router',
       'react-router-dom',
-      'history',
       'react-transition-group',
+      'draft-js',
       'numeral',
       'moment',
     ],
@@ -36,27 +37,14 @@ export default {
         test: /\.(scss)$/,
         use: ExtractTextPlugin.extract({
           use: [
-            {
-              loader: 'css-loader',
-            },
+            { loader: 'css-loader' },
             {
               loader: 'postcss-loader',
               options: {
-                /* eslint-disable */
-                plugins: function() {
-                  /*
-                    Disable removal of outdated prefixes (not needed),
-                    which speeds up Autoprefixer.
-                    https://github.com/postcss/autoprefixer#outdated-prefixes
-                   */
-                  return [require('autoprefixer')({ remove: false })];
-                },
-                /* eslint-enable */
+                plugins: [prefixer()],
               },
             },
-            {
-              loader: 'sass-loader',
-            },
+            { loader: 'sass-loader' },
           ],
           fallback: 'style-loader',
         }),

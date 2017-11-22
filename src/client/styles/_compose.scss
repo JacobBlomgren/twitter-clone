@@ -1,4 +1,6 @@
 @import 'no-style';
+@import '~bootstrap/scss/mixins';
+@import '~draft-js/dist/Draft.css';
 
 .ComposeTweet {
   background-color: #fff;
@@ -12,8 +14,14 @@
   width: 100%;
 }
 
+.DraftEditor-editorContainer, .DraftEditor-root, .public-DraftEditor-content {
+  height: auto;
+  min-height: 150px;
+}
+
 .ComposeTweet__Bottom {
-  border-top: 1px solid #616161;
+  @include clearfix;
+  border-top: 1px solid #a1a1a1;
   bottom: 0;
   left: 0;
   padding: inherit;
@@ -33,6 +41,10 @@
 }
 
 @include media-breakpoint-up(sm) {
+  .ComposeTweet {
+    height: auto;
+  }
+
   .ComposeTweet__Bottom {
     padding: 1.2rem 0;
     position: relative;

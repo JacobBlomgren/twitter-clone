@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
+import { Editor, EditorState } from 'draft-js';
 import stringLength from 'string-length';
 
 export default class ComposeTweet extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: '',
-    };
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { editorState: EditorState.createEmpty(), value: '' };
+    this.onChange = editorState => this.setState({ editorState });
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(e) {
-    this.setState({ value: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
   }
-
   render() {
     return (
       <main>
@@ -27,12 +21,9 @@ export default class ComposeTweet extends Component {
           className="MainColumn ComposeTweet SmallPadding"
           onSubmit={this.handleSubmit}
         >
-          <textarea
-            value={this.state.value}
-            placeholder="What's on your mind?"
-            onChange={this.handleChange}
-            className="ComposeTweet__Textarea"
-            rows={6}
+          <Editor
+            editorState={this.state.editorState}
+            onChange={this.onChange}
           />
           <div className="ComposeTweet__Bottom">
             <span className="float-right">
