@@ -7,13 +7,10 @@
   },
   "scripts": {
     "start": "yarn dev:start",
-    "dev:start":
-      "nodemon -e js,jsx,sql --ignore lib --ignore dist --ignore src/client --exec babel-node src/server",
+    "dev:start": "nodemon -e js,jsx,sql --ignore lib --ignore dist --ignore src/client --exec babel-node src/server",
     "dev:wds": "webpack-dev-server --config webpack.dev.babel.js --progress",
-    "prod:build":
-      "rimraf lib dist && babel src -d lib && cross-env NODE_ENV=production webpack --config webpack.prod.babel.js --progress",
-    "prod:start":
-      "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
+    "prod:build": "rimraf lib dist && babel src -d lib && cross-env NODE_ENV=production webpack --config webpack.prod.babel.js --progress",
+    "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "prettify": "yarn prettier \"{src,__tests__}/**/*.{js,jsx}\" webpack.*.js",
     "prettier": "prettier --single-quote --trailing-comma all --write",
@@ -87,6 +84,7 @@
     "dotenv": "^4.0.0",
     "draft-js": "^0.10.3",
     "draft-js-hashtag-plugin": "^2.0.1",
+    "draft-js-mention-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.0.3",
     "express": "^4.15.3",
     "express-session": "^1.15.4",
@@ -113,6 +111,8 @@
     "redux-thunk": "^2.2.0",
     "spinkit": "^1.2.5",
     "string-length": "^2.0.0",
+    "stylelint-order": "^0.7.0",
+    "stylelint-scss": "^2.1.0",
     "whatwg-fetch": "^2.0.3",
     "xss-filters": "^1.2.7"
   }

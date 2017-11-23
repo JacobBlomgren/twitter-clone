@@ -150,8 +150,8 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
 }
 
 .Tweet__Action__Button {
-  text-align: left;
   @include button-no-style;
+  text-align: left;
 }
 
 @include media-breakpoint-down(md) {

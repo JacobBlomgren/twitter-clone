@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/variables';
 
 .Errors {
+  @include ol-no-style;
   bottom: 40px;
   left: 0;
   margin: 0 auto;
@@ -9,7 +10,6 @@
   right: 0;
   width: 250px;
   z-index: $zindex-popover;
-  @include ol-no-style;
 }
 
 .Errors__Error {
