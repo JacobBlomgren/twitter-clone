@@ -9,6 +9,7 @@
     "react",
     "prettier"
   ],
+  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "jest": true

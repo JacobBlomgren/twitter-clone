@@ -1,14 +1,14 @@
 import React from 'react';
-import Bundle from '../Bundle/Bundle';
+import Loadable from 'react-loadable';
 import Spinner from '../Spinner';
-import ComposeTweet from './ComposeTweet';
 
-export default function Lazy() {
-  return (
-    <Bundle load={ComposeTweet}>
-      {Comp => (Comp ? <Comp /> : <Spinner fullPage />)}
-    </Bundle>
-  );
-}
+// Lazy load ComposeTweet with its heavy draft.js dependency, which is not needed for instance when
+// the user is not logged in.
+const Lazy = Loadable({
+  loader: () => import('./ComposeTweet'),
+  loading() {
+    return <Spinner fullPage />;
+  },
+});
 
-Lazy.propTypes = {};
+export default Lazy;

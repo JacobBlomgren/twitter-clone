@@ -31,10 +31,10 @@ export default {
   },
   module: {
     rules: [
-      {
-        test: /ComposeTweet\.jsx$/,
-        use: 'bundle-loader',
-      },
+      // {
+      //   test: /ComposeTweet\.jsx$/,
+      //   loaders: ['bundle?lazy', 'babel'],
+      // },
       { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
       {
         test: /\.(scss)$/,
