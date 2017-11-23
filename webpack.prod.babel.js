@@ -33,7 +33,7 @@ const clientConfig = merge(common, {
     }),
     new webpack.HashedModuleIdsPlugin(),
     new ExtractTextPlugin({
-      filename: 'styles/main-[contenthash].css',
+      filename: 'styles/[name]-[contenthash].css',
     }),
     new HtmlWebpackPlugin({
       alwaysWriteToDisk: true,

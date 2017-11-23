@@ -1,6 +1,10 @@
+@import 'custom';
 @import 'no-style';
+@import 'variables';
 @import '~bootstrap/scss/mixins';
 @import '~draft-js/dist/Draft.css';
+@import '~draft-js-mention-plugin/lib/plugin.css';
+@import '~draft-js-hashtag-plugin/lib/plugin.css';
 
 .ComposeTweet {
   background-color: #fff;
@@ -14,7 +18,9 @@
   width: 100%;
 }
 
-.DraftEditor-editorContainer, .DraftEditor-root, .public-DraftEditor-content {
+.DraftEditor-editorContainer,
+.DraftEditor-root,
+.public-DraftEditor-content {
   height: auto;
   min-height: 150px;
 }

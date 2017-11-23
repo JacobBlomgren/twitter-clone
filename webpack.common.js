@@ -7,6 +7,7 @@ import path from 'path';
 
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import prefixer from 'autoprefixer';
+import noComments from 'postcss-discard-comments';
 
 export default {
   name: 'client',
@@ -40,11 +41,11 @@ export default {
         test: /\.(scss)$/,
         use: ExtractTextPlugin.extract({
           use: [
-            { loader: 'css-loader' },
+            { loader: 'css-loader', options: { minimize: true } },
             {
               loader: 'postcss-loader',
               options: {
-                plugins: [prefixer()],
+                plugins: [prefixer(), noComments({ removeAll: true })],
               },
             },
             { loader: 'sass-loader' },
