@@ -1,6 +1,6 @@
 import express from 'express';
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import loginRequired from '../middleware/loginRequired';
 import id from '../middleware/validation/id';

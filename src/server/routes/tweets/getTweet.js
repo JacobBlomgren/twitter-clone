@@ -1,5 +1,5 @@
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import id from '../middleware/validation/id';
 import getTweetWithReplies from '../../db/queries/tweet/getTweet/getTweetWithReplies';

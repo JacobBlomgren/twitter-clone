@@ -31,9 +31,9 @@ export default function Tweet({
   return (
     <TweetLink id={id}>
       <article
-        className={`Tweet SmallPadding ${retweet
-          ? 'NoUpperPadding'
-          : ''} clearfix`}
+        className={`Tweet SmallPadding ${
+          retweet ? 'NoUpperPadding' : ''
+        } clearfix`}
       >
         {retweet ? <Retweet {...retweet} /> : ''}
         <div className="float-left">

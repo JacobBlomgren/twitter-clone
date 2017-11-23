@@ -1,5 +1,5 @@
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import { getUser as getUserQuery } from '../../db/queries/user/index';
 import id from '../middleware/validation/id';

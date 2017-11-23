@@ -11,10 +11,7 @@ export default class FadeInAndOut extends React.Component {
     super(props);
     this.state = { show: true };
 
-    setTimeout(
-      () => this.setState({ show: false }),
-      this.props.interval || 5000,
-    );
+    setTimeout(() => this.setState({ show: false }), this.props.interval);
   }
 
   render() {
@@ -27,7 +24,7 @@ export default class FadeInAndOut extends React.Component {
 }
 
 FadeInAndOut.defaultProps = {
-  interval: 0,
+  interval: 5000,
   onExited: undefined,
 };
 

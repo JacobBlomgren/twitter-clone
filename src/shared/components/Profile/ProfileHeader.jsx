@@ -30,7 +30,6 @@ export default function ProfileHeader({
               {loggedInUserID !== id && (
                 <FollowButton
                   id={id}
-                  loggedInUserID={loggedInUserID}
                   followUser={followUser}
                   unfollowUser={unfollowUser}
                   follows={follows}
@@ -55,11 +54,12 @@ export default function ProfileHeader({
 
 ProfileHeader.defaultProps = {
   description: '',
+  loggedInUserID: null,
 };
 
 ProfileHeader.propTypes = {
   id: PropTypes.string.isRequired,
-  loggedInUserID: PropTypes.string.isRequired,
+  loggedInUserID: PropTypes.string,
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   profilePictureURL: PropTypes.string.isRequired,

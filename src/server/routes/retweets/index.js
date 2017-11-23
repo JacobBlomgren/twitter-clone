@@ -1,6 +1,6 @@
 import express from 'express';
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import addRetweet from './addRetweet';
 import removeRetweet from './removeRetweet';

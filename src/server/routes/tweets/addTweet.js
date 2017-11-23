@@ -1,5 +1,5 @@
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import addTweetHelper from '../../tweet/addTweet';
 import checkLengthHelper from '../../../shared/tweet/checkLength';

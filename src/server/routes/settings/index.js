@@ -1,6 +1,6 @@
 import express from 'express';
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import { updateDescription, updateName } from '../../db/queries/settings/index';
 import { db } from '../../db/connection';

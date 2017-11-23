@@ -1,5 +1,5 @@
 import joi from 'joi';
-import celebrate from 'celebrate';
+import { celebrate } from 'celebrate';
 
 import passport from '../../auth/passport';
 import username from '../middleware/validation/username';

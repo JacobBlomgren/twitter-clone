@@ -7,9 +7,9 @@ export default function TweetAction({ label, active, icon, count, onClick }) {
   return (
     <div className="Tweet__Action">
       <button
-        className={`Tweet__Action__Button ${active
-          ? 'Tweet__Action__Button--Active'
-          : 'LightText'}`}
+        className={`Tweet__Action__Button ${
+          active ? 'Tweet__Action__Button--Active' : 'LightText'
+        }`}
         aria-label={label}
         onClick={onClick}
       >
