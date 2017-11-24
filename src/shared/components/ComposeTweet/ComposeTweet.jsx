@@ -25,8 +25,8 @@ export default class ComposeTweet extends Component {
     e.preventDefault();
   }
   render() {
-    console.log(this.state.editorState.getCurrentContent());
-    console.log('asdasdasd');
+    const { editorState } = this.state;
+    const value = editorState.getCurrentContent().getPlainText();
     return (
       <main>
         <form
@@ -34,14 +34,15 @@ export default class ComposeTweet extends Component {
           onSubmit={this.handleSubmit}
         >
           <Editor
-            editorState={this.state.editorState}
+            editorState={editorState}
             onChange={this.onChange}
             plugins={plugins}
+            placeholder="What's on your mind?"
           />
           <div className="ComposeTweet__Bottom">
             <span className="float-right">
               <span className="ComposeTweet__Count LightText">
-                {140 - stringLength(this.state.value)}
+                {140 - stringLength(value)}
               </span>
               <input
                 type="submit"
