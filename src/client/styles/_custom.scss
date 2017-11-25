@@ -5,7 +5,7 @@
 $btn-transition: background-color 0.08s linear, border-color 0.08s linear, color 0.08s linear,
   box-shadow 0.08s linear !default;
 
-$btn-border-radius: 0.5rem;
+$btn-border-radius: 0.25rem;
 
 // This is crazy, but this is the only way I found to override the primary color in bootstrap,
 // since theme-colors are defined as a map and there's no way to change just the primary color on its own

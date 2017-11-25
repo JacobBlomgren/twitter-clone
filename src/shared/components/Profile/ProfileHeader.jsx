@@ -19,8 +19,8 @@ export default function ProfileHeader({
   followerCount,
 }) {
   return (
-    <header className="ProfilePage__Header Header">
-      <div className="container-fluid container-fluid--no-padding SmallPadding--Sides">
+    <header className="ProfilePage__Header Header SmallPadding--Sides">
+      <div className="container-fluid container-fluid--no-padding">
         <div className="row">
           <div className="ProfilePage__Header__ProfilePicture col-md-3">
             <ProfilePicture url={profilePictureURL} username={username} />
