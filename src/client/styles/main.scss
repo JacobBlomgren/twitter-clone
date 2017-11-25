@@ -3,6 +3,7 @@
 @import '404';
 @import 'buttons';
 @import 'error';
+@import 'nav/nav';
 @import 'profile';
 @import 'spinner';
 @import 'transitions';
@@ -54,6 +55,17 @@ $large-padding: 1.2rem;
 
 body {
   background-color: #ededed;
+}
+
+.Content {
+  margin-top: $nav-height;
+}
+
+@include media-breakpoint-up(md) {
+  .Content {
+    margin-top: $nav-height-desktop;
+    padding-top: 1rem;
+  }
 }
 
 .MainColumn {

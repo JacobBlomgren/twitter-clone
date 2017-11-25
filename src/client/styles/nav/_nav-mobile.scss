@@ -1,14 +1,1 @@
-.NavMobile__Link {
-  color: #fff;
-  font-weight: bold;
-}
 
-.NavMobile__Link ~ .NavMobile__Link {
-  margin-left: 1rem;
-}
-
-.NavMobile__Link:focus,
-.NavMobile__Link:active {
-  color: #f5f5f5;
-  text-decoration: none;
-}
