@@ -1,0 +1,24 @@
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '../variables';
+
+@import 'nav-mobile';
+
+.Nav {
+  background-color: $main-color;
+  color: #fff;
+  height: $nav-height;
+  left: 0;
+  padding-top: 0.5rem;
+  position: fixed;
+  top: 0;
+  transition: background-color 0.5s ease-in-out;
+  width: 100%;
+  z-index: $zindex-sticky;
+}
+
+@include media-breakpoint-up(md) {
+  .Nav {
+    height: $nav-height-desktop;
+  }
+}
