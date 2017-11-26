@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import Nav from './components/Nav/Nav';
 import TweetPage from './components/page/TweetPage';
 import ProfilePage from './components/page/ProfilePage';
+import LoginPage from './components/page/LoginPage';
 import ErrorsContainer from './containers/ErrorsContainer';
 import Prefetcher from './Prefetcher';
 
@@ -14,6 +15,7 @@ export default function App() {
       <div className="Content">
         <Route path="/u/:username" component={ProfilePage} />
         <Route path="/t/:id" component={TweetPage} />
+        <Route path="/login" component={LoginPage} />
       </div>
       <Prefetcher />
       <ErrorsContainer />

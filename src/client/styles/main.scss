@@ -3,6 +3,7 @@
 @import '404';
 @import 'buttons';
 @import 'error';
+@import 'login';
 @import 'nav/nav';
 @import 'profile';
 @import 'spinner';
@@ -76,6 +77,10 @@ body {
 @include media-breakpoint-up(md) {
   .MainColumn {
     width: 520px;
+  }
+
+  .MainColumn--Narrow {
+    max-width: 350px;
   }
 }
 
