@@ -16,10 +16,15 @@ function loginSuccess(json) {
   };
 }
 
+let errorID = 0;
+
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-function loginFailure() {
+function loginFailure(message) {
+  errorID += 1;
   return {
     type: LOGIN_FAILURE,
+    message,
+    errorID,
   };
 }
 
@@ -32,8 +37,14 @@ export function login(username, password) {
       credentials: 'include',
     })
       .then(response => {
-        if (!response.ok) return dispatch(loginFailure());
+        if (!response.ok) throw Error(response.status);
         return response.json();
       })
-      .then(json => dispatch(loginSuccess(json)));
+      .then(json => dispatch(loginSuccess(json)))
+      .catch(err => {
+        if (err.message === '401')
+          return dispatch(loginFailure('Invalid username or password'));
+        // Don't dispatch a login failure as it wasn't a client error.
+        return dispatch(addError('Something went wrong'));
+      });
 }

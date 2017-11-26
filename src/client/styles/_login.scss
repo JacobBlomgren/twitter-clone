@@ -1,3 +1,4 @@
+@import 'no-style';
 @import '~bootstrap/scss/mixins';
 
 .Login {
@@ -51,4 +52,22 @@
   display: block;
   float: right;
   margin-top: 0.15rem;
+}
+
+.Login__Error {
+  font-size: 0.8rem;
+}
+
+$dark-close-color: #49060c;
+
+.Login__Error__Close {
+  @include button-no-style;
+  color: #721c24;
+  float: right;
+}
+
+.Login__Error__Close:hover {
+  @include button-no-style;
+  color: #a74346;
+  float: right;
 }

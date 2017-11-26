@@ -1,8 +1,13 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 import { login } from '../actions/auth';
 import LoginForm from '../components/Login/LoginForm';
+
+function mapStateToProps(state) {
+  return {
+    error: state.entities.login.error,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -10,4 +15,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import LoginError from './LoginError';
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -7,12 +8,20 @@ export default class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
+      dissmissed: [],
     };
 
+    this.onCloseError = this.onCloseError.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.login = this.props.login;
+  }
+
+  onCloseError(errorID) {
+    this.setState(prevState => ({
+      dissmissed: [...prevState.dissmissed, errorID],
+    }));
   }
 
   onChangeUsername(e) {
@@ -29,43 +38,63 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, dissmissed } = this.state;
+    const { error } = this.props;
+    const showError = error && !dissmissed.includes(error.id);
+    const valid = /^[a-z0-9]{3,15}$/i.test(username) && password.length >= 8;
     return (
-      <form className="Login__Form clearfix" onSubmit={this.onSubmit}>
-        <label htmlFor="username" className="Login__Input__Label">
-          <span className="sr-only">Username</span>
-          <input
-            type="text"
-            value={username}
-            onChange={this.onChangeUsername}
-            className="Login__Input"
-            placeholder="Username"
-            autoComplete="on"
-            id="username"
+      <div className="Login__Form">
+        {showError && (
+          <LoginError
+            error={error.message}
+            show={showError}
+            onClose={() => this.onCloseError(error.id)}
           />
-        </label>
-        <label htmlFor="password" className="Login__Input__Label">
-          <span className="sr-only">Password</span>
+        )}
+        <form className="clearfix" onSubmit={this.onSubmit}>
+          <label htmlFor="username" className="Login__Input__Label">
+            <span className="sr-only">Username</span>
+            <input
+              type="text"
+              value={username}
+              onChange={this.onChangeUsername}
+              className="Login__Input"
+              placeholder="Username"
+              autoComplete="on"
+              id="username"
+            />
+          </label>
+          <label htmlFor="password" className="Login__Input__Label">
+            <span className="sr-only">Password</span>
+            <input
+              type="password"
+              value={password}
+              onChange={this.onChangePassword}
+              className="Login__Input"
+              placeholder="Password"
+              autoComplete="current-password"
+              id="password"
+            />
+          </label>
           <input
-            type="password"
-            value={password}
-            onChange={this.onChangePassword}
-            className="Login__Input"
-            placeholder="Password"
-            autoComplete="current-password"
-            id="password"
+            type="submit"
+            value="Post"
+            className="btn btn-primary Login__Button"
+            disabled={!valid}
+            aria-disabled={!valid}
           />
-        </label>
-        <input
-          type="submit"
-          value="Post"
-          className="btn btn-primary Login__Button"
-        />
-      </form>
+        </form>
+      </div>
     );
   }
 }
 
+LoginForm.defaultProps = { error: null };
+
 LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
+  error: PropTypes.shape({
+    message: PropTypes.string,
+    id: PropTypes.number,
+  }),
 };
