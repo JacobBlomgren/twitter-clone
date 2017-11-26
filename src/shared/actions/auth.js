@@ -1,6 +1,8 @@
 import camelizeKeys from '../utils/camelizeKeys';
 import { addError } from './error';
 
+import headers from '../utils/fetch/jsonHeaders';
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 function loginRequest() {}
 
@@ -14,8 +16,12 @@ function loginSuccess(json) {
   };
 }
 
-const headers = new Headers();
-headers.append('Content-Type', 'application/json');
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+function loginFailure() {
+  return {
+    type: LOGIN_FAILURE,
+  };
+}
 
 export function login(username, password) {
   return dispatch =>
@@ -26,7 +32,7 @@ export function login(username, password) {
       credentials: 'include',
     })
       .then(response => {
-        if (!response.ok) return dispatch(addError('Login failed'));
+        if (!response.ok) return dispatch(loginFailure());
         return response.json();
       })
       .then(json => dispatch(loginSuccess(json)));

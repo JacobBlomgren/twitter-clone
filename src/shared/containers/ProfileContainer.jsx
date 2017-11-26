@@ -88,7 +88,7 @@ function mapStateToProps(state, { username }) {
     R.sortBy(R.prop('createdAt')),
     R.union,
   )(tweetsWithTimestamp, retweets);
-  return { ...user, tweets, loggedInUserID: state.entities.loggedInUserID };
+  return { ...user, tweets, loggedInUserID: state.entities.login.user };
 }
 
 function mapDispatchToProps(dispatch, { username }) {

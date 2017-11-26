@@ -17,5 +17,5 @@ function Nav({ loggedIn }) {
 Nav.propTypes = { loggedIn: PropTypes.bool.isRequired };
 
 export default connect(state => ({
-  loggedIn: typeof state.loggedInUserID !== 'undefined',
+  loggedIn: typeof state.entities.login.user !== 'undefined',
 }))(Nav);

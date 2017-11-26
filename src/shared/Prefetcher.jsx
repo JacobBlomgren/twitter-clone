@@ -24,5 +24,5 @@ class Prefetcher extends Component {
 Prefetcher.propTypes = { loggedIn: PropTypes.bool.isRequired };
 
 export default connect(state => ({
-  loggedIn: typeof state.loggedInUserID !== 'undefined',
+  loggedIn: typeof state.entities.login.user !== 'undefined',
 }))(Prefetcher);
