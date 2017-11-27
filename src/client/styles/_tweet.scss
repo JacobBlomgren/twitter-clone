@@ -128,8 +128,10 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
 }
 
 .Retweet__Icon {
-  height: 0.7em;
+  height: 0.7rem !important;
+  margin-bottom: 0.125rem;
   margin-right: 0.2rem;
+  width: 0.7rem !important;
 }
 
 .Retweet__Link {
@@ -171,6 +173,13 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   height: 0.9rem;
   margin-right: 0.3rem;
   vertical-align: middle;
+
+  svg {
+    height: 0.9rem !important;
+    margin-bottom: 0.0625rem;
+    vertical-align: baseline !important;
+    width: 0.9rem !important;
+  }
 }
 
 .Tweet__Action__Button:hover,

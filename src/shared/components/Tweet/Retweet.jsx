@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import retweet from '../../../../public/icons/retweet.png';
+import RetweetIcon from 'react-icons/lib/fa/retweet';
 
 export default function Retweet({ name, username }) {
   return (
     <div className="Retweet">
       <small className="LightText">
-        <img src={retweet} className="Retweet__Icon" alt="" />
+        <RetweetIcon className="Retweet__Icon" />
         <Link
           to={`/u/${username}`}
           className="Retweet__Link"

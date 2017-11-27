@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { withRouter } from 'react-router-dom';
+import RetweetIcon from 'react-icons/lib/fa/retweet';
+import LikeIcon from 'react-icons/lib/fa/heart-o';
+import Reply from 'react-icons/lib/fa/comment-o';
 
 import TweetAction from './TweetAction';
-
-import reply from '../../../../public/icons/reply.png';
-import retweet from '../../../../public/icons/retweet.png';
-import retweetActive from '../../../../public/icons/retweet-active.png';
-import like from '../../../../public/icons/like.png';
-import likeActive from '../../../../public/icons/like-active.png';
 
 function Like({ likeCount, liked, loggedIn, redirect, onLike, onUnlike }) {
   let onClick;
@@ -19,7 +16,7 @@ function Like({ likeCount, liked, loggedIn, redirect, onLike, onUnlike }) {
     <TweetAction
       label={liked ? 'Unlike' : 'Like'}
       active={liked}
-      icon={liked ? likeActive : like}
+      icon={<LikeIcon />}
       count={likeCount}
       onClick={onClick}
     />
@@ -48,9 +45,9 @@ function Retweet({
   else onClick = redirect;
   return (
     <TweetAction
-      label={retweeted ? 'Remove retweet' : 'Retweet'}
+      label={retweeted ? 'Remove retweet' : 'RetweetIcon'}
       active={retweeted}
-      icon={retweeted ? retweetActive : retweet}
+      icon={<RetweetIcon />}
       count={retweetCount}
       onClick={onClick}
     />
@@ -86,7 +83,7 @@ function TweetActions({
       <TweetAction
         label="Reply"
         active={false}
-        icon={reply}
+        icon={<Reply />}
         count={replyCount}
         onClick={() => null}
       />

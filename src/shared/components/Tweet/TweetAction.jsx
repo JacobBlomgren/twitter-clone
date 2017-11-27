@@ -13,7 +13,7 @@ export default function TweetAction({ label, active, icon, count, onClick }) {
         aria-label={label}
         onClick={onClick}
       >
-        <img src={icon} alt="" className="Tweet__Action__Button__Icon" />
+        <span className="Tweet__Action__Button__Icon">{icon}</span>
         <span aria-hidden="true">{formatNumber(count)}</span>
       </button>
     </div>
@@ -23,7 +23,7 @@ export default function TweetAction({ label, active, icon, count, onClick }) {
 TweetAction.propTypes = {
   label: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
   count: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };

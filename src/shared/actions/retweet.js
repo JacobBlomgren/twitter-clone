@@ -36,7 +36,7 @@ export function retweet(tweetID) {
       credentials: 'include',
     }).then(response => {
       if (response.ok) return dispatch(retweetSuccess(tweetID));
-      dispatch(addError('Retweet failed'));
+      dispatch(addError('RetweetIcon failed'));
       return dispatch(retweetFailure(tweetID));
     });
   };
