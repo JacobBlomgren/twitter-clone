@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from '../shared/reducers/index';
 import { isProd } from '../shared/utils/isProd';
+import { subscriber, onLoad } from './prefetch';
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers =
@@ -23,5 +24,8 @@ const store = createStore(
   preloadedState,
   composeEnhancers(applyMiddleware(thunkMiddleware)),
 );
+
+onLoad(store);
+store.subscribe(subscriber(store));
 
 export default store;

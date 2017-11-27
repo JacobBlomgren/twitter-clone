@@ -6,7 +6,6 @@ import ErrorsContainer from './containers/ErrorsContainer';
 import TweetPage from './components/page/TweetPage';
 import ProfilePage from './components/page/ProfilePage';
 import LoginPage from './components/page/LoginPage';
-import Prefetcher from './Prefetcher';
 
 export default function App() {
   return (
@@ -17,7 +16,6 @@ export default function App() {
         <Route path="/t/:id" component={TweetPage} />
         <Route path="/login" component={LoginPage} />
       </div>
-      <Prefetcher />
       <ErrorsContainer />
     </div>
   );
