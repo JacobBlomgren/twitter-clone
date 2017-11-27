@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+
 import LoginError from './LoginError';
 
 export default class LoginForm extends Component {
@@ -38,8 +40,11 @@ export default class LoginForm extends Component {
   }
 
   render() {
+    const { error, from, loggedIn } = this.props;
+    if (loggedIn) return <Redirect to={from || '/'} />;
+
     const { username, password, dissmissed } = this.state;
-    const { error } = this.props;
+
     const showError = error && !dissmissed.includes(error.id);
     const valid = /^[a-z0-9]{3,15}$/i.test(username) && password.length >= 8;
     return (
@@ -89,12 +94,17 @@ export default class LoginForm extends Component {
   }
 }
 
-LoginForm.defaultProps = { error: null };
+LoginForm.defaultProps = {
+  error: null,
+  from: null,
+};
 
 LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   error: PropTypes.shape({
     message: PropTypes.string,
     id: PropTypes.number,
   }),
+  from: PropTypes.string,
 };

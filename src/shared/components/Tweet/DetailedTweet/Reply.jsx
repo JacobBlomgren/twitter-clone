@@ -6,7 +6,6 @@ import Tweet from '../Tweet';
 import ReplyToReply from './ReplyToReply';
 
 export default function Reply({ id, replies }) {
-  console.log(replies);
   return (
     <div>
       <TweetContainer Tweet={Tweet} id={id} />

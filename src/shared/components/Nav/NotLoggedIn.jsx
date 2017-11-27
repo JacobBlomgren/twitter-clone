@@ -1,17 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 
-export default function NavNotLoggedIn() {
+function NotLoggedIn({ location }) {
+  const { pathname } = location;
   return (
     <span className="float-right">
       <Link to="/signup" className="Nav__Link">
         Sign up
       </Link>
-      <Link to="/login" className="Nav__Link">
+      <Link
+        to={{ pathname: '/login', state: { from: pathname } }}
+        className="Nav__Link"
+      >
         Login
       </Link>
     </span>
   );
 }
 
-NavNotLoggedIn.propTypes = {};
+NotLoggedIn.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+};
+
+export default withRouter(NotLoggedIn);

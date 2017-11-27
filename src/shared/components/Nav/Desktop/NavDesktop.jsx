@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import NotLoggedIn from '../NotLoggedIn';
 
-export default function NavDesktop({ loggedIn }) {
+export default function NavDesktop({ loggedIn, location }) {
   return (
     <nav className="d-none d-md-block Nav">
       <div className="MainColumn SmallPadding--Sides">

@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import Error from './Error';
 
 export default function Errors({ errors, removeError }) {
-  if (errors.length === 0)
-    return null;
+  if (errors.length === 0) return null;
   return (
     <ol className="Errors" role="alert">
       {errors.map(e => (
