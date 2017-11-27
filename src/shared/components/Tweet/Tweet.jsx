@@ -16,6 +16,7 @@ export default function Tweet({
   profilePictureURL,
   createdAt,
   content,
+  loggedIn,
   replyTo,
   replyCount,
   retweet,
@@ -46,6 +47,7 @@ export default function Tweet({
           {replyTo ? <ReplyTo username={replyTo} /> : ''}
           <TweetContent content={content} />
           <TweetActions
+            id={id}
             replyCount={replyCount}
             retweetCount={retweetCount}
             retweeted={retweeted}
@@ -55,6 +57,7 @@ export default function Tweet({
             liked={liked}
             onLike={onLike}
             onUnlike={onUnlike}
+            loggedIn={loggedIn}
           />
         </div>
       </article>

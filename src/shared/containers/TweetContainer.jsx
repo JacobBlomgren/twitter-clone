@@ -24,6 +24,7 @@ function mapStateToProps(state, { id, retweet }) {
       username: state.entities.users.byID[retweet].username,
       name: state.entities.users.byID[retweet].name,
     },
+    loggedIn: typeof state.entities.login.user !== 'undefined',
   };
 }
 
