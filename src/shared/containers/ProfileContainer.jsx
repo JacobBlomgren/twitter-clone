@@ -46,7 +46,6 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    console.log(this.props);
     if (this.props.notFound) return <NotFoundPage message="User not found" />;
     if (this.props.shouldFetch) return <Spinner fullPage />;
     return <Profile {...this.props} />;

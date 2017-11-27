@@ -7,7 +7,6 @@ import NavMobile from './Mobile/NavMobile';
 import NavDesktop from './Desktop/NavDesktop';
 
 function Nav({ loggedIn, location }) {
-  console.log('rerender');
   return (
     <div className="NavContainer">
       <NavDesktop loggedIn={loggedIn} location={location} />
