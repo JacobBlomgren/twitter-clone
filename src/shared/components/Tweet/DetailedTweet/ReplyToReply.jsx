@@ -14,6 +14,7 @@ export default function ReplyToReply({
   username,
   profilePictureURL,
   createdAt,
+  loggedIn,
   content,
   replyTo,
   replyCount,
@@ -39,6 +40,7 @@ export default function ReplyToReply({
           {replyTo ? <ReplyTo username={replyTo} /> : ''}
           <TweetContent content={content} />
           <TweetActions
+            id={id}
             replyCount={replyCount}
             retweetCount={retweetCount}
             retweeted={retweeted}
@@ -48,6 +50,7 @@ export default function ReplyToReply({
             liked={liked}
             onLike={onLike}
             onUnlike={onUnlike}
+            loggedIn={loggedIn}
           />
         </div>
       </article>

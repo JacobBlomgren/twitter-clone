@@ -7,11 +7,13 @@ import MainTweetInfo from './MainTweetInfo';
 import MainTweetDate from './MainTweetDate';
 
 export default function MainTweet({
+  id,
   name,
   username,
   profilePictureURL,
   createdAt,
   content,
+  loggedIn,
   replyCount,
   retweetCount,
   retweeted,
@@ -38,6 +40,7 @@ export default function MainTweet({
         <TweetContent content={content} />
         <MainTweetDate createdAt={createdAt} />
         <TweetActions
+          id={id}
           replyCount={replyCount}
           retweetCount={retweetCount}
           retweeted={retweeted}
@@ -47,6 +50,7 @@ export default function MainTweet({
           liked={liked}
           onLike={onLike}
           onUnlike={onUnlike}
+          loggedIn={loggedIn}
         />
       </div>
     </div>
