@@ -45,7 +45,7 @@ function Retweet({
   else onClick = redirect;
   return (
     <TweetAction
-      label={retweeted ? 'Remove retweet' : 'RetweetIcon'}
+      label={retweeted ? 'Remove retweet' : 'Retweet'}
       active={retweeted}
       icon={<RetweetIcon />}
       count={retweetCount}

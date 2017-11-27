@@ -24,7 +24,9 @@
 }
 
 .Errors__Error__Icon {
-  height: 0.8rem;
+  height: 0.8rem !important;
+  margin-bottom: 0.125rem;
   margin-right: 0.3rem;
   vertical-align: middle;
+  width: 0.8rem !important;
 }
