@@ -30,6 +30,8 @@ export default function ProfileHeader({
               {loggedInUserID !== id && (
                 <FollowButton
                   id={id}
+                  username={username}
+                  loggedIn={!!loggedInUserID}
                   followUser={followUser}
                   unfollowUser={unfollowUser}
                   follows={follows}
