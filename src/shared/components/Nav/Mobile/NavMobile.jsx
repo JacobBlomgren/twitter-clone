@@ -6,7 +6,7 @@ import NotLoggedIn from '../NotLoggedIn';
 export default function NavMobile({ loggedIn, location }) {
   return (
     <nav className="d-md-none Nav SmallPadding--Sides">
-      {loggedIn ? '' : <NotLoggedIn />}
+      {loggedIn ? '' : <NotLoggedIn location={location} />}
     </nav>
   );
 }

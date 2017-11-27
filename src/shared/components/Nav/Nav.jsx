@@ -7,16 +7,19 @@ import NavMobile from './Mobile/NavMobile';
 import NavDesktop from './Desktop/NavDesktop';
 
 function Nav({ loggedIn, location }) {
+  console.log('rerender');
   return (
     <div className="NavContainer">
-      <NavDesktop loggedIn={loggedIn} />
-      <NavMobile loggedIn={loggedIn} />
+      <NavDesktop loggedIn={loggedIn} location={location} />
+      <NavMobile loggedIn={loggedIn} location={location} />
     </div>
   );
 }
 
 Nav.propTypes = { loggedIn: PropTypes.bool.isRequired };
 
-export default withRouter(connect(state => ({
-  loggedIn: typeof state.entities.login.user !== 'undefined',
-}))(Nav));
+export default withRouter(
+  connect(state => ({
+    loggedIn: typeof state.entities.login.user !== 'undefined',
+  }))(Nav),
+);

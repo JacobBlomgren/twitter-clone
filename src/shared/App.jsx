@@ -2,10 +2,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import Nav from './components/Nav/Nav';
+import ErrorsContainer from './containers/ErrorsContainer';
 import TweetPage from './components/page/TweetPage';
 import ProfilePage from './components/page/ProfilePage';
 import LoginPage from './components/page/LoginPage';
-import ErrorsContainer from './containers/ErrorsContainer';
 import Prefetcher from './Prefetcher';
 
 export default function App() {

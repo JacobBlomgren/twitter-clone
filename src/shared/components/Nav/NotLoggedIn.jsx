@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function NotLoggedIn({ location }) {
+export default function NotLoggedIn({ location }) {
   const { pathname } = location;
   return (
     <span className="float-right">
@@ -24,5 +24,3 @@ NotLoggedIn.propTypes = {
     pathname: PropTypes.string,
   }).isRequired,
 };
-
-export default withRouter(NotLoggedIn);
