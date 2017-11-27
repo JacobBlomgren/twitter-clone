@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import notFound from '../../../../public/icons/not-found.png';
+import NotFound from 'react-icons/lib/ti/delete-outline';
 
 export default function NotFoundPage({ message }) {
   return (
     <div className="NotFound">
-      <img src={notFound} alt="" className="NotFound__Icon" />
+      <NotFound className="NotFound__Icon" />
       <p className="LightText NotFound__Text">{message || 'Page not found'}</p>
     </div>
   );
