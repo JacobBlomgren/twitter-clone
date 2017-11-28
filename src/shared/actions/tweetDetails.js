@@ -26,6 +26,15 @@ export function fetchTweetSuccess(response) {
   };
 }
 
+export const FETCH_TWEET_NOT_FOUND = 'FETCH_TWEET_NOT_FOUND';
+export function fetchTweetNotFound(tweetID) {
+  return {
+    type: FETCH_TWEET_NOT_FOUND,
+    id: tweetID,
+    time: Date.now(),
+  };
+}
+
 export function fetchTweet(tweetID) {
   return dispatch => {
     dispatch(fetchTweetRequest(tweetID));
@@ -38,6 +47,9 @@ export function fetchTweet(tweetID) {
         return response.json();
       })
       .then(json => dispatch(fetchTweetSuccess(json)))
-      .catch(() => null);
+      .catch(err => {
+        if (err.message === '404') return dispatch(fetchTweetNotFound(tweetID));
+        return null;
+      });
   };
 }

@@ -14,7 +14,10 @@ import {
   RETWEET_FAILURE,
   RETWEET_REQUEST,
 } from '../../actions/retweet';
-import { FETCH_TWEET_SUCCESS } from '../../actions/tweetDetails';
+import {
+  FETCH_TWEET_NOT_FOUND,
+  FETCH_TWEET_SUCCESS,
+} from '../../actions/tweetDetails';
 
 /*
  * Replaces a tweet in state, that is assumed to exist.
@@ -120,7 +123,28 @@ function allIDs(state = [], action) {
   }
 }
 
+// updates the list of not found tweets with the newly recieved tweets.
+function updateNotFound(state, tweets) {
+  if (Object.keys(state).length === 0) return state;
+  return R.filter(t => R.none(R.propEq('id', t.id), tweets), state);
+}
+
+function notFound(state = {}, action) {
+  switch (action.type) {
+    case FETCH_TWEET_NOT_FOUND:
+      return {
+        ...state,
+        [action.id]: { id: action.id, time: action.time },
+      };
+    case FETCH_TWEET_SUCCESS:
+      return updateNotFound(state, action.tweets);
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   byID,
   allIDs,
+  notFound,
 });

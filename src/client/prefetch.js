@@ -16,7 +16,7 @@ export function subscriber(store) {
 
 // Prefetching based on initial store state.
 export function onLoad(store) {
-  console.log(store.getState().entities.login.user)
+  console.log(store.getState().entities.login.user);
   if (store.getState().entities.login.user) {
     fetchedCompose = true;
     setTimeout(Lazy.preload, 3000);

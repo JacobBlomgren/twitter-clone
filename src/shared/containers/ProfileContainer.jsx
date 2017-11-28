@@ -16,11 +16,11 @@ import NotFoundPage from '../components/page/NotFoundPage';
 class ProfileContainer extends Component {
   static isStale(recievedAt) {
     // elapsed time since last fetch in minutes
-    return (Date.now() - recievedAt) / (60 * 60) > 30;
+    return (Date.now() - recievedAt) / (1000 * 60) > 30;
   }
 
   static shouldFetchNotFound(notFound) {
-    return notFound && (Date.now() - notFound.time) / (60 * 60) > 5;
+    return notFound && (Date.now() - notFound.time) / (1000 * 60) > 5;
   }
 
   componentDidMount() {

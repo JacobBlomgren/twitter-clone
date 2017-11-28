@@ -21,7 +21,11 @@ function findReplies(replyTable, id) {
 
 export default function mapStateToProps(state, { id }) {
   const tweet = state.entities.tweets.byID[id];
-  if (!tweet) return { shouldFetch: true };
+  if (!tweet) {
+    if (state.entities.tweets.notFound[id])
+      return { notFound: state.entities.tweets.notFound[id] };
+    return { shouldFetch: true };
+  }
   if (tweet.partial) {
     return {
       id: tweet.id,
