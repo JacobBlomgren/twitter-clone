@@ -58,6 +58,7 @@ const findUser = (users, username) =>
 
 function mapStateToProps(state, { username }) {
   const user = findUser(Object.values(state.entities.users.byID), username);
+  // Determine whether there is enough data to display the profile.
   if (!user) {
     if (state.entities.users.notFound[username])
       return { notFound: state.entities.users.notFound[username] };

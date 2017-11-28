@@ -63,6 +63,9 @@ Retweet.propTypes = {
   onRemoveRetweet: PropTypes.func.isRequired,
 };
 
+/**
+ * The possible actions on a Tweet, reply to, like or retweet.
+ */
 function TweetActions({
   id,
   history,

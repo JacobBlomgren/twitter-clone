@@ -37,6 +37,9 @@ function mapDispatchToProps(dispatch, { id }) {
   };
 }
 
+/**
+ * Generate a Tweet container from a given type of Tweet, e.g. the standard Tweet or ReplyToReply.
+ */
 export default function TweetContainer({ Tweet, ...props }) {
   return React.createElement(
     connect(mapStateToProps, mapDispatchToProps)(Tweet),

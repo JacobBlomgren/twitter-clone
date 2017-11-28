@@ -11,6 +11,7 @@ function FollowButton({
   loggedIn,
   history,
 }) {
+  // Redirect to login if not logged in, and then back to this page afterwards.
   const redirect = () => history.push('/login', { from: `/u/${username}` });
   if (!follows) {
     const onClick = loggedIn ? () => followUser(id) : redirect;
@@ -38,10 +39,13 @@ function FollowButton({
 
 FollowButton.propTypes = {
   id: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   loggedIn: PropTypes.bool.isRequired,
   followUser: PropTypes.func.isRequired,
   unfollowUser: PropTypes.func.isRequired,
   follows: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object.isRequired,
 };
 
 export default withRouter(FollowButton);

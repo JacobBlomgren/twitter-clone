@@ -5,6 +5,9 @@ import ProfilePicture from './ProfilePicture';
 import ProfileFollowingInfo from './ProfileFollowingInfo';
 import FollowButton from './FollowButton';
 
+/**
+ * The header of the Profile page with a profile picture, a description, following info, etc.
+ */
 export default function ProfileHeader({
   id,
   loggedInUserID,

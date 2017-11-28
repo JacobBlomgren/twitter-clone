@@ -3,6 +3,7 @@ function findParents(tweets, parents, id) {
   return findParents(tweets, [tweets[id].id, ...parents], tweets[id].replyTo);
 }
 
+// Finds replies to a certain depth limit.
 function findRepliesRecursion(levels, limit, replyTable, id) {
   if (levels === limit) return { id };
   return {
@@ -21,6 +22,7 @@ function findReplies(replyTable, id) {
 
 export default function mapStateToProps(state, { id }) {
   const tweet = state.entities.tweets.byID[id];
+  // determine how much data we have.
   if (!tweet) {
     if (state.entities.tweets.notFound[id])
       return { notFound: state.entities.tweets.notFound[id] };
@@ -33,6 +35,7 @@ export default function mapStateToProps(state, { id }) {
       shouldFetch: true,
     };
   }
+
   const parents = tweet.replyTo
     ? findParents(state.entities.tweets.byID, [], tweet.replyTo)
     : [];

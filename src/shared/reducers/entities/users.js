@@ -15,6 +15,8 @@ import { FETCH_TWEET_SUCCESS } from '../../actions/tweetDetails';
 
 function merge(key, left, right) {
   if (Array.isArray(left)) return R.union(left, right);
+  // same as in tweets, if we have already non-partial data, it's still non-partial regardless of the
+  // new data.
   if (key === 'partial' && !left) return false;
   return right;
 }

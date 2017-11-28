@@ -54,5 +54,5 @@ export function login(username, password) {
         // Don't dispatch a login failure as it wasn't a client error.
         return dispatch(addError('Something went wrong'));
       });
-  }
+  };
 }

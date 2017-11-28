@@ -19,9 +19,7 @@ import {
   FETCH_TWEET_SUCCESS,
 } from '../../actions/tweetDetails';
 
-/*
- * Replaces a tweet in state, that is assumed to exist.
- */
+// Replaces a tweet in state, that is assumed to exist.
 function replaceTweet(state, tweet) {
   return {
     ...state,
@@ -74,10 +72,13 @@ function removeRetweet(state, tweetID) {
 }
 
 function merge(key, left, right) {
+  // If we already have non-partial data (in left) the partial key is set to false
+  // regardless of the new value, as we could recieve partial data afterwards.
   if (key === 'partial' && !left) return false;
   return right;
 }
 
+// Recursively merge the state with new tweets.
 function mergeTweets(state, tweets) {
   if (tweets.length === 0) return state;
   const [tweet, ...tail] = tweets;

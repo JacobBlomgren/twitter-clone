@@ -10,6 +10,8 @@ export default class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
+      // We keep track of the dismissed error alerts so that we know if the currently displayed error
+      // has been dismissed. This is useful if the user fails to log in twice in a row.
       dissmissed: [],
     };
 
@@ -41,6 +43,7 @@ export default class LoginForm extends Component {
 
   render() {
     const { error, from, loggedIn } = this.props;
+    // from is a URL to return to after succesful login.
     if (loggedIn) return <Redirect to={from || '/'} />;
 
     const { username, password, dissmissed } = this.state;

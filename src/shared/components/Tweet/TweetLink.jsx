@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 /**
- * A link to a Tweet. HTML doesn't allow a link within a link, which is necessary in this case
+ * A link to a Tweet. HTML doesn't allow a link within a link, which is necessary in this case.
  */
 export default class TweetLink extends Component {
   constructor(props) {
@@ -24,8 +24,8 @@ export default class TweetLink extends Component {
   }
 
   render() {
-    if (this.state.redirect)
-      return <Redirect push to={`/t/${this.props.id}`} />;
+    const { id, children } = this.props;
+    if (this.state.redirect) return <Redirect push to={`/t/${id}`} />;
     return (
       <div
         className="TweetLink"
@@ -34,7 +34,7 @@ export default class TweetLink extends Component {
         role="link"
         tabIndex="0"
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

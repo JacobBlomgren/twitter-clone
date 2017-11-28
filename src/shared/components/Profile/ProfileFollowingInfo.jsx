@@ -17,6 +17,9 @@ FollowingInfo.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
+/**
+ * The number of followers and users this user follows.
+ */
 export default function ProfileFollowingInfo({
   followingCount,
   followerCount,
