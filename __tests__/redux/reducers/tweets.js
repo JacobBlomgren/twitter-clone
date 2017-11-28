@@ -15,6 +15,10 @@ import {
   RETWEET_FAILURE,
   RETWEET_REQUEST,
 } from '../../../src/shared/actions/retweet';
+import {
+  FETCH_TWEET_NOT_FOUND,
+  FETCH_TWEET_SUCCESS,
+} from '../../../src/shared/actions/tweetDetails';
 
 test('default', () => {
   const state = tweets(undefined, {});
@@ -215,6 +219,79 @@ describe('recieve profile', () => {
   });
 });
 
+describe('recieve detailed tweet', () => {
+  test('FETCH_TWEET_SUCCESS', () => {
+    const initialState = tweets(
+      {
+        byID: {
+          '1': {
+            id: '1',
+            likeCount: 1,
+          },
+          '2': {
+            id: '2',
+          },
+        },
+        allIDs: ['1', '2'],
+      },
+      {},
+    );
+    deepFreeze(initialState);
+
+    const state = tweets(initialState, {
+      type: FETCH_TWEET_SUCCESS,
+      tweets: [
+        {
+          id: '3',
+        },
+        {
+          id: '1',
+          likeCount: 3,
+        },
+      ],
+    });
+
+    expect(state.allIDs).toEqual(expect.arrayContaining(['1', '2', '3']));
+
+    expect(state.byID).toEqual(
+      expect.objectContaining({
+        '1': expect.any(Object),
+        '2': expect.any(Object),
+        '3': expect.any(Object),
+      }),
+    );
+
+    expect(state.byID['1'].likeCount).toBe(3);
+  });
+
+  test('remove not found tweets that are now recieved', () => {
+    const initialState = {
+      notFound: {
+        '3': {
+          id: '3',
+          time: Date.now(),
+        },
+        '2': {
+          id: '2',
+          time: Date.now(),
+        },
+      },
+    };
+    deepFreeze(initialState);
+    const state = tweets(initialState, {
+      type: FETCH_TWEET_SUCCESS,
+      tweets: [
+        {
+          id: '3',
+        },
+      ],
+    });
+
+    expect(state.notFound['3']).toBeUndefined();
+    expect(state.notFound['2']).toBeDefined();
+  });
+});
+
 describe('retweet', () => {
   test('RETWEET_REQUEST', () => {
     const initialState = tweets(
@@ -404,5 +481,18 @@ describe('recieve profile', () => {
     );
 
     expect(state.byID['1'].likeCount).toBe(3);
+  });
+});
+
+test('tweet not found', () => {
+  const time = Date.now();
+  const state = tweets(undefined, {
+    type: FETCH_TWEET_NOT_FOUND,
+    id: '1',
+    time,
+  });
+  expect(state.notFound['1']).toEqual({
+    id: '1',
+    time,
   });
 });

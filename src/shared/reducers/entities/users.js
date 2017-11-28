@@ -81,6 +81,7 @@ function byID(state = {}, action) {
 function allIDs(state = [], action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
+    case FETCH_TWEET_SUCCESS:
       return R.union(state, action.users.map(R.prop('id')));
     default:
       return state;
@@ -101,6 +102,7 @@ function notFound(state = {}, action) {
         [action.username]: { username: action.username, time: action.time },
       };
     case FETCH_PROFILE_SUCCESS:
+    case FETCH_TWEET_SUCCESS:
       return updateNotFound(state, action.users);
     default:
       return state;

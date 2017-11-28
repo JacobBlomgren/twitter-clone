@@ -59,15 +59,17 @@ it('should find parents and children correctly', () => {
     },
     { id: '2' },
   );
-  const { id, parents, children } = props;
+
+  const { id, parents, replies } = props;
+
   expect(id).toBe('2');
   expect(parents).toEqual(['0', '1']);
-  expect(R.find(child => child.id === '3', children).children).toBeUndefined();
-  const children4 = R.find(child => child.id === '4', children).children;
+  expect(R.find(child => child.id === '3', replies).replies).toBeUndefined();
+  const children4 = R.find(child => child.id === '4', replies).replies;
   expect(children4).toEqual([
     {
       id: '5',
-      children: [
+      replies: [
         // Anything below 6 is not included,
         // as the limit of 3 levels of children deep is reached.
         { id: '6' },
