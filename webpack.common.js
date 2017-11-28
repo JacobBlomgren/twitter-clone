@@ -37,6 +37,7 @@ export default {
       //   loaders: ['bundle?lazy', 'babel'],
       // },
       { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
+      // { test: /plugin\.(scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
       {
         test: /\.(scss)$/,
         use: ExtractTextPlugin.extract({
@@ -76,11 +77,5 @@ export default {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default'],
-    }),
   ],
 };

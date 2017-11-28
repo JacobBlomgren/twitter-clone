@@ -17,7 +17,6 @@ export default merge(common, {
   output: {
     publicPath: `http://localhost:${WDS_PORT}/dist/`,
   },
-  devtool: 'source-map',
   devServer: {
     port: WDS_PORT,
     hot: true,
@@ -27,9 +26,11 @@ export default merge(common, {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+      exclude: ['js/vendor.bundle.js', 'js/polyfills.bundle.js'],
+    }),
     new ExtractTextPlugin({
-      // ?
-      filename: 'styles/main-[contenthash].css',
       disable: true,
     }),
   ],
