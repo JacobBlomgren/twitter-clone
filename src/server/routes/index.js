@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import auth from './auth';
-import followers from './followers';
 import following from './following';
 import like from './likes';
 import retweets from './retweets';
@@ -17,7 +16,6 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
 router.use('/auth', auth);
-router.use('/followers', followers);
 router.use('/following', following);
 router.use('/likes', like);
 router.use('/retweets', retweets);

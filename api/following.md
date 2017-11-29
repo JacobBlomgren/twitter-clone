@@ -1,3 +1,17 @@
+#GET api/following
+Gets a list of all accounts that the logged in user follows. Login required.
+
+##Paramaters
+_user_id_ the id of the user to follow
+
+##Response
+_200_ if successful.
+
+_401_ if no user is logged in.
+
+_500_ if an error occurred.
+
+
 #POST api/following
 Follows a user. Login required.
 

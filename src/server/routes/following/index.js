@@ -3,9 +3,11 @@ import joi from 'joi';
 import { celebrate } from 'celebrate';
 
 import loginRequired from '../middleware/loginRequired';
+import loggedInUserID from '../middleware/loggedInUserID';
 import id from '../middleware/validation/id';
 import follow from './follow';
 import unfollow from './unfollow';
+import getFollowing from './getFollowing';
 
 const router = express.Router();
 
@@ -22,10 +24,9 @@ const validate = celebrate({
 });
 
 router.use(loginRequired);
-router.use(validate);
-router.use(checkFollowYourself);
 
-router.post('/', follow);
-router.delete('/', unfollow);
+router.post('/', validate, checkFollowYourself, follow);
+router.delete('/', validate, checkFollowYourself, unfollow);
+router.get('/', loggedInUserID, getFollowing);
 
 export default router;
