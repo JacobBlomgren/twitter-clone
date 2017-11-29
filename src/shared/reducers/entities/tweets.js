@@ -18,6 +18,7 @@ import {
   FETCH_TWEET_NOT_FOUND,
   FETCH_TWEET_SUCCESS,
 } from '../../actions/tweetDetails';
+import { LOGIN_SUCCESS } from '../../actions/auth';
 
 // Replaces a tweet in state, that is assumed to exist.
 function replaceTweet(state, tweet) {
@@ -110,6 +111,9 @@ function byID(state = {}, action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
       return recieveTweets(state, action);
+    // Invalidate all data (whether tweets are liked, retweeted, etc).
+    case LOGIN_SUCCESS:
+      return {};
     default:
       return state;
   }
@@ -120,6 +124,8 @@ function allIDs(state = [], action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
       return R.union(state, action.tweets.map(R.prop('id')));
+    case LOGIN_SUCCESS:
+      return [];
     default:
       return state;
   }

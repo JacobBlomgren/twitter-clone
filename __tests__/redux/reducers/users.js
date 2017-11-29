@@ -12,6 +12,7 @@ import {
   FETCH_PROFILE_NOT_FOUND,
   FETCH_PROFILE_SUCCESS,
 } from '../../../src/shared/actions/profile';
+import { LOGIN_SUCCESS } from '../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = users(undefined, {});
@@ -333,5 +334,31 @@ test('user not found', () => {
   expect(state.notFound.jacob).toEqual({
     username: 'jacob',
     time,
+  });
+});
+
+test('invalidate all data on login', () => {
+  const initialState = users(
+    {
+      byID: {
+        '1': {
+          id: '1',
+        },
+      },
+      allIDs: ['1'],
+      notFound: {
+        jacob: { username: 'jacob' },
+      },
+    },
+    {},
+  );
+  deepFreeze(initialState);
+
+  const state = users(initialState, { type: LOGIN_SUCCESS });
+  expect(state.byID).toEqual({});
+  expect(state.allIDs).toEqual([]);
+  // Not found should remain the same
+  expect(state.notFound).toEqual({
+    jacob: { username: 'jacob' },
   });
 });

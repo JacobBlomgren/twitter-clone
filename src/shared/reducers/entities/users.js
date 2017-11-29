@@ -12,6 +12,7 @@ import {
   UNFOLLOW_REQUEST,
 } from '../../actions/follow';
 import { FETCH_TWEET_SUCCESS } from '../../actions/tweetDetails';
+import { LOGIN_SUCCESS } from '../../actions/auth';
 
 function merge(key, left, right) {
   if (Array.isArray(left)) return R.union(left, right);
@@ -75,6 +76,9 @@ function byID(state = {}, action) {
     case UNFOLLOW_REQUEST:
     case FOLLOW_FAILURE:
       return removeFollow(state, action);
+    // Invalidate all data (save for not found) on login as followed, etc., changes.
+    case LOGIN_SUCCESS:
+      return {};
     default:
       return state;
   }
@@ -85,6 +89,8 @@ function allIDs(state = [], action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
       return R.union(state, action.users.map(R.prop('id')));
+    case LOGIN_SUCCESS:
+      return [];
     default:
       return state;
   }

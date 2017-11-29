@@ -19,6 +19,7 @@ import {
   FETCH_TWEET_NOT_FOUND,
   FETCH_TWEET_SUCCESS,
 } from '../../../src/shared/actions/tweetDetails';
+import {LOGIN_SUCCESS} from '../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = tweets(undefined, {});
@@ -494,5 +495,31 @@ test('tweet not found', () => {
   expect(state.notFound['1']).toEqual({
     id: '1',
     time,
+  });
+});
+
+test('invalidate all data on login', () => {
+  const initialState = tweets(
+    {
+      byID: {
+        '1': {
+          id: '1',
+        },
+      },
+      allIDs: ['1'],
+      notFound: {
+        '2': { id: '2' },
+      },
+    },
+    {},
+  );
+  deepFreeze(initialState);
+
+  const state = tweets(initialState, { type: LOGIN_SUCCESS });
+  expect(state.byID).toEqual({});
+  expect(state.allIDs).toEqual([]);
+  // Not found should remain the same
+  expect(state.notFound).toEqual({
+    '2': { id: '2' },
   });
 });
