@@ -19,7 +19,7 @@ import {
   FETCH_TWEET_NOT_FOUND,
   FETCH_TWEET_SUCCESS,
 } from '../../../src/shared/actions/tweetDetails';
-import {LOGIN_SUCCESS} from '../../../src/shared/actions/auth';
+import { LOGIN_SUCCESS } from '../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = tweets(undefined, {});

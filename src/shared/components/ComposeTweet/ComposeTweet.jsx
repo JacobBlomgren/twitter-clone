@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import * as R from 'ramda';
+import PropTypes from 'prop-types';
 import { EditorState } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import createHashtagPlugin from 'draft-js-hashtag-plugin';
+import createMentionPlugin from 'draft-js-mention-plugin';
 import stringLength from 'string-length';
 
 import '../../../client/styles/compose.scss';
@@ -11,21 +13,47 @@ const hashtagPlugin = createHashtagPlugin({
   theme: { hashtag: 'Compose__Hashtag' },
 });
 
-const plugins = [hashtagPlugin];
+const mentionPlugin = createMentionPlugin({
+  entityMutabilityCan: 'MUTABLE',
+});
+
+const plugins = [hashtagPlugin, mentionPlugin];
 
 export default class ComposeTweet extends Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty(), value: '' };
+    this.state = {
+      editorState: EditorState.createEmpty(),
+      users: props.users,
+      suggestions: props.users,
+    };
+
     this.onChange = editorState => this.setState({ editorState });
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (!R.equals(this.props.users, nextProps.users)) {
+      this.setState({
+        users: nextProps.users,
+      });
+    }
+  }
+
+  onSearchChange({ value }) {
+    this.setState(prevState => ({
+      suggestions: prevState.users.filter(m => m.name.includes(value)),
+    }));
+  }
+
   render() {
-    const { editorState } = this.state;
+    const { MentionSuggestions } = mentionPlugin;
+    const { editorState, suggestions } = this.state;
     const value = editorState.getCurrentContent().getPlainText();
     return (
       <main>
@@ -38,6 +66,10 @@ export default class ComposeTweet extends Component {
             onChange={this.onChange}
             plugins={plugins}
             placeholder="What's on your mind?"
+          />
+          <MentionSuggestions
+            onSearchChange={this.onSearchChange}
+            suggestions={suggestions}
           />
           <div className="ComposeTweet__Bottom">
             <span className="float-right">
@@ -57,4 +89,11 @@ export default class ComposeTweet extends Component {
   }
 }
 
-// ComposeTweet.propTypes = {};
+ComposeTweet.propTypes = {
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      avatar: PropTypes.string,
+    }),
+  ).isRequired,
+};

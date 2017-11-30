@@ -48,4 +48,3 @@ test('invalidate all data on login', () => {
   expect(state.byID).toEqual({});
   expect(state.allIDs).toEqual([]);
 });
-
