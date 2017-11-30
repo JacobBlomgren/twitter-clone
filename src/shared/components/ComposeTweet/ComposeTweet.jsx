@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
+import Fuse from 'fuse.js';
 import PropTypes from 'prop-types';
 import { EditorState } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
@@ -13,6 +14,11 @@ const hashtagPlugin = createHashtagPlugin({
   theme: { hashtag: 'Compose__Hashtag' },
 });
 
+const fuseOptions = {
+  shouldSort: true,
+  keys: ['name'],
+};
+
 const mentionPlugin = createMentionPlugin({
   entityMutabilityCan: 'MUTABLE',
 });
@@ -25,6 +31,7 @@ export default class ComposeTweet extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       users: props.users,
+      fuse: new Fuse(props.users, fuseOptions),
       suggestions: props.users,
     };
 
@@ -41,13 +48,14 @@ export default class ComposeTweet extends Component {
     if (!R.equals(this.props.users, nextProps.users)) {
       this.setState({
         users: nextProps.users,
+        fuse: new Fuse(nextProps.users, fuseOptions),
       });
     }
   }
 
   onSearchChange({ value }) {
     this.setState(prevState => ({
-      suggestions: prevState.users.filter(m => m.name.includes(value)),
+      suggestions: prevState.fuse.search(value),
     }));
   }
 
