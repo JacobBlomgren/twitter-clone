@@ -5,7 +5,8 @@ CREATE TABLE account (
   salt_rounds INTEGER NOT NULL,
   created_at DATE DEFAULT CURRENT_DATE,
   name TEXT,
-  description TEXT
+  description TEXT,
+  profile_picture_url TEXT
 );
 
 CREATE INDEX username_index ON account (username);
@@ -22,6 +23,8 @@ CREATE TABLE tweet (
   content TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX tweet_index ON tweet (user_id);
 
 CREATE TABLE hashtag_used (
   tweet_id BIGINT REFERENCES tweet ON DELETE CASCADE,
@@ -44,6 +47,7 @@ CREATE TABLE reply_to (
   -- If the user in turn is removed, we still know that the tweet was a reply.
   original_tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE SET NULL,
   original_user_id BIGINT REFERENCES account (user_id) ON DELETE SET NULL,
+  PRIMARY KEY (reply_tweet_id)
 );
 
 CREATE INDEX reply_to_index ON reply_to (original_tweet_id);
@@ -57,9 +61,11 @@ CREATE TABLE retweet (
 
 CREATE INDEX retweet_index ON retweet (user_id);
 
-CREATE TABLE likes(
+CREATE TABLE likes (
   tweet_id BIGINT REFERENCES tweet (tweet_id) ON DELETE CASCADE,
   user_id BIGINT REFERENCES account (user_id) ON DELETE CASCADE,
   PRIMARY KEY (tweet_id, user_id)
 );
+
+CREATE INDEX likes_index ON likes (user_id);
 

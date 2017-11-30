@@ -64,13 +64,14 @@ export function getUserByUsernameAuth(username) {
   );
 }
 
-export function insertUser(username, hash, saltRounds) {
+export function insertUser(username, hash, saltRounds, profilePictureURL) {
   return db.none(
-    'INSERT INTO account (username, hash, salt_rounds) VALUES ($/username/, $/hash/, $/saltRounds/) ',
+    'INSERT INTO account (username, hash, salt_rounds, profile_picture_url) VALUES ($/username/, $/hash/, $/saltRounds/, $/profilePictureURL/) ',
     {
       username,
       hash,
       saltRounds,
+      profilePictureURL,
     },
   );
 }
