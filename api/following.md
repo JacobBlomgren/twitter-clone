@@ -1,8 +1,7 @@
 #GET api/following
 Gets a list of all accounts that the logged in user follows. Login required.
-
-##Paramaters
-_user_id_ the id of the user to follow
+The response body as an array of the following format: 
+`{ id, username, name, profile_picture_url }`
 
 ##Response
 _200_ if successful.

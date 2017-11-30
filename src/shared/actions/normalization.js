@@ -6,7 +6,7 @@ import * as R from 'ramda';
 export function normalizeProfileToUser(profile) {
   return {
     // remove tweet property
-    ...R.dissoc('tweets', profile),
+    ...R.omit(['tweets', 'follows'], profile),
     partial: false,
     recievedAt: Date.now(),
   };
@@ -111,5 +111,16 @@ export function normalizeTweets(tweets) {
     users: normalizeUsersFromTweets(tweets),
     tweets: normalizeTweetData(tweets),
     replies: computeReplies(tweets),
+  };
+}
+
+/**
+ * Normalizes following data
+ * @param following an array of the format [{ id, username, name, profilePictureURL }]
+ * @returns {{users}}
+ */
+export function normalizeFollowing(following) {
+  return {
+    users: following.map(R.assoc('partial', true)),
   };
 }

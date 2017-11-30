@@ -1,6 +1,8 @@
 import headers from '../utils/fetch/jsonHeaders';
 import { addError } from './error';
+import camelizeKeys from '../utils/camelizeKeys';
 import decamelizeKeys from '../utils/decamelizeKeys';
+import { normalizeFollowing } from './normalization';
 
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 function followRequest(userID) {
@@ -79,5 +81,44 @@ export function unfollow(userID) {
       dispatch(addError('Follow failed'));
       return dispatch(unfollowFailure(userID));
     });
+  };
+}
+
+export const FETCH_FOLLOWING_REQUEST = 'FETCH_FOLLOWING_REQUEST';
+function fetchFollowingRequest() {
+  return { type: FETCH_FOLLOWING_REQUEST };
+}
+
+export const FETCH_FOLLOWING_SUCCESS = 'FETCH_FOLLOWING_SUCCESS';
+function fetchFollowingSuccess(following) {
+  const normalized = normalizeFollowing(camelizeKeys(following));
+  return {
+    type: FETCH_FOLLOWING_SUCCESS,
+    ...normalized,
+  };
+}
+export const FETCH_FOLLOWING_FAILURE = 'FETCH_FOLLOWING_FAILURE';
+function fetchFollowingFailure() {
+  return {
+    type: FETCH_FOLLOWING_FAILURE,
+  };
+}
+
+export function fetchFollowing() {
+  return dispatch => {
+    dispatch(fetchFollowingRequest());
+    return fetch('/api/following', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.status);
+        return response.json();
+      })
+      .then(json => dispatch(fetchFollowingSuccess(json)))
+      .catch(() => {
+        dispatch(fetchFollowingFailure());
+        return dispatch(addError("Couldn't fetch data"));
+      });
   };
 }

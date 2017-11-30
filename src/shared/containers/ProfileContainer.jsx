@@ -5,7 +5,7 @@ import * as R from 'ramda';
 import Profile from '../components/Profile/Profile';
 import Spinner from '../components/Spinner';
 import { fetchUser } from '../actions/profile';
-import { follow, unfollow } from '../actions/follow';
+import { follow, unfollow } from '../actions/following';
 import NotFoundPage from '../components/page/NotFoundPage';
 
 /* eslint-disable react/prop-types */

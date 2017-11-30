@@ -1,18 +1,18 @@
 import 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze';
 
-import users from '../../../src/shared/reducers/entities/users';
+import users from '../../../../src/shared/reducers/entities/users/index';
 import {
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
-} from '../../../src/shared/actions/follow';
+} from '../../../../src/shared/actions/following';
 import {
   FETCH_PROFILE_NOT_FOUND,
   FETCH_PROFILE_SUCCESS,
-} from '../../../src/shared/actions/profile';
-import { LOGIN_SUCCESS } from '../../../src/shared/actions/auth';
+} from '../../../../src/shared/actions/profile';
+import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = users(undefined, {});
@@ -188,11 +188,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: false,
             followerCount: 5,
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -202,7 +202,6 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(6);
-    expect(state.byID['1'].follows).toBe(true);
   });
 
   test('FOLLOW_REQUEST multiple times', () => {
@@ -211,11 +210,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: false,
             followerCount: 0,
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -229,7 +228,6 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state2.byID['1'].followerCount).toBe(1);
-    expect(state2.byID['1'].follows).toBe(true);
   });
 
   test('FOLLOW_REQUEST non-existent USER', () => {
@@ -238,11 +236,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: false,
             followerCount: 0,
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -260,11 +258,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: true,
             followerCount: 1,
           },
         },
         allIDs: ['1'],
+        following: { allIDs: ['1'] },
       },
       {},
     );
@@ -274,7 +272,6 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(0);
-    expect(state.byID['1'].follows).toBe(false);
   });
 
   test('UNFOLLOW_REQUEST', () => {
@@ -283,11 +280,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: true,
             followerCount: 5,
           },
         },
         allIDs: ['1'],
+        following: { allIDs: ['1'] },
       },
       {},
     );
@@ -297,7 +294,6 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(4);
-    expect(state.byID['1'].follows).toBe(false);
   });
 
   test('UNFOLLOW_FAILURE', () => {
@@ -306,11 +302,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            follows: false,
             followerCount: 0,
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -320,7 +316,6 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(1);
-    expect(state.byID['1'].follows).toBe(true);
   });
 });
 
