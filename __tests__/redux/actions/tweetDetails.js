@@ -8,8 +8,7 @@ import {
   FETCH_TWEET_REQUEST,
   FETCH_TWEET_SUCCESS,
   fetchTweet,
-  fetchTweetSuccess,
-} from '../../../src/shared/actions/tweetDetails';
+} from '../../../src/shared/actions/tweet';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

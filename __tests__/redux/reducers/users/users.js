@@ -383,15 +383,38 @@ test('is fetching', async () => {
   expect(state1.following.isFetching).toBe(true);
   deepFreeze(state1);
 
-  const state2 = users(state1, { type: FETCH_FOLLOWING_SUCCESS });
+  const state2 = users(state1, {
+    type: FETCH_FOLLOWING_SUCCESS,
+    users: [],
+  });
   expect(state2.following.isFetching).toBe(false);
 });
 
 test('fetch following', async () => {
   const state = users(undefined, {
     type: FETCH_FOLLOWING_SUCCESS,
+    users: [
+      {
+        id: '1',
+        name: 'jacob',
+      },
+      {
+        id: '2',
+        name: 'jake',
+      },
+    ],
     following: ['1', '2'],
   });
   expect(state.following.allIDs).toContain('1');
   expect(state.following.allIDs).toContain('2');
+  expect(state.byID).toEqual({
+    '1': {
+      id: '1',
+      name: 'jacob',
+    },
+    '2': {
+      id: '2',
+      name: 'jake',
+    },
+  });
 });

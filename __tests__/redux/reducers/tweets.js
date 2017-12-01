@@ -439,6 +439,28 @@ describe('remove retweet of tweet', () => {
   });
 });
 
+describe('post tweet', () => {
+  test('POST_TWEET_SUCCESS', () => {
+    const state = tweets(undefined, {
+      type: POST_TWEET_SUCCESS,
+      tweets: [
+        {
+          id: '1',
+          content: 'a tweet',
+        },
+      ],
+    });
+
+    expect(state.byID).toEqual({
+      '1': {
+        id: '1',
+        content: 'a tweet',
+      },
+    });
+    expect(state.allIDs).toEqual(['1']);
+  });
+});
+
 describe('recieve profile', () => {
   test('FETCH_PROFILE_SUCCESS', () => {
     const initialState = tweets(
