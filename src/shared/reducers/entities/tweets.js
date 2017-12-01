@@ -94,6 +94,18 @@ function recieveTweets(state, action) {
   return mergeTweets(state, action.tweets);
 }
 
+// Removes data concerning user actions (liked/retweeted tweets) on login.
+function invalidateOnLogin(state) {
+  // prettier-ignore
+  return R.map(
+    R.pipe(
+      R.omit(['liked', 'retweeted']),
+      R.assoc('partial', true),
+    ),
+    state
+  );
+}
+
 function byID(state = {}, action) {
   switch (action.type) {
     // We add a like at the request for immediate feedback, and remove it on failure
@@ -113,9 +125,8 @@ function byID(state = {}, action) {
     case FETCH_TWEET_SUCCESS:
     case POST_TWEET_SUCCESS:
       return recieveTweets(state, action);
-    // Invalidate all data (whether tweets are liked, retweeted, etc).
     case LOGIN_SUCCESS:
-      return {};
+      return invalidateOnLogin(state);
     default:
       return state;
   }
@@ -127,8 +138,6 @@ function allIDs(state = [], action) {
     case FETCH_TWEET_SUCCESS:
     case POST_TWEET_SUCCESS:
       return R.union(state, action.tweets.map(R.prop('id')));
-    case LOGIN_SUCCESS:
-      return [];
     default:
       return state;
   }

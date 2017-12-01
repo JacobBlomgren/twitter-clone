@@ -345,18 +345,23 @@ test('user not found', () => {
   });
 });
 
-test('invalidate all data on login', () => {
+test('invalidate data on login', () => {
   const initialState = users(
     {
       byID: {
         '1': {
           id: '1',
+          follows: false,
+        },
+        '2': {
+          id: '2',
+          partial: false,
         },
       },
-      allIDs: ['1'],
-      notFound: {
-        jacob: { username: 'jacob' },
-      },
+      // allIDs: ['1', '2'],
+      // notFound: {
+      //   jacob: { username: 'jacob' },
+      // },
       following: { allIDs: [], isFetching: false, recievedAt: 0 },
     },
     {},
@@ -364,18 +369,9 @@ test('invalidate all data on login', () => {
   deepFreeze(initialState);
 
   const state = users(initialState, { type: LOGIN_SUCCESS });
-  expect(state.byID).toEqual({});
-  expect(state.allIDs).toEqual([]);
-  // Not found should remain the same
-  expect(state.notFound).toEqual({
-    jacob: { username: 'jacob' },
-  });
-  // same for following
-  expect(state.following).toEqual({
-    allIDs: [],
-    isFetching: false,
-    recievedAt: 0,
-  });
+  expect(state.byID['1']).not.toHaveProperty('follows');
+  expect(state.byID['1']).toHaveProperty('partial', true);
+  expect(state.byID['2']).toHaveProperty('partial', true);
 });
 
 test('is fetching', async () => {

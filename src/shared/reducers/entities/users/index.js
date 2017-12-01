@@ -63,6 +63,18 @@ function removeFollow(state, followingAllIDs, action) {
   return replaceUser(state, newUser);
 }
 
+// Invalidates follows data for users on login.
+function invalidateOnLogin(state) {
+  // prettier-ignore
+  return R.map(
+    R.pipe(
+      R.omit(['follows']),
+      R.assoc('partial', true),
+    ),
+    state,
+  );
+}
+
 function byID(state = {}, followingAllIDs, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
@@ -76,9 +88,8 @@ function byID(state = {}, followingAllIDs, action) {
     case UNFOLLOW_REQUEST:
     case FOLLOW_FAILURE:
       return removeFollow(state, followingAllIDs, action);
-    // Invalidate all data (save for not found) on login as followed, etc., changes.
     case LOGIN_SUCCESS:
-      return {};
+      return invalidateOnLogin(state);
     default:
       return state;
   }
@@ -89,8 +100,6 @@ function allIDs(state = [], action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
       return R.union(state, action.users.map(R.prop('id')));
-    case LOGIN_SUCCESS:
-      return [];
     default:
       return state;
   }
@@ -132,4 +141,3 @@ export default function(state, action) {
     following: followingReducer(state.following, state.byID, action),
   };
 }
-

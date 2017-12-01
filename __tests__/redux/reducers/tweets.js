@@ -521,17 +521,19 @@ test('tweet not found', () => {
   });
 });
 
-test('invalidate all data on login', () => {
+test('invalidate data on login', () => {
   const initialState = tweets(
     {
       byID: {
         '1': {
           id: '1',
+          liked: false,
+          retweeted: false,
         },
-      },
-      allIDs: ['1'],
-      notFound: {
-        '2': { id: '2' },
+        '2': {
+          id: '2',
+          partial: false,
+        },
       },
     },
     {},
@@ -539,10 +541,10 @@ test('invalidate all data on login', () => {
   deepFreeze(initialState);
 
   const state = tweets(initialState, { type: LOGIN_SUCCESS });
-  expect(state.byID).toEqual({});
-  expect(state.allIDs).toEqual([]);
-  // Not found should remain the same
-  expect(state.notFound).toEqual({
-    '2': { id: '2' },
-  });
+  const tweet1 = state.byID['1'];
+  expect(tweet1).not.toHaveProperty('liked');
+  expect(tweet1).not.toHaveProperty('retweeted');
+  expect(tweet1).toHaveProperty('partial', true);
+
+  expect(state.byID['2']).toHaveProperty('partial', true);
 });
