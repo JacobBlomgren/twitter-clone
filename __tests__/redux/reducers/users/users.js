@@ -3,7 +3,8 @@ import deepFreeze from 'deep-freeze';
 
 import users from '../../../../src/shared/reducers/entities/users/index';
 import {
-  FETCH_FOLLOWING_REQUEST, FETCH_FOLLOWING_SUCCESS,
+  FETCH_FOLLOWING_REQUEST,
+  FETCH_FOLLOWING_SUCCESS,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
@@ -393,4 +394,4 @@ test('fetch following', async () => {
   });
   expect(state.following.allIDs).toContain('1');
   expect(state.following.allIDs).toContain('2');
-})
+});

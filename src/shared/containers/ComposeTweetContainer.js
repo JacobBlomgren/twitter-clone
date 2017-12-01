@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import ComposeTweet from '../components/ComposeTweet/ComposeTweet';
 
 function mapStateToProps(state) {
-  const users = Object.values(state.entities.users.byID).map(
-    ({ username, profilePictureURL }) => ({
+  const users = R.pipe(
+    R.filter(R.has('profilePictureURL')),
+    R.map(({ username, profilePictureURL }) => ({
       name: `@${username}`,
       avatar: profilePictureURL,
-    }),
-  );
+    })),
+  )(Object.values(state.entities.users.byID));
   return { users };
 }
 

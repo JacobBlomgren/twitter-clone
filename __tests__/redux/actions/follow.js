@@ -14,7 +14,8 @@ import {
   UNFOLLOW_REQUEST,
   UNFOLLOW_SUCCESS,
   FETCH_FOLLOWING_REQUEST,
-  FETCH_FOLLOWING_SUCCESS, FETCH_FOLLOWING_FAILURE,
+  FETCH_FOLLOWING_SUCCESS,
+  FETCH_FOLLOWING_FAILURE,
 } from '../../../src/shared/actions/following';
 import { ADD_ERROR } from '../../../src/shared/actions/error';
 

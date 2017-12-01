@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
 
@@ -8,7 +9,6 @@ import { fetchUser } from '../actions/profile';
 import { follow, unfollow } from '../actions/following';
 import NotFoundPage from '../components/page/NotFoundPage';
 
-/* eslint-disable react/prop-types */
 /**
  * Component to wrap a profile, that fetches new data for the requested user
  * if the current data is old, non-existent, or partial.
@@ -51,7 +51,21 @@ class ProfileContainer extends Component {
     return <Profile {...this.props} />;
   }
 }
-/* eslint-enable react/prop-types */
+
+ProfileContainer.propTypes = {
+  id: PropTypes.string,
+  recievedAt: PropTypes.number,
+  shouldFetch: PropTypes.bool,
+  notFound: PropTypes.bool,
+  fetchUser: PropTypes.func.isRequired,
+};
+
+ProfileContainer.defaultProps = {
+  id: null,
+  recievedAt: null,
+  shouldFetch: false,
+  notFound: false,
+};
 
 const findUser = (users, username) =>
   R.find(R.propEq('username', username), users);
@@ -73,6 +87,10 @@ function mapStateToProps(state, { username }) {
     };
   }
 
+  const follows =
+    !!state.entities.login.user &&
+    state.entities.users.following.allIDs.includes(user.id);
+  console.log(follows);
   const tweetsWithTimestamp = user.tweets
     ? user.tweets.map(id => ({
         id,
@@ -88,7 +106,12 @@ function mapStateToProps(state, { username }) {
     R.sortBy(R.prop('createdAt')),
     R.union,
   )(tweetsWithTimestamp, retweets);
-  return { ...user, tweets, loggedInUserID: state.entities.login.user };
+  return {
+    ...user,
+    follows,
+    tweets,
+    loggedInUserID: state.entities.login.user,
+  };
 }
 
 function mapDispatchToProps(dispatch, { username }) {
