@@ -1,6 +1,12 @@
 import Lazy from '../shared/components/ComposeTweet/Lazy';
+import { fetchFollowing } from '../shared/actions/following';
 
 let fetchedCompose = false;
+
+function compose() {
+  Lazy.preload();
+  fetchFollowing();
+}
 
 /**
  * Higher order function that, given a store, returns a subscriber for that store's state changes.
@@ -11,7 +17,7 @@ export function subscriber(store) {
     const state = store.getState();
     if (state.entities.login.user && !fetchedCompose) {
       fetchedCompose = true;
-      setTimeout(Lazy.preload, 3000);
+      setTimeout(compose, 3000);
     }
   };
 }
@@ -22,6 +28,6 @@ export function subscriber(store) {
 export function onLoad(store) {
   if (store.getState().entities.login.user) {
     fetchedCompose = true;
-    setTimeout(Lazy.preload, 3000);
+    setTimeout(compose, 3000);
   }
 }
