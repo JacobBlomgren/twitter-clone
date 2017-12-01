@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { combineReducers } from 'redux';
 
 import { FETCH_PROFILE_SUCCESS } from '../../actions/profile';
-import { FETCH_TWEET_SUCCESS } from '../../actions/tweetDetails';
+import { FETCH_TWEET_SUCCESS } from '../../actions/tweet';
 import { LOGIN_SUCCESS } from '../../actions/auth';
 
 function byID(state = {}, action) {

@@ -6,12 +6,13 @@ import {
   FETCH_PROFILE_SUCCESS,
 } from '../../../actions/profile';
 import {
+  FETCH_FOLLOWING_SUCCESS,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
 } from '../../../actions/following';
-import { FETCH_TWEET_SUCCESS } from '../../../actions/tweetDetails';
+import { FETCH_TWEET_SUCCESS } from '../../../actions/tweet';
 import { LOGIN_SUCCESS } from '../../../actions/auth';
 
 function merge(key, left, right) {
@@ -66,6 +67,7 @@ function byID(state = {}, followingAllIDs, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
+    case FETCH_FOLLOWING_SUCCESS:
       return recieveUsers(state, action);
     // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:
@@ -131,9 +133,3 @@ export default function(state, action) {
   };
 }
 
-// export default combineReducers({
-//   byID,
-//   allIDs,
-//   notFound,
-//   following,
-// });

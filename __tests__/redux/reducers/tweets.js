@@ -18,7 +18,8 @@ import {
 import {
   FETCH_TWEET_NOT_FOUND,
   FETCH_TWEET_SUCCESS,
-} from '../../../src/shared/actions/tweetDetails';
+  POST_TWEET_SUCCESS,
+} from '../../../src/shared/actions/tweet';
 import { LOGIN_SUCCESS } from '../../../src/shared/actions/auth';
 
 test('default', () => {

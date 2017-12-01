@@ -122,5 +122,6 @@ export function normalizeTweets(tweets) {
 export function normalizeFollowing(following) {
   return {
     users: following.map(R.assoc('partial', true)),
+    following: following.map(R.prop('id')),
   };
 }

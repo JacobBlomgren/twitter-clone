@@ -7,7 +7,7 @@ import {
   fetchProfileNotFound,
   fetchProfileSuccess,
 } from '../../shared/actions/profile';
-import { fetchTweetSuccess } from '../../shared/actions/tweetDetails';
+import { fetchTweetSuccess } from '../../shared/actions/tweet';
 import { loginSuccess } from '../../shared/actions/auth';
 
 export async function profile(username, loggedInUserID) {

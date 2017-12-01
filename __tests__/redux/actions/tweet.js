@@ -7,8 +7,9 @@ import {
   FETCH_TWEET_NOT_FOUND,
   FETCH_TWEET_REQUEST,
   FETCH_TWEET_SUCCESS,
-  fetchTweet,
+  fetchTweet, POST_TWEET_REQUEST, POST_TWEET_SUCCESS, postTweet,
 } from '../../../src/shared/actions/tweet';
+import {ADD_ERROR} from '../../../src/shared/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 
@@ -114,3 +115,22 @@ test('fetch tweet not found', async () => {
   expect(store.getActions()[0].type).toBe(FETCH_TWEET_REQUEST);
   expect(store.getActions()[1].type).toBe(FETCH_TWEET_NOT_FOUND);
 });
+
+test('post tweet success', async () => {
+  fetchMock.post('/api/tweets/', {
+    id: '1',
+    content: 'tweet',
+  });
+  const store = mockStore();
+  await store.dispatch(postTweet('tweet'));
+  expect(store.getActions()[0].type).toBe(POST_TWEET_REQUEST);
+  expect(store.getActions()[1].type).toBe(POST_TWEET_SUCCESS);
+})
+
+test('post tweet failure', async () => {
+  fetchMock.post('/api/tweets/', 500);
+  const store = mockStore();
+  await store.dispatch(postTweet('tweet'));
+  expect(store.getActions()[0].type).toBe(POST_TWEET_REQUEST);
+  expect(store.getActions()[1].type).toBe(ADD_ERROR);
+})

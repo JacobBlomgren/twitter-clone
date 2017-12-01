@@ -1,5 +1,8 @@
 import { normalizeTweets } from './normalization';
 import camelizeKeys from '../utils/camelizeKeys';
+import { addError } from './error';
+import decamelizeKeys from '../utils/decamelizeKeys';
+import headers from '../utils/fetch/jsonHeaders';
 
 export const FETCH_TWEET_REQUEST = 'FETCH_TWEET_REQUEST';
 function fetchTweetRequest(tweetID) {
@@ -51,5 +54,40 @@ export function fetchTweet(tweetID) {
         if (err.message === '404') return dispatch(fetchTweetNotFound(tweetID));
         return null;
       });
+  };
+}
+
+export const POST_TWEET_REQUEST = 'POST_TWEET_REQUEST';
+function postTweetRequest() {
+  return {
+    type: POST_TWEET_REQUEST,
+  };
+}
+
+export const POST_TWEET_SUCCESS = 'POST_TWEET_SUCCESS';
+function postTweetSuccess(tweet) {
+  const normalized = normalizeTweets([camelizeKeys(tweet)]);
+  return {
+    type: POST_TWEET_SUCCESS,
+    ...normalized,
+  };
+}
+
+export function postTweet(content, replyTo) {
+  return dispatch => {
+    dispatch(postTweetRequest());
+    const body = replyTo ? { content, replyTo } : { content };
+    return fetch('/api/tweets/', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(decamelizeKeys(body)),
+      credentials: 'include',
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.status);
+        return response.json();
+      })
+      .then(json => dispatch(postTweetSuccess(json)))
+      .catch(() => dispatch(addError("Couldn't post tweet.")));
   };
 }
