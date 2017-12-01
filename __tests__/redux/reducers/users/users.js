@@ -358,11 +358,7 @@ test('invalidate data on login', () => {
           partial: false,
         },
       },
-      // allIDs: ['1', '2'],
-      // notFound: {
-      //   jacob: { username: 'jacob' },
-      // },
-      following: { allIDs: [], isFetching: false, recievedAt: 0 },
+      following: { allIDs: [] },
     },
     {},
   );
@@ -374,17 +370,17 @@ test('invalidate data on login', () => {
   expect(state.byID['2']).toHaveProperty('partial', true);
 });
 
-test('is fetching', async () => {
-  const state1 = users(undefined, { type: FETCH_FOLLOWING_REQUEST });
-  expect(state1.following.isFetching).toBe(true);
-  deepFreeze(state1);
-
-  const state2 = users(state1, {
-    type: FETCH_FOLLOWING_SUCCESS,
-    users: [],
-  });
-  expect(state2.following.isFetching).toBe(false);
-});
+// test('is fetching', async () => {
+//   const state1 = users(undefined, { type: FETCH_FOLLOWING_REQUEST });
+//   expect(state1.following.isFetching).toBe(true);
+//   deepFreeze(state1);
+//
+//   const state2 = users(state1, {
+//     type: FETCH_FOLLOWING_SUCCESS,
+//     users: [],
+//   });
+//   expect(state2.following.isFetching).toBe(false);
+// });
 
 test('fetch following', async () => {
   const state = users(undefined, {

@@ -1,8 +1,6 @@
 import * as R from 'ramda';
 
 import {
-  FETCH_FOLLOWING_FAILURE,
-  FETCH_FOLLOWING_REQUEST,
   FETCH_FOLLOWING_SUCCESS,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
@@ -38,33 +36,12 @@ function allIDs(state = [], usersByID, action) {
   }
 }
 
-function isFetching(state = false, action) {
-  switch (action.type) {
-    case FETCH_FOLLOWING_REQUEST:
-      return true;
-    case FETCH_FOLLOWING_FAILURE:
-    case FETCH_FOLLOWING_SUCCESS:
-      return false;
-    default:
-      return state;
-  }
-}
-
-function recievedAt(state = 0, action) {
-  if (action.type === FETCH_FOLLOWING_SUCCESS) return action.recievedAt;
-  return state;
-}
-
 export default function(state, usersByID, action) {
   if (typeof state === 'undefined')
     return {
       allIDs: allIDs(undefined, {}, action),
-      isFetching: isFetching(undefined, action),
-      recievedAt: recievedAt(undefined, action),
     };
   return {
     allIDs: allIDs(state.allIDs, usersByID, action),
-    isFetching: isFetching(state.isFetching, action),
-    recievedAt: recievedAt(state.recievedAt, action),
   };
 }
