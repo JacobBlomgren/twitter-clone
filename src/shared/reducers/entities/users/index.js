@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-import { combineReducers } from 'redux';
 
 import followingReducer from './following';
 import {
@@ -43,9 +42,9 @@ function replaceUser(state, user) {
   };
 }
 
-function addFollow(state, following, action) {
+function addFollow(state, followingAllIDs, action) {
   const user = state[action.userID];
-  if (!user || following.allIDs.includes(user.id)) return state;
+  if (!user || followingAllIDs.includes(user.id)) return state;
   const newUser = {
     ...user,
     followerCount: user.followerCount + 1,
@@ -53,9 +52,9 @@ function addFollow(state, following, action) {
   return replaceUser(state, newUser);
 }
 
-function removeFollow(state, following, action) {
+function removeFollow(state, followingAllIDs, action) {
   const user = state[action.userID];
-  if (!user || !following.allIDs.includes(user.id)) return state;
+  if (!user || !followingAllIDs.includes(user.id)) return state;
   const newUser = {
     ...user,
     followerCount: user.followerCount - 1,
@@ -63,7 +62,7 @@ function removeFollow(state, following, action) {
   return replaceUser(state, newUser);
 }
 
-function byID(state = {}, following, action) {
+function byID(state = {}, followingAllIDs, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
@@ -71,10 +70,10 @@ function byID(state = {}, following, action) {
     // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:
     case UNFOLLOW_FAILURE:
-      return addFollow(state, following, action);
+      return addFollow(state, followingAllIDs, action);
     case UNFOLLOW_REQUEST:
     case FOLLOW_FAILURE:
-      return removeFollow(state, following, action);
+      return removeFollow(state, followingAllIDs, action);
     // Invalidate all data (save for not found) on login as followed, etc., changes.
     case LOGIN_SUCCESS:
       return {};
@@ -119,13 +118,13 @@ function notFound(state = {}, action) {
 export default function(state, action) {
   if (typeof state === 'undefined')
     return {
-      byID: byID(undefined, undefined, action),
+      byID: byID(undefined, [], action),
       allIDs: allIDs(undefined, action),
       notFound: notFound(undefined, action),
-      following: followingReducer(undefined, undefined, action),
+      following: followingReducer(undefined, {}, action),
     };
   return {
-    byID: byID(state.byID, state.following, action),
+    byID: byID(state.byID, state.following.allIDs, action),
     allIDs: allIDs(state.allIDs, action),
     notFound: notFound(state.notFound, action),
     following: followingReducer(state.following, state.byID, action),

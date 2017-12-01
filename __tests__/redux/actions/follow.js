@@ -6,12 +6,15 @@ import thunkMiddleware from 'redux-thunk';
 import {
   follow,
   unfollow,
+  fetchFollowing,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   FOLLOW_SUCCESS,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
   UNFOLLOW_SUCCESS,
+  FETCH_FOLLOWING_REQUEST,
+  FETCH_FOLLOWING_SUCCESS, FETCH_FOLLOWING_FAILURE,
 } from '../../../src/shared/actions/following';
 import { ADD_ERROR } from '../../../src/shared/actions/error';
 
@@ -61,4 +64,35 @@ test('unfollow failure', async () => {
   expect(store.getActions()[0].type).toBe(UNFOLLOW_REQUEST);
   expect(store.getActions()[1].type).toBe(ADD_ERROR);
   expect(store.getActions()[2].type).toBe(UNFOLLOW_FAILURE);
+});
+
+test('fetch following success', async () => {
+  fetchMock.get('/api/following', {
+    status: 200,
+    body: [
+      {
+        id: '1',
+        username: 'jacob',
+        name: 'Jacob',
+        profile_picture_url: 'me.png',
+      },
+    ],
+  });
+
+  const store = mockStore();
+  await store.dispatch(fetchFollowing());
+
+  expect(store.getActions()[0].type).toBe(FETCH_FOLLOWING_REQUEST);
+  expect(store.getActions()[1].type).toBe(FETCH_FOLLOWING_SUCCESS);
+});
+
+test('fetch following success', async () => {
+  fetchMock.get('/api/following', 500);
+
+  const store = mockStore();
+  await store.dispatch(fetchFollowing());
+
+  expect(store.getActions()[0].type).toBe(FETCH_FOLLOWING_REQUEST);
+  expect(store.getActions()[1].type).toBe(FETCH_FOLLOWING_FAILURE);
+  expect(store.getActions()[2].type).toBe(ADD_ERROR);
 });

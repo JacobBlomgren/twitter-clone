@@ -3,6 +3,7 @@ import deepFreeze from 'deep-freeze';
 
 import users from '../../../../src/shared/reducers/entities/users/index';
 import {
+  FETCH_FOLLOWING_REQUEST, FETCH_FOLLOWING_SUCCESS,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
@@ -31,6 +32,7 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -64,6 +66,7 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -97,6 +100,7 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -132,6 +136,7 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
+        following: { allIDs: [] },
       },
       {},
     );
@@ -163,6 +168,7 @@ describe('recieve profile', () => {
           time: Date.now(),
         },
       },
+      following: { allIDs: [] },
     };
     deepFreeze(initialState);
     const state = users(initialState, {
@@ -202,6 +208,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(6);
+    expect(state.allIDs).toContain('1');
   });
 
   test('FOLLOW_REQUEST multiple times', () => {
@@ -228,6 +235,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state2.byID['1'].followerCount).toBe(1);
+    expect(state2.allIDs).toContain('1');
   });
 
   test('FOLLOW_REQUEST non-existent USER', () => {
@@ -250,6 +258,7 @@ describe('follow user', () => {
       userID: '5',
     });
     expect(state).toEqual(initialState);
+    expect(state.allIDs).not.toContain('5');
   });
 
   test('FOLLOW_FAILURE', () => {
@@ -272,6 +281,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(0);
+    expect(state.following.allIDs).not.toContain('1');
   });
 
   test('UNFOLLOW_REQUEST', () => {
@@ -294,6 +304,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(4);
+    expect(state.following.allIDs).not.toContain('1');
   });
 
   test('UNFOLLOW_FAILURE', () => {
@@ -316,6 +327,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(1);
+    expect(state.following.allIDs).toContain('1');
   });
 });
 
@@ -344,6 +356,7 @@ test('invalidate all data on login', () => {
       notFound: {
         jacob: { username: 'jacob' },
       },
+      following: { allIDs: [], isFetching: false, recievedAt: 0 },
     },
     {},
   );
@@ -356,4 +369,28 @@ test('invalidate all data on login', () => {
   expect(state.notFound).toEqual({
     jacob: { username: 'jacob' },
   });
+  // same for following
+  expect(state.following).toEqual({
+    allIDs: [],
+    isFetching: false,
+    recievedAt: 0,
+  });
 });
+
+test('is fetching', async () => {
+  const state1 = users(undefined, { type: FETCH_FOLLOWING_REQUEST });
+  expect(state1.following.isFetching).toBe(true);
+  deepFreeze(state1);
+
+  const state2 = users(state1, { type: FETCH_FOLLOWING_SUCCESS });
+  expect(state2.following.isFetching).toBe(false);
+});
+
+test('fetch following', async () => {
+  const state = users(undefined, {
+    type: FETCH_FOLLOWING_SUCCESS,
+    following: ['1', '2'],
+  });
+  expect(state.following.allIDs).toContain('1');
+  expect(state.following.allIDs).toContain('2');
+})
