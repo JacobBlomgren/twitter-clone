@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import following from './following';
+import tweet from './tweet';
 
 /**
  * Reducers for state about network requests, i.e. if something is currently
@@ -8,4 +9,5 @@ import following from './following';
  */
 export default combineReducers({
   following,
+  tweet,
 });

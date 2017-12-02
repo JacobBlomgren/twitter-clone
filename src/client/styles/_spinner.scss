@@ -2,6 +2,8 @@
 $spinkit-spinner-color: $main-color;
 
 @import '~spinkit/scss/spinners/3-wave';
+$spinkit-spinner-color: #656565;
+@import '~spinkit/scss/spinners/10-fading-circle';
 
 .sk-rect:not(:last-child) {
   margin: 0 3px 0 0;
@@ -17,4 +19,11 @@ $spinkit-spinner-color: $main-color;
   .sk-wave {
     margin: 0 auto;
   }
+}
+
+.sk-fading-circle {
+  display: inline-block;
+  height: 0.625rem;
+  margin: 0;
+  width: 0.625rem;
 }

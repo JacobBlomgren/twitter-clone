@@ -1,0 +1,162 @@
+@import 'custom';
+@import 'no-style';
+@import 'variables';
+@import '~bootstrap/scss/mixins';
+@import '~draft-js/dist/Draft.css';
+@import '~draft-js-mention-plugin/lib/plugin.css';
+//@import '~draft-js-hashtag-plugin/lib/plugin.css';
+
+.ComposeTweet {
+  background-color: #fff;
+  height: 100vh;
+  position: relative;
+}
+
+@include media-breakpoint-down(md-mobile) {
+  .ComposeTweet {
+    margin-top: -$nav-height;
+    padding-top: 1rem + $nav-height;
+  }
+}
+
+.ComposeTweet__Textarea {
+  @include textarea-no-style;
+  resize: none;
+  width: 100%;
+}
+
+.DraftEditor-editorContainer,
+.DraftEditor-root,
+.public-DraftEditor-content {
+  height: auto;
+  min-height: 150px;
+}
+
+.ComposeTweet__Bottom {
+  @include clearfix;
+  border-top: 1px solid #a1a1a1;
+  bottom: 0;
+  left: 0;
+  padding: inherit;
+  position: absolute;
+  width: 100%;
+}
+
+.ComposeTweet__Count {
+  font-size: 1.2rem;
+  margin-right: 0.8rem;
+}
+
+.ComposeTweet__Submit,
+.ComposeTweet__Textarea {
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+@include media-breakpoint-up(sm) {
+  .ComposeTweet {
+    height: auto;
+  }
+
+  .ComposeTweet__Bottom {
+    padding: 1.2rem 0;
+    position: relative;
+  }
+
+  .ComposeTweet__Submit,
+  .ComposeTweet__Textarea {
+    font-size: 1rem;
+  }
+
+  .ComposeTweet__Count {
+    font-size: 0.9rem;
+  }
+}
+
+.ComposeTweet__Spinner {
+  margin-right: 0.3rem;
+}
+
+.Compose__Hashtag {
+  color: $main-color;
+}
+
+.Compose__Mention {
+  color: $main-color;
+  text-decoration: none;
+}
+
+$main-transparent: rgba(109, 43, 41, 0.59);
+
+/* stylelint-disable */
+.draftJsMentionPlugin__mention__29BEd, .draftJsMentionPlugin__mention__29BEd:visited {
+  background-color: transparent;
+  border-radius: 2px;
+  color: $main-color;
+  cursor: inherit;
+  display: inline-block;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+}
+
+.draftJsMentionPlugin__mention__29BEd:hover, .draftJsMentionPlugin__mention__29BEd:focus {
+  background-color: transparent;
+  color: $main-color;
+  outline: 0; /* reset for :focus */
+}
+
+.draftJsMentionPlugin__mention__29BEd:active {
+  background-color: transparent;
+  color: $main-color;
+}
+
+.draftJsMentionPlugin__mentionSuggestionsEntry__3mSwm {
+  padding: 7px 10px 3px 10px;
+}
+
+.draftJsMentionPlugin__mentionSuggestionsEntry__3mSwm:active {
+  background-color: $main-transparent;
+}
+
+.draftJsMentionPlugin__mentionSuggestionsEntryFocused__3LcTd {
+  background-color: #ffe1e4;
+}
+
+.draftJsMentionPlugin__mentionSuggestionsEntryText__3Jobq {
+  display: inline-block;
+  font-size: 0.9em;
+  margin-bottom: 0.2em;
+  margin-left: 8px;
+  max-width: 368px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.draftJsMentionPlugin__mentionSuggestionsEntryAvatar__1xgA9 {
+  border-radius: 12px;
+  display: inline-block;
+  height: 24px;
+  vertical-align: top;
+  width: 24px;
+}
+
+.draftJsMentionPlugin__mentionSuggestions__2DWjA {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  box-shadow: 0 4px 30px 0 rgba(220,220,220,1);
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.75em;
+  max-width: 440px;
+  min-width: 220px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  position: absolute;
+  transform: scale(0);
+  z-index: 2;
+}

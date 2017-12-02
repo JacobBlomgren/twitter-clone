@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 
 import ComposeTweet from '../components/ComposeTweet/ComposeTweet';
+import { postTweet } from '../actions/tweet';
 
 function mapStateToProps(state) {
   const users = R.pipe(
@@ -13,7 +14,17 @@ function mapStateToProps(state) {
       avatar: profilePictureURL,
     })),
   )(Object.values(state.entities.users.byID));
-  return { users };
+  return {
+    users,
+    posting: state.network.tweet.posting,
+  };
 }
 
-export default connect(mapStateToProps)(ComposeTweet);
+function mapDispatchToProps(dispatch) {
+  return {
+    postTweet: (content, replyTo, callback) =>
+      dispatch(postTweet(content, replyTo, callback)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComposeTweet);

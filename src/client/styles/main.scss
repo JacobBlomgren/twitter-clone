@@ -1,13 +1,15 @@
 @import 'custom';
 @import '~bootstrap/scss/bootstrap';
-@import '404';
+@import 'spinner';
+@import 'transitions';
 @import 'buttons';
+
+@import '404';
+@import 'compose';
 @import 'error';
 @import 'login';
 @import 'nav/nav';
 @import 'profile';
-@import 'spinner';
-@import 'transitions';
 @import 'tweet';
 
 $padding-sides: 10px;

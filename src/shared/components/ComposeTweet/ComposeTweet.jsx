@@ -8,7 +8,7 @@ import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import createMentionPlugin from 'draft-js-mention-plugin';
 import stringLength from 'string-length';
 
-import '../../../client/styles/compose.scss';
+import SmallSpinner from '../SmallSpinner';
 
 const hashtagPlugin = createHashtagPlugin({
   theme: { hashtag: 'Compose__Hashtag' },
@@ -42,6 +42,11 @@ export default class ComposeTweet extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.props.postTweet(
+      this.state.editorState.getCurrentContent().getPlainText(),
+      null,
+      id => console.log(id),
+    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,7 +67,11 @@ export default class ComposeTweet extends Component {
   render() {
     const { MentionSuggestions } = mentionPlugin;
     const { editorState, suggestions } = this.state;
+    const { posting } = this.props;
     const value = editorState.getCurrentContent().getPlainText();
+    const disabled = value === '' || stringLength(value) >= 140;
+    // can't change it once it's posted.
+    const onChange = posting ? () => null : this.onChange;
     return (
       <main>
         <form
@@ -71,7 +80,7 @@ export default class ComposeTweet extends Component {
         >
           <Editor
             editorState={editorState}
-            onChange={this.onChange}
+            onChange={onChange}
             plugins={plugins}
             placeholder="What's on your mind?"
           />
@@ -81,6 +90,7 @@ export default class ComposeTweet extends Component {
           />
           <div className="ComposeTweet__Bottom">
             <span className="float-right">
+              {posting && <SmallSpinner className="ComposeTweet__Spinner" />}
               <span className="ComposeTweet__Count LightText">
                 {140 - stringLength(value)}
               </span>
@@ -88,6 +98,8 @@ export default class ComposeTweet extends Component {
                 type="submit"
                 value="Post"
                 className="btn btn-primary ComposeTweet__Submit"
+                disabled={disabled}
+                aria-disabled={disabled}
               />
             </span>
           </div>
@@ -104,4 +116,6 @@ ComposeTweet.propTypes = {
       avatar: PropTypes.string,
     }),
   ).isRequired,
+  posting: PropTypes.bool.isRequired,
+  postTweet: PropTypes.func.isRequired,
 };
