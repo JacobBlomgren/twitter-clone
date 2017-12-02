@@ -2,6 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import ComposeTweet from '../components/ComposeTweet/ComposeTweet';
 import { postTweet } from '../actions/tweet';
@@ -27,4 +28,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComposeTweet);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ComposeTweet),
+);

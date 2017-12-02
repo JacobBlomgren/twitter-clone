@@ -12,7 +12,10 @@ import {
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
 } from '../../../actions/following';
-import { FETCH_TWEET_SUCCESS } from '../../../actions/tweet';
+import {
+  FETCH_TWEET_SUCCESS,
+  POST_TWEET_SUCCESS,
+} from '../../../actions/tweet';
 import { LOGIN_SUCCESS } from '../../../actions/auth';
 
 function merge(key, left, right) {
@@ -80,6 +83,7 @@ function byID(state = {}, followingAllIDs, action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
     case FETCH_FOLLOWING_SUCCESS:
+    case POST_TWEET_SUCCESS:
       return recieveUsers(state, action);
     // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:
@@ -99,6 +103,7 @@ function allIDs(state = [], action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
+    case POST_TWEET_SUCCESS:
       return R.union(state, action.users.map(R.prop('id')));
     default:
       return state;

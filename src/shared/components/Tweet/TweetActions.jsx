@@ -113,6 +113,9 @@ function TweetActions({
 TweetActions.propTypes = {
   id: PropTypes.string.isRequired,
   replyCount: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   ...R.dissoc('redirect', Retweet.propTypes),
   ...R.dissoc('redirect', Like.propTypes),
 };

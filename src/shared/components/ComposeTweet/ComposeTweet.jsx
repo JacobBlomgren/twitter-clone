@@ -40,15 +40,6 @@ export default class ComposeTweet extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.postTweet(
-      this.state.editorState.getCurrentContent().getPlainText(),
-      null,
-      id => console.log(id),
-    );
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!R.equals(this.props.users, nextProps.users)) {
       this.setState({
@@ -62,6 +53,15 @@ export default class ComposeTweet extends Component {
     this.setState(prevState => ({
       suggestions: prevState.fuse.search(value),
     }));
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.postTweet(
+      this.state.editorState.getCurrentContent().getPlainText(),
+      null,
+      id => this.props.history.replace(`/t/${id}`),
+    );
   }
 
   render() {
@@ -118,4 +118,7 @@ ComposeTweet.propTypes = {
   ).isRequired,
   posting: PropTypes.bool.isRequired,
   postTweet: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+  }).isRequired,
 };
