@@ -1,4 +1,4 @@
-import findMentions from '../../src/server/tweet/findMentions';
+import findMentions from '../../../src/server/tweet/findMentions';
 
 it('should match a username', () => {
   expect(findMentions('@jacob')).toEqual(['jacob']);

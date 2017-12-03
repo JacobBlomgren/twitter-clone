@@ -12,8 +12,8 @@ import {
   REMOVE_RETWEET_REQUEST,
   REMOVE_RETWEET_SUCCESS,
   removeRetweet,
-} from '../../../src/shared/actions/retweet';
-import { ADD_ERROR } from '../../../src/shared/actions/error';
+} from '../../../../src/shared/actions/retweet';
+import { ADD_ERROR } from '../../../../src/shared/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

@@ -1,5 +1,5 @@
-import errors from '../../../src/shared/reducers/errors';
-import { ADD_ERROR, REMOVE_ERROR } from '../../../src/shared/actions/error';
+import errors from '../../../../src/shared/reducers/errors';
+import { ADD_ERROR, REMOVE_ERROR } from '../../../../src/shared/actions/error';
 
 test('default', () => {
   const state = errors(undefined, {});

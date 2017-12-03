@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import {
   normalizeProfileToUser,
   normalizeTweets,
-} from '../../src/shared/actions/normalization';
+} from '../../../src/shared/actions/normalization';
 
 describe('normalizeTweets', () => {
   test('normal tweets', () => {

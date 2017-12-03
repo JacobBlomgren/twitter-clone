@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-import mapStateToProps from '../../../src/shared/containers/DetailedTweet/mapStateToProps';
+import mapStateToProps from '../../../../src/shared/containers/DetailedTweet/mapStateToProps';
 
 it('should find parents and children correctly', () => {
   const props = mapStateToProps(

@@ -5,7 +5,7 @@ import {
   REMOVE_ERROR,
   addError,
   removeError,
-} from '../../../src/shared/actions/error';
+} from '../../../../src/shared/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

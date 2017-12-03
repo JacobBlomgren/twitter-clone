@@ -1,26 +1,26 @@
 import 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze';
 
-import tweets from '../../../src/shared/reducers/entities/tweets';
+import tweets from '../../../../src/shared/reducers/entities/tweets';
 import {
   LIKE_TWEET_FAILURE,
   LIKE_TWEET_REQUEST,
   UNLIKE_TWEET_FAILURE,
   UNLIKE_TWEET_REQUEST,
-} from '../../../src/shared/actions/like';
-import { FETCH_PROFILE_SUCCESS } from '../../../src/shared/actions/profile';
+} from '../../../../src/shared/actions/like';
+import { FETCH_PROFILE_SUCCESS } from '../../../../src/shared/actions/profile';
 import {
   REMOVE_RETWEET_FAILURE,
   REMOVE_RETWEET_REQUEST,
   RETWEET_FAILURE,
   RETWEET_REQUEST,
-} from '../../../src/shared/actions/retweet';
+} from '../../../../src/shared/actions/retweet';
 import {
   FETCH_TWEET_NOT_FOUND,
   FETCH_TWEET_SUCCESS,
   POST_TWEET_SUCCESS,
-} from '../../../src/shared/actions/tweet';
-import { LOGIN_SUCCESS } from '../../../src/shared/actions/auth';
+} from '../../../../src/shared/actions/tweet';
+import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = tweets(undefined, {});

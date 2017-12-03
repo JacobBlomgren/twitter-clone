@@ -16,8 +16,8 @@ import {
   FETCH_FOLLOWING_REQUEST,
   FETCH_FOLLOWING_SUCCESS,
   FETCH_FOLLOWING_FAILURE,
-} from '../../../src/shared/actions/following';
-import { ADD_ERROR } from '../../../src/shared/actions/error';
+} from '../../../../src/shared/actions/following';
+import { ADD_ERROR } from '../../../../src/shared/actions/error';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

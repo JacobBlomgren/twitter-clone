@@ -8,7 +8,7 @@ import {
   FETCH_PROFILE_REQUEST,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_NOT_FOUND,
-} from '../../../src/shared/actions/profile';
+} from '../../../../src/shared/actions/profile';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

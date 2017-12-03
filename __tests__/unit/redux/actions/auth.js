@@ -8,7 +8,7 @@ import {
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-} from '../../../src/shared/actions/auth';
+} from '../../../../src/shared/actions/auth';
 
 const mockStore = configureMockStore([thunkMiddleware]);
 

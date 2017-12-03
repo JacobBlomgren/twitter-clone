@@ -1,4 +1,4 @@
-import findHashtags from '../../src/server/tweet/findHashtags';
+import findHashtags from '../../../src/server/tweet/findHashtags';
 
 it('should match a hashtag', () => {
   expect(findHashtags('#hashtag')).toEqual(['hashtag']);

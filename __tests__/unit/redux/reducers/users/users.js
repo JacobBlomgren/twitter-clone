@@ -1,7 +1,7 @@
 import 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze';
 
-import users from '../../../../src/shared/reducers/entities/users/index';
+import users from '../../../../../src/shared/reducers/entities/users/index';
 import {
   FETCH_FOLLOWING_REQUEST,
   FETCH_FOLLOWING_SUCCESS,
@@ -9,12 +9,12 @@ import {
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
-} from '../../../../src/shared/actions/following';
+} from '../../../../../src/shared/actions/following';
 import {
   FETCH_PROFILE_NOT_FOUND,
   FETCH_PROFILE_SUCCESS,
-} from '../../../../src/shared/actions/profile';
-import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
+} from '../../../../../src/shared/actions/profile';
+import { LOGIN_SUCCESS } from '../../../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = users(undefined, {});
