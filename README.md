@@ -1,10 +1,10 @@
-#Twitter clone
+# Twitter clone
 
 A twitter clone I'm building to learn more about modern web development. Uses
 React/Redux, Webpack, Express, Postgres, Ramda, and a few other nice
 technologies.
 
-#How to build
+# How to build
 
 Run `yarn install` to download all dependencies, `yarn prod:build` to build, and
 `yarn prod:start` to start a pm2 process. To run the dev server run `yarn start`
@@ -18,14 +18,14 @@ Lastly, a secret key needs to be set in `.env` as `SECRET_KEY` to sign the
 session id cookie. It can be anything, e.g. generated with python's
 `os.urandom`.
 
-#How to test
+# How to test
 
 The simplest form of testing is to run `yarn jest unit`, this runs the bulk of
 the testing. I also made an attempt at some integration testing, which can be
 run with `yarn test-integration` but that requires a database with the name
 `twitter_test` and the same schema as above.
 
-#Documentation
+# Documentation
 
 The api documentation can be found in the `api` directory. To generate the rest
 of the docs, run `yarn docs`, which will generate a `docs` directory. Note that
