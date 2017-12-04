@@ -66,14 +66,29 @@ function postTweetRequest() {
 
 export const POST_TWEET_SUCCESS = 'POST_TWEET_SUCCESS';
 function postTweetSuccess(tweet) {
-  const normalized = normalizeTweets([camelizeKeys(tweet)]);
+  const normalized = normalizeTweets([
+    { ...camelizeKeys(tweet), partial: false },
+  ]);
   return {
     type: POST_TWEET_SUCCESS,
     ...normalized,
   };
 }
 
-export function postTweet(content, replyTo) {
+export const POST_TWEET_FAILURE = 'POST_TWEET_FAILURE';
+function postTweetFailure() {
+  return {
+    type: POST_TWEET_FAILURE,
+  };
+}
+
+/**
+ * Posts a tweet in the logged in users name.
+ * @param {string} content the content of the tweet (required).
+ * @param {string} replyTo id of the tweet that this tweet is a reply to (optional).
+ * @param {function(string)} callback a function that takes the posted tweet's id as a paramater.
+ */
+export function postTweet(content, replyTo, callback) {
   return dispatch => {
     dispatch(postTweetRequest());
     const body = replyTo ? { content, replyTo } : { content };
@@ -87,7 +102,14 @@ export function postTweet(content, replyTo) {
         if (!response.ok) throw Error(response.status);
         return response.json();
       })
-      .then(json => dispatch(postTweetSuccess(json)))
-      .catch(() => dispatch(addError("Couldn't post tweet.")));
+      .then(json => {
+        dispatch(postTweetSuccess(json));
+        if (callback) callback(json.id);
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(postTweetFailure());
+        dispatch(addError("Couldn't post tweet."));
+      });
   };
 }
