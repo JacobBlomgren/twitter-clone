@@ -76,7 +76,7 @@ export default class ComposeTweet extends Component {
       <main>
         <form
           className="MainColumn ComposeTweet SmallPadding"
-          onSubmit={this.handleSubmit}
+          onSubmit={posting ? e => e.preventDefault() : this.handleSubmit}
         >
           <Editor
             editorState={editorState}
