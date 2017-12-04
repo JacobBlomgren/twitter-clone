@@ -38,7 +38,7 @@ export function fetchProfileNotFound(username) {
   };
 }
 
-export function fetchUser(username) {
+export function fetchProfile(username) {
   return dispatch => {
     dispatch(fetchProfileRequest(username));
     return fetch(`/api/user?username=${username}`, {

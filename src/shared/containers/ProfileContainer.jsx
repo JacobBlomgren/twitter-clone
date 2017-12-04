@@ -5,7 +5,7 @@ import * as R from 'ramda';
 
 import Profile from '../components/Profile/Profile';
 import Spinner from '../components/Spinner';
-import { fetchUser } from '../actions/profile';
+import { fetchProfile } from '../actions/profile';
 import { follow, unfollow } from '../actions/following';
 import NotFoundPage from '../components/page/NotFoundPage';
 
@@ -29,7 +29,7 @@ class ProfileContainer extends Component {
       this.props.shouldFetch ||
       ProfileContainer.shouldFetchNotFound(this.props.notFound)
     ) {
-      this.props.fetchUser();
+      this.props.fetchProfile();
     }
   }
 
@@ -40,7 +40,7 @@ class ProfileContainer extends Component {
         nextProps.shouldFetch ||
         ProfileContainer.shouldFetchNotFound(nextProps.notFound)
       ) {
-        nextProps.fetchUser();
+        nextProps.fetchProfile();
       }
     }
   }
@@ -57,7 +57,7 @@ ProfileContainer.propTypes = {
   recievedAt: PropTypes.number,
   shouldFetch: PropTypes.bool,
   notFound: PropTypes.bool,
-  fetchUser: PropTypes.func.isRequired,
+  fetchProfile: PropTypes.func.isRequired,
 };
 
 ProfileContainer.defaultProps = {
@@ -90,7 +90,6 @@ function mapStateToProps(state, { username }) {
   const follows =
     !!state.entities.login.user &&
     state.entities.users.following.allIDs.includes(user.id);
-  console.log(follows);
   const tweetsWithTimestamp = user.tweets
     ? user.tweets.map(id => ({
         id,
@@ -116,7 +115,7 @@ function mapStateToProps(state, { username }) {
 
 function mapDispatchToProps(dispatch, { username }) {
   return {
-    fetchUser: () => dispatch(fetchUser(username)),
+    fetchProfile: () => dispatch(fetchProfile(username)),
     followUser: id => dispatch(follow(id)),
     unfollowUser: id => dispatch(unfollow(id)),
   };

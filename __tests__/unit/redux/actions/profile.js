@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 import {
-  fetchUser,
+  fetchProfile,
   FETCH_PROFILE_REQUEST,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_NOT_FOUND,
@@ -35,7 +35,7 @@ test('fetch user sucess', async () => {
     },
   });
   const store = mockStore();
-  await store.dispatch(fetchUser('jacob'));
+  await store.dispatch(fetchProfile('jacob'));
 
   expect(store.getActions()[0].type).toBe(FETCH_PROFILE_REQUEST);
   expect(store.getActions()[1].type).toBe(FETCH_PROFILE_SUCCESS);
@@ -44,7 +44,7 @@ test('fetch user sucess', async () => {
 test('fetch user not found', async () => {
   fetchMock.get('/api/user?username=jacob', 404);
   const store = mockStore();
-  await store.dispatch(fetchUser('jacob'));
+  await store.dispatch(fetchProfile('jacob'));
 
   expect(store.getActions()[0].type).toBe(FETCH_PROFILE_REQUEST);
   expect(store.getActions()[1].type).toBe(FETCH_PROFILE_NOT_FOUND);
