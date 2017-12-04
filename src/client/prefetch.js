@@ -1,11 +1,14 @@
 import Lazy from '../shared/components/ComposeTweet/Lazy';
 import { fetchFollowing } from '../shared/actions/following';
+import { fetchProfile } from '../shared/actions/profile';
 
 let fetchedCompose = false;
 
-function compose() {
-  Lazy.preload();
-  fetchFollowing();
+function compose(dispatch) {
+  return () => {
+    Lazy.preload();
+    dispatch(fetchFollowing());
+  };
 }
 
 /**
@@ -17,7 +20,8 @@ export function subscriber(store) {
     const state = store.getState();
     if (state.entities.login.user && !fetchedCompose) {
       fetchedCompose = true;
-      setTimeout(compose, 3000);
+      setTimeout(compose(store.dispatch), 3000);
+      store.dispatch(fetchProfile(state.entities.login.user.username));
     }
   };
 }
@@ -26,8 +30,10 @@ export function subscriber(store) {
  * Prefetching based on initial store state.
  */
 export function onLoad(store) {
-  if (store.getState().entities.login.user) {
+  const state = store.getState();
+  if (state.entities.login.user) {
     fetchedCompose = true;
-    setTimeout(compose, 3000);
+    setTimeout(compose(store.dispatch), 3000);
+    store.dispatch(fetchProfile(state.entities.login.user.username));
   }
 }
