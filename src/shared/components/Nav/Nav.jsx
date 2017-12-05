@@ -15,7 +15,9 @@ function Nav({ loggedIn, location }) {
   );
 }
 
-Nav.propTypes = { loggedIn: PropTypes.bool.isRequired };
+Nav.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+};
 
 export default withRouter(
   connect(state => ({

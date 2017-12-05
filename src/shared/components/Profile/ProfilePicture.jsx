@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Profile from './Profile';
 
-export default function ProfilePicture({ url, username }) {
+export default function ProfilePicture({ url, username, className }) {
   return (
-    <img src={url} alt={username} className="ProfilePicture rounded-circle" />
+    <img
+      src={url}
+      alt={username}
+      className={`ProfilePicture rounded-circle ${className}`}
+    />
   );
 }
+
+ProfilePicture.defaultProps = {
+  className: '',
+};
 
 ProfilePicture.propTypes = {
   url: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };

@@ -109,7 +109,7 @@ function mapStateToProps(state, { username }) {
     ...user,
     follows,
     tweets,
-    loggedInUserID: state.entities.login.user,
+    loggedInUserID: state.entities.login.user && state.entities.login.user.id,
   };
 }
 

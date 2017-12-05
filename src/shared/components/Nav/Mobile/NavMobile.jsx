@@ -1,19 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import NotLoggedIn from '../NotLoggedIn';
 import NavLoggedIn from './NavLoggedIn';
+import NavMenuContainer from '../../../containers/NavMenuContainer';
 
-export default function NavMobile({ loggedIn, location }) {
-  return (
-    <nav className="d-md-none Nav SmallPadding--Sides">
-      {loggedIn ? <NavLoggedIn /> : <NotLoggedIn location={location} />}
-    </nav>
-  );
+export default class NavMobile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { menuOpen: false };
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+
+  toggleMenu() {
+    this.setState(prevState => ({ menuOpen: !prevState.menuOpen }));
+  }
+
+  render() {
+    const { menuOpen } = this.state;
+    const { loggedIn, location } = this.props;
+    return (
+      <div>
+        {loggedIn && (
+          <NavMenuContainer
+            open={menuOpen}
+            pageWrapId="page-wrap"
+            outerContainerId="outer-container"
+          />
+        )}
+        <nav className="d-md-none Nav SmallPadding--Sides">
+          {loggedIn ? (
+            <NavLoggedIn open={menuOpen} toggleMenu={this.toggleMenu} />
+          ) : (
+            <NotLoggedIn location={location} />
+          )}
+        </nav>
+      </div>
+    );
+  }
 }
+
 NavMobile.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
+  // open: PropTypes.bool.isRequired,
+  // toggleMenu: PropTypes.func.isRequired,
 };

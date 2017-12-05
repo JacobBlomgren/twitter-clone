@@ -1,7 +1,17 @@
 @import '../no-style';
+@import 'menu';
 @import 'hamburgers';
 
 .BurgerButton {
   @include button-no-style;
   height: 24px;
+}
+
+.NavMenuProfilePicture {
+  display: block;
+  margin: auto;
+}
+
+.NavMenu__ProfileInfo {
+  margin-top: 1rem;
 }
