@@ -75,5 +75,7 @@ export default {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    // Omit the very heavy locales of moment, as the app is not international yet.
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
 };
