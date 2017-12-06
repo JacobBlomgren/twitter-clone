@@ -7,10 +7,9 @@ import getTweetWithReplies from '../../db/queries/tweet/getTweet/getTweetWithRep
 export async function getTweet(req, res) {
   try {
     const response = await getTweetWithReplies(req.query.tweet_id);
+    if (!response) return res.status(404).end();
     res.status(200).json(response);
   } catch (err) {
-    console.log(err);
-    console.log(err);
     res.status(500).end();
   }
 }
