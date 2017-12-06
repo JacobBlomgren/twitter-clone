@@ -55,10 +55,12 @@ _200_ if successful. The response body is:
 }
 ```
 
-`reply_to` is possibly null. `parents` and `children` are arrays of the same 
+`reply_to` is possibly null. `parents` and `children` are arrays of the same
 format as the main tweet.
 
 _400_ if `tweet_id` is malformed.
+
+_404_ if a tweet with that id does not exist.
 
 _500_ if an error occured.
 
@@ -82,4 +84,3 @@ _404_ if the tweet either does not exist or its not the user's tweet and
 consequently cannot be deleted.
 
 _500_ if an error occurred.
-

@@ -1,4 +1,4 @@
-# POST api/auth/register
+# POST api/auth/login
 
 Logs in a user.
 
