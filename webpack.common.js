@@ -13,18 +13,6 @@ export default {
   name: 'client',
   entry: {
     polyfills: ['babel-polyfill', 'whatwg-fetch'],
-    vendor: [
-      'ramda',
-      'react',
-      'react-dom',
-      'react-redux',
-      'redux',
-      'react-router',
-      'react-router-dom',
-      'react-transition-group',
-      'numeral',
-      'moment',
-    ],
   },
   output: {
     filename: 'js/[name].bundle.js',
@@ -32,10 +20,6 @@ export default {
   },
   module: {
     rules: [
-      // {
-      //   test: /ComposeTweet\.jsx$/,
-      //   loaders: ['bundle?lazy', 'babel'],
-      // },
       { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
       // { test: /plugin\.(scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
       {
@@ -72,8 +56,22 @@ export default {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
+    // split vendor files into separate bundle
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+      // technique suggested here https://webpack.js.org/plugins/commons-chunk-plugin/
+      minChunks: module =>
+        module.context &&
+        module.context.indexOf('node_modules') !== -1 &&
+        // Do not include polyfills which are in their separate bundle,
+        // and react-icons which is bound to change too frequently
+        // TODO this should probably use an array of packages that change
+        // too frequently in the future.
+        !/(core-js|whatwg-fetch|react-icons)/.test(module.context),
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

@@ -8,6 +8,7 @@ import path from 'path';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import InlineManifestWebpackPlugin from 'inline-manifest-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
@@ -36,7 +37,6 @@ const clientConfig = merge(common, {
       filename: 'styles/[name]-[contenthash].css',
     }),
     new HtmlWebpackPlugin({
-      alwaysWriteToDisk: true,
       inject: false,
       minify: {
         collapseWhitespace: true,
@@ -45,6 +45,9 @@ const clientConfig = merge(common, {
       },
       title: APP_NAME,
       template: 'index.ejs',
+    }),
+    new InlineManifestWebpackPlugin({
+      name: 'webpackManifest',
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
