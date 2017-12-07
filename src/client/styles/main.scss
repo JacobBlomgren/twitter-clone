@@ -1,5 +1,6 @@
 @import 'custom';
-@import '~bootstrap/scss/bootstrap';
+// file with only needed bootstrap imports
+@import 'bootstrap';
 @import 'spinner';
 @import 'transitions';
 @import 'buttons';
