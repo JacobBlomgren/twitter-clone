@@ -1,4 +1,6 @@
-.btn-primary:focus,
-.btn-outline-primary:focus {
-  box-shadow: none;
+@import 'variables';
+
+a:focus,
+button:focus {
+  outline-color: $main-color;
 }

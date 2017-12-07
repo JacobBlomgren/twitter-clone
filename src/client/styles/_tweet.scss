@@ -203,3 +203,7 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   background-color: #f7f7f7;
   cursor: pointer;
 }
+
+.TweetLink:focus {
+  outline-color: $main-color;
+}
