@@ -21,7 +21,9 @@ export function subscriber(store) {
     if (state.entities.login.user && !fetchedCompose) {
       fetchedCompose = true;
       setTimeout(compose(store.dispatch), 3000);
-      store.dispatch(fetchProfile(state.entities.login.user.username));
+      const loggedInUser = state.entities.login.user.username;
+      if (!state.network.user.fetching.includes(loggedInUser))
+        store.dispatch(fetchProfile(loggedInUser));
     }
   };
 }

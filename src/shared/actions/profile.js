@@ -25,6 +25,7 @@ export function fetchProfileSuccess(profile) {
   const normalized = normalizeProfileResponse(camelizeKeys(profile));
   return {
     ...normalized,
+    username: profile.username,
     type: FETCH_PROFILE_SUCCESS,
   };
 }
@@ -35,6 +36,14 @@ export function fetchProfileNotFound(username) {
     type: FETCH_PROFILE_NOT_FOUND,
     username,
     time: Date.now(),
+  };
+}
+
+export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
+function fetchProfileFailure(username) {
+  return {
+    type: FETCH_PROFILE_FAILURE,
+    username,
   };
 }
 
@@ -53,7 +62,7 @@ export function fetchProfile(username) {
       .catch(err => {
         if (err.message === '404')
           return dispatch(fetchProfileNotFound(username));
-        return null;
+        return dispatch(fetchProfileFailure(username));
       });
   };
 }

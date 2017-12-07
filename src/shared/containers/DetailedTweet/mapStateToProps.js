@@ -21,18 +21,20 @@ function findReplies(replyTable, id) {
 }
 
 export default function mapStateToProps(state, { id }) {
+  const fetching = state.network.tweet.fetching.includes(id);
   const tweet = state.entities.tweets.byID[id];
   // determine how much data we have.
   if (!tweet) {
     if (state.entities.tweets.notFound[id])
-      return { notFound: state.entities.tweets.notFound[id] };
-    return { shouldFetch: true };
+      return { notFound: state.entities.tweets.notFound[id], fetching };
+    return { shouldFetch: true, fetching };
   }
   if (tweet.partial) {
     return {
       id: tweet.id,
       partial: true,
       shouldFetch: true,
+      fetching,
     };
   }
 
@@ -48,5 +50,6 @@ export default function mapStateToProps(state, { id }) {
     recievedAt: tweet.recievedAt,
     parents,
     replies,
+    fetching,
   };
 }

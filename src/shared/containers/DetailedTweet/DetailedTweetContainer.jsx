@@ -20,9 +20,10 @@ class DetailedTweetContainer extends Component {
 
   componentDidMount() {
     if (
-      DetailedTweetContainer.isStale(this.props.recievedAt) ||
-      this.props.shouldFetch ||
-      DetailedTweetContainer.shouldFetchNotFound(this.props.notFound)
+      !this.props.fetching &&
+      (DetailedTweetContainer.isStale(this.props.recievedAt) ||
+        this.props.shouldFetch ||
+        DetailedTweetContainer.shouldFetchNotFound(this.props.notFound))
     ) {
       this.props.fetchTweet();
     }
@@ -31,8 +32,9 @@ class DetailedTweetContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.id !== nextProps.id) {
       if (
-        DetailedTweetContainer.isStale(nextProps.recievedAt) ||
-        nextProps.shouldFetch
+        !nextProps.fetching &&
+        (DetailedTweetContainer.isStale(nextProps.recievedAt) ||
+          nextProps.shouldFetch)
       ) {
         nextProps.fetchTweet();
       }
@@ -70,6 +72,7 @@ DetailedTweetContainer.propTypes = {
   partial: PropTypes.bool,
   id: PropTypes.string,
   fetchTweet: PropTypes.func.isRequired,
+  fetching: PropTypes.bool.isRequired,
 };
 
 function mapDispatchToProps(dispatch, { id }) {

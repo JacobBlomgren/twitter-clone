@@ -38,6 +38,14 @@ export function fetchTweetNotFound(tweetID) {
   };
 }
 
+export const FETCH_TWEET_FAILURE = 'FETCH_TWEET_FAILURE';
+function fetchTweetFailure(tweetID) {
+  return {
+    type: FETCH_TWEET_FAILURE,
+    id: tweetID,
+  };
+}
+
 export function fetchTweet(tweetID) {
   return dispatch => {
     dispatch(fetchTweetRequest(tweetID));
@@ -52,7 +60,7 @@ export function fetchTweet(tweetID) {
       .then(json => dispatch(fetchTweetSuccess(json)))
       .catch(err => {
         if (err.message === '404') return dispatch(fetchTweetNotFound(tweetID));
-        return null;
+        return dispatch(fetchTweetFailure(tweetID));
       });
   };
 }
@@ -106,8 +114,7 @@ export function postTweet(content, replyTo, callback) {
         dispatch(postTweetSuccess(json));
         if (callback) callback(json.id);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         dispatch(postTweetFailure());
         dispatch(addError("Couldn't post tweet."));
       });

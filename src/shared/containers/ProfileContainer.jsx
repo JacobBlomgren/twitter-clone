@@ -25,9 +25,10 @@ class ProfileContainer extends Component {
 
   componentDidMount() {
     if (
-      ProfileContainer.isStale(this.props.recievedAt) ||
-      this.props.shouldFetch ||
-      ProfileContainer.shouldFetchNotFound(this.props.notFound)
+      !this.props.fetching &&
+      (ProfileContainer.isStale(this.props.recievedAt) ||
+        this.props.shouldFetch ||
+        ProfileContainer.shouldFetchNotFound(this.props.notFound))
     ) {
       this.props.fetchProfile();
     }
@@ -36,9 +37,10 @@ class ProfileContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.id !== nextProps.id) {
       if (
-        ProfileContainer.isStale(nextProps.recievedAt) ||
-        nextProps.shouldFetch ||
-        ProfileContainer.shouldFetchNotFound(nextProps.notFound)
+        !nextProps.fetching &&
+        (ProfileContainer.isStale(nextProps.recievedAt) ||
+          nextProps.shouldFetch ||
+          ProfileContainer.shouldFetchNotFound(nextProps.notFound))
       ) {
         nextProps.fetchProfile();
       }
@@ -58,6 +60,7 @@ ProfileContainer.propTypes = {
   shouldFetch: PropTypes.bool,
   notFound: PropTypes.bool,
   fetchProfile: PropTypes.func.isRequired,
+  fetching: PropTypes.bool.isRequired,
 };
 
 ProfileContainer.defaultProps = {
@@ -71,19 +74,23 @@ const findUser = (users, username) =>
   R.find(R.propEq('username', username), users);
 
 function mapStateToProps(state, { username }) {
+  const fetching = state.network.user.fetching.includes(username);
+  console.log(fetching);
   const user = findUser(Object.values(state.entities.users.byID), username);
   // Determine whether there is enough data to display the profile.
   if (!user) {
     if (state.entities.users.notFound[username])
-      return { notFound: state.entities.users.notFound[username] };
-    return { shouldFetch: true };
+      return { notFound: state.entities.users.notFound[username], fetching };
+    return { shouldFetch: true, fetching };
   }
 
   if (user.partial) {
     return {
       id: user.id,
+      // can probably remove
       partial: true,
       shouldFetch: true,
+      fetching,
     };
   }
 
@@ -110,6 +117,7 @@ function mapStateToProps(state, { username }) {
     follows,
     tweets,
     loggedInUserID: state.entities.login.user && state.entities.login.user.id,
+    fetching,
   };
 }
 
