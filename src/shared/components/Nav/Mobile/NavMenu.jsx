@@ -42,6 +42,19 @@ export default function NavMenu({
   );
 }
 
+NavMenu.defaultProps = {
+  name: null,
+  username: null,
+  profilePictureURL: null,
+  followerCount: 0,
+  followingCount: 0,
+}
+
 NavMenu.propTypes = {
   open: PropTypes.bool.isRequired,
+  name: PropTypes.string,
+  username: PropTypes.string,
+  profilePictureURL: PropTypes.string,
+  followerCount: PropTypes.number,
+  followingCount: PropTypes.number,
 };

@@ -17,6 +17,9 @@ function Nav({ loggedIn, location }) {
 
 Nav.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
 };
 
 export default withRouter(

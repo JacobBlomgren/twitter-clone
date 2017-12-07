@@ -14,10 +14,11 @@ const hashtagPlugin = createHashtagPlugin({
   theme: { hashtag: 'Compose__Hashtag' },
 });
 
-const fuseOptions = {
-  shouldSort: true,
-  keys: ['name'],
-};
+const createFuse = users =>
+  new Fuse(users, {
+    shouldSort: true,
+    keys: ['name'],
+  });
 
 const mentionPlugin = createMentionPlugin({
   entityMutabilityCan: 'MUTABLE',
@@ -30,10 +31,9 @@ export default class ComposeTweet extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
-      users: props.users,
-      fuse: new Fuse(props.users, fuseOptions),
       suggestions: props.users,
     };
+    this.fuse = createFuse(props.users);
 
     this.onChange = editorState => this.setState({ editorState });
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,10 +42,7 @@ export default class ComposeTweet extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!R.equals(this.props.users, nextProps.users)) {
-      this.setState({
-        users: nextProps.users,
-        fuse: new Fuse(nextProps.users, fuseOptions),
-      });
+      this.fuse = createFuse(nextProps.users);
     }
   }
 

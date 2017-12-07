@@ -45,6 +45,4 @@ NavMobile.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
-  // open: PropTypes.bool.isRequired,
-  // toggleMenu: PropTypes.func.isRequired,
 };

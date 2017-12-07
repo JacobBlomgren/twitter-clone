@@ -13,4 +13,9 @@ export default function NavDesktop({ loggedIn, location }) {
   );
 }
 
-NavDesktop.propTypes = { loggedIn: PropTypes.bool.isRequired };
+NavDesktop.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+};

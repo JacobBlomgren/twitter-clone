@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function BurgerButton({ onClick, open }) {
-  console.log(open);
   return (
     <button
       className={`BurgerButton hamburger hamburger--squeeze ${
