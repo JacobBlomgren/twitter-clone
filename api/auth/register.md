@@ -10,7 +10,8 @@ _password_ the password (required). A string of at least 8 characters.
 
 ## Response
 
-_201_ if successful.
+_201_ if successful. The response body will contain the field `user_id` with
+the id of the registered user.
 
 _400_ if malformed paramaters are sent.
 

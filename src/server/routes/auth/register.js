@@ -20,7 +20,7 @@ export async function register(req, res, next) {
             res
               .status(500)
               .json({ error: 'Authentication fail after registration' });
-          res.status(201).json({ status: 'Success' });
+          res.status(201).json({ status: 'Success', user_id: req.user.id });
         });
       }
     })(req, res, next);
