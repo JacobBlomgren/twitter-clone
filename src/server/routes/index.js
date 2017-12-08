@@ -6,6 +6,7 @@ import following from './following';
 import like from './likes';
 import retweets from './retweets';
 import settings from './settings';
+import timeline from './timeline';
 import tweets from './tweets';
 import user from './user';
 import joiError from './middleware/joiError';
@@ -20,6 +21,7 @@ router.use('/following', following);
 router.use('/likes', like);
 router.use('/retweets', retweets);
 router.use('/settings', settings);
+router.use('/timeline', timeline);
 router.use('/tweets', tweets);
 router.use('/user', user);
 
