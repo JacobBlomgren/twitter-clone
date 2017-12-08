@@ -59,6 +59,7 @@ typings/
 
 /coverage/
 /lib/
+docs/
 /dist/
 .idea
 report.html
