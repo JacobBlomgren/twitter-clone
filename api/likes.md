@@ -4,7 +4,7 @@ Likes a tweet
 
 ## Paramaters
 
-_tweet_id_ the id of the tweet to like.
+_tweet_id: string_ — the id of the tweet to like.
 
 ## Response
 
@@ -20,7 +20,7 @@ Deletes a like of a tweet
 
 ## Paramaters
 
-_tweet_id_ the id of the tweet.
+_tweet_id: string_ — the id of the tweet.
 
 ## Response
 

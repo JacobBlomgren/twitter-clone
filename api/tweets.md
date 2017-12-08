@@ -4,9 +4,9 @@ Posts a tweet in the logged in users name.
 
 ## Paramaters
 
-_content_ the content of the tweet (required).
+_content: string_ — the content of the tweet (required).
 
-_reply_to_ the tweet id that the tweet potentially is a reply to. Non-existent
+_reply_to: ?string_ the tweet id that the tweet potentially is a reply to. Non-existent
 ids will simply be ignored.
 
 ## Response
@@ -70,7 +70,7 @@ Deletes a tweet.
 
 ## Paramaters
 
-_tweet_id_ the id of the tweet to be deleted.
+_tweet_id: string_ — the id of the tweet to be deleted.
 
 ## Response
 

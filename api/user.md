@@ -4,8 +4,8 @@ Gets the profile info and tweets of a user.
 
 ## Paramaters
 
-_id_ the id of the user.
-_username_ the username of the user.
+_id: ?string_ — the id of the user.
+_username: ?string_ — the username of the user.
 
 The user can be retrieved with either one of the paramaters, only one of the two
 is needed. If both are sent the behavior is unspecified.

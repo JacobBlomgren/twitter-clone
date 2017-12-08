@@ -16,7 +16,7 @@ Follows a user. Login required.
 
 ## Paramaters
 
-_user_id_ the id of the user to follow
+_user_id: string_ — the id of the user to follow
 
 ## Response
 
@@ -34,7 +34,7 @@ Unfollows a user. Login required.
 
 ## Paramaters
 
-_user_id_ the id of the user to unfollow
+_user_id: string_ — the id of the user to unfollow
 
 ## Response
 
