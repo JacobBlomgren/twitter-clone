@@ -7,6 +7,7 @@ function mapStateToProps(state) {
   return {
     error: state.entities.login.error,
     loggedIn: typeof state.entities.login.user !== 'undefined',
+    submitted: state.network.auth.login,
   };
 }
 

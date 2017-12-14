@@ -38,7 +38,8 @@ export default class LoginForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.login(this.state.username, this.state.password);
+    if (!this.props.submitted)
+      this.login(this.state.username, this.state.password);
   }
 
   render() {
@@ -110,4 +111,5 @@ LoginForm.propTypes = {
     id: PropTypes.number,
   }),
   from: PropTypes.string,
+  submitted: PropTypes.bool.isRequired,
 };
