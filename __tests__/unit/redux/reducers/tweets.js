@@ -21,6 +21,7 @@ import {
   POST_TWEET_SUCCESS,
 } from '../../../../src/shared/actions/tweet';
 import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
+import { FETCH_TIMELINE_SUCCESS } from '../../../../src/shared/actions/timeline';
 
 test('default', () => {
   const state = tweets(undefined, {});
@@ -547,4 +548,29 @@ test('invalidate data on login', () => {
   expect(tweet1).toHaveProperty('partial', true);
 
   expect(state.byID['2']).toHaveProperty('partial', true);
+});
+
+test('timeline', () => {
+  const initialState = tweets(
+    {
+      timeline: ['1'],
+    },
+    {},
+  );
+  deepFreeze(initialState);
+
+  const state = tweets(initialState, {
+    type: FETCH_TIMELINE_SUCCESS,
+    tweets: [
+      {
+        id: '1',
+        content: 'tweet',
+      },
+      {
+        id: '2',
+        content: 'second tweet',
+      },
+    ],
+  });
+  expect(state.timeline).toEqual(['1', '2']);
 });

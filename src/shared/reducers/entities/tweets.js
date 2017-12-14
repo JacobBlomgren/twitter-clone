@@ -20,6 +20,7 @@ import {
   POST_TWEET_SUCCESS,
 } from '../../actions/tweet';
 import { LOGIN_SUCCESS } from '../../actions/auth';
+import {FETCH_TIMELINE_SUCCESS} from '../../actions/timeline';
 
 // Replaces a tweet in state, that is assumed to exist.
 function replaceTweet(state, tweet) {
@@ -164,8 +165,15 @@ function notFound(state = {}, action) {
   }
 }
 
+function timeline(state = [], action) {
+  if (action.type === FETCH_TIMELINE_SUCCESS)
+    return R.union(state, R.pluck('id', action.tweets));
+  return state;
+}
+
 export default combineReducers({
   byID,
   allIDs,
   notFound,
+  timeline,
 });
