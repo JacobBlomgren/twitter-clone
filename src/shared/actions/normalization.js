@@ -6,7 +6,7 @@ import * as R from 'ramda';
 export function normalizeProfileToUser(profile) {
   return {
     // remove tweet property
-    ...R.omit(['tweets', 'follows'], profile),
+    ...R.dissoc('tweets', profile),
     partial: false,
     recievedAt: Date.now(),
   };
@@ -87,21 +87,6 @@ function normalizeTweetData(tweets) {
   return [...normalized, ...replies];
 }
 
-/*
- Computes an array of the IDs of all replies to every tweet, akin to a view table in SQL.
- Although this is data duplication, it eliminates the need for expensive loops through the whole
- tweet table, to find all replies to a tweet.
- */
-function computeReplies(tweets) {
-  return tweets.filter(R.prop('replyTo')).reduce((acc, t) => {
-    const list = acc[t.replyTo.originalTweetID] || [];
-    return {
-      ...acc,
-      [t.replyTo.originalTweetID]: [...list, t.id],
-    };
-  }, {});
-}
-
 /**
  * Normalizes an array of tweets.
  * @returns {{users, tweets, replies}}
@@ -110,7 +95,6 @@ export function normalizeTweets(tweets) {
   return {
     users: normalizeUsersFromTweets(tweets),
     tweets: normalizeTweetData(tweets),
-    replies: computeReplies(tweets),
   };
 }
 
@@ -122,6 +106,5 @@ export function normalizeTweets(tweets) {
 export function normalizeFollowing(following) {
   return {
     users: following.map(R.assoc('partial', true)),
-    following: following.map(R.prop('id')),
   };
 }

@@ -1,19 +1,19 @@
 import 'isomorphic-fetch';
 import deepFreeze from 'deep-freeze';
 
-import users from '../../../../../src/shared/reducers/entities/users/index';
+import users from '../../../../src/shared/reducers/entities/users';
 import {
   FETCH_FOLLOWING_SUCCESS,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
-} from '../../../../../src/shared/actions/following';
+} from '../../../../src/shared/actions/following';
 import {
   FETCH_PROFILE_NOT_FOUND,
   FETCH_PROFILE_SUCCESS,
-} from '../../../../../src/shared/actions/profile';
-import { LOGIN_SUCCESS } from '../../../../../src/shared/actions/auth';
+} from '../../../../src/shared/actions/profile';
+import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = users(undefined, {});
@@ -32,7 +32,6 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -66,7 +65,6 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -100,7 +98,6 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -136,7 +133,6 @@ describe('recieve profile', () => {
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -168,7 +164,6 @@ describe('recieve profile', () => {
           time: Date.now(),
         },
       },
-      following: { allIDs: [] },
     };
     deepFreeze(initialState);
     const state = users(initialState, {
@@ -194,11 +189,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
+            follows: false,
             followerCount: 5,
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -209,6 +204,7 @@ describe('follow user', () => {
     });
     expect(state.byID['1'].followerCount).toBe(6);
     expect(state.allIDs).toContain('1');
+    expect(state.byID['1'].follows).toBe(true);
   });
 
   test('FOLLOW_REQUEST multiple times', () => {
@@ -217,11 +213,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
+            follows: false,
             followerCount: 0,
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -236,6 +232,7 @@ describe('follow user', () => {
     });
     expect(state2.byID['1'].followerCount).toBe(1);
     expect(state2.allIDs).toContain('1');
+    expect(state2.byID['1'].follows).toBe(true);
   });
 
   test('FOLLOW_REQUEST non-existent USER', () => {
@@ -244,11 +241,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
+            follows: false,
             followerCount: 0,
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -267,11 +264,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
+            follows: true,
             followerCount: 1,
           },
         },
         allIDs: ['1'],
-        following: { allIDs: ['1'] },
       },
       {},
     );
@@ -281,7 +278,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(0);
-    expect(state.following.allIDs).not.toContain('1');
+    expect(state.byID['1'].follows).toBe(false);
   });
 
   test('UNFOLLOW_REQUEST', () => {
@@ -290,11 +287,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
+            follows: true,
             followerCount: 5,
           },
         },
         allIDs: ['1'],
-        following: { allIDs: ['1'] },
       },
       {},
     );
@@ -304,7 +301,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(4);
-    expect(state.following.allIDs).not.toContain('1');
+    expect(state.byID['1'].follows).toBe(false);
   });
 
   test('UNFOLLOW_FAILURE', () => {
@@ -313,11 +310,11 @@ describe('follow user', () => {
         byID: {
           '1': {
             id: '1',
-            followerCount: 0,
+            follows: true,
+            followerCount: 1,
           },
         },
         allIDs: ['1'],
-        following: { allIDs: [] },
       },
       {},
     );
@@ -327,7 +324,7 @@ describe('follow user', () => {
       userID: '1',
     });
     expect(state.byID['1'].followerCount).toBe(1);
-    expect(state.following.allIDs).toContain('1');
+    expect(state.byID['1'].follows).toBe(true);
   });
 });
 
@@ -357,7 +354,6 @@ test('invalidate data on login', () => {
           partial: false,
         },
       },
-      following: { allIDs: [] },
     },
     {},
   );
@@ -369,42 +365,31 @@ test('invalidate data on login', () => {
   expect(state.byID['2']).toHaveProperty('partial', true);
 });
 
-// test('is fetching', async () => {
-//   const state1 = users(undefined, { type: FETCH_FOLLOWING_REQUEST });
-//   expect(state1.following.isFetching).toBe(true);
-//   deepFreeze(state1);
-//
-//   const state2 = users(state1, {
-//     type: FETCH_FOLLOWING_SUCCESS,
-//     users: [],
-//   });
-//   expect(state2.following.isFetching).toBe(false);
-// });
-
 test('fetch following', async () => {
   const state = users(undefined, {
     type: FETCH_FOLLOWING_SUCCESS,
     users: [
       {
         id: '1',
+        follows: true,
         name: 'jacob',
       },
       {
         id: '2',
+        follows: true,
         name: 'jake',
       },
     ],
-    following: ['1', '2'],
   });
-  expect(state.following.allIDs).toContain('1');
-  expect(state.following.allIDs).toContain('2');
   expect(state.byID).toEqual({
     '1': {
       id: '1',
+      follows: true,
       name: 'jacob',
     },
     '2': {
       id: '2',
+      follows: true,
       name: 'jake',
     },
   });

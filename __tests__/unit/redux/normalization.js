@@ -87,7 +87,7 @@ describe('normalizeTweets', () => {
   });
 
   test('extract replyTo data', () => {
-    const { users, tweets, replies } = normalizeTweets([
+    const { users, tweets } = normalizeTweets([
       {
         id: '2',
         username: 'jacobblomgren',
@@ -133,9 +133,6 @@ describe('normalizeTweets', () => {
       ),
     ).toBe(true);
     expect(tweets).toContainEqual({ id: '1', userID: '2', partial: true });
-    expect(replies['1']).toContain('2');
-    expect(replies['1']).toContain('3');
-    expect(replies['1']).not.toContain('4');
   });
 
   test('extract retweet data', () => {
@@ -186,10 +183,9 @@ describe('normalizeTweets', () => {
   });
 
   test('empty argument', () => {
-    const { users, tweets, replies } = normalizeTweets([]);
+    const { users, tweets } = normalizeTweets([]);
     expect(users).toEqual([]);
     expect(tweets).toEqual([]);
-    expect(replies).toEqual({});
   });
 });
 

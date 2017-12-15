@@ -1,23 +1,20 @@
 import * as R from 'ramda';
+import { combineReducers } from 'redux';
 
-import followingReducer from './following';
 import {
   FETCH_PROFILE_NOT_FOUND,
   FETCH_PROFILE_SUCCESS,
-} from '../../../actions/profile';
+} from '../../actions/profile';
 import {
   FETCH_FOLLOWING_SUCCESS,
   FOLLOW_FAILURE,
   FOLLOW_REQUEST,
   UNFOLLOW_FAILURE,
   UNFOLLOW_REQUEST,
-} from '../../../actions/following';
-import {
-  FETCH_TWEET_SUCCESS,
-  POST_TWEET_SUCCESS,
-} from '../../../actions/tweet';
-import { LOGIN_SUCCESS } from '../../../actions/auth';
-import { FETCH_TIMELINE_SUCCESS } from '../../../actions/timeline';
+} from '../../actions/following';
+import { FETCH_TWEET_SUCCESS, POST_TWEET_SUCCESS } from '../../actions/tweet';
+import { LOGIN_SUCCESS } from '../../actions/auth';
+import { FETCH_TIMELINE_SUCCESS } from '../../actions/timeline';
 
 function merge(key, left, right) {
   if (Array.isArray(left)) return R.union(left, right);
@@ -47,21 +44,23 @@ function replaceUser(state, user) {
   };
 }
 
-function addFollow(state, followingAllIDs, action) {
+function addFollow(state, action) {
   const user = state[action.userID];
-  if (!user || followingAllIDs.includes(user.id)) return state;
+  if (!user || user.follows) return state;
   const newUser = {
     ...user,
+    follows: true,
     followerCount: user.followerCount + 1,
   };
   return replaceUser(state, newUser);
 }
 
-function removeFollow(state, followingAllIDs, action) {
+function removeFollow(state, action) {
   const user = state[action.userID];
-  if (!user || !followingAllIDs.includes(user.id)) return state;
+  if (!user || !user.follows) return state;
   const newUser = {
     ...user,
+    follows: false,
     followerCount: user.followerCount - 1,
   };
   return replaceUser(state, newUser);
@@ -79,7 +78,7 @@ function invalidateOnLogin(state) {
   );
 }
 
-function byID(state = {}, followingAllIDs, action) {
+function byID(state = {}, action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
@@ -90,10 +89,10 @@ function byID(state = {}, followingAllIDs, action) {
     // We add a follow at the request for immediate feedback, and remove it on failure
     case FOLLOW_REQUEST:
     case UNFOLLOW_FAILURE:
-      return addFollow(state, followingAllIDs, action);
+      return addFollow(state, action);
     case UNFOLLOW_REQUEST:
     case FOLLOW_FAILURE:
-      return removeFollow(state, followingAllIDs, action);
+      return removeFollow(state, action);
     case LOGIN_SUCCESS:
       return invalidateOnLogin(state);
     default:
@@ -135,18 +134,8 @@ function notFound(state = {}, action) {
   }
 }
 
-export default function(state, action) {
-  if (typeof state === 'undefined')
-    return {
-      byID: byID(undefined, [], action),
-      allIDs: allIDs(undefined, action),
-      notFound: notFound(undefined, action),
-      following: followingReducer(undefined, {}, action),
-    };
-  return {
-    byID: byID(state.byID, state.following.allIDs, action),
-    allIDs: allIDs(state.allIDs, action),
-    notFound: notFound(state.notFound, action),
-    following: followingReducer(state.following, state.byID, action),
-  };
-}
+export default combineReducers({
+  byID,
+  allIDs,
+  notFound,
+});

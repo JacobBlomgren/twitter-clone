@@ -168,7 +168,6 @@ function notFound(state = {}, action) {
 }
 
 function timeline(state = [], action) {
-  console.log(action.tweets);
   if (action.type === FETCH_TIMELINE_SUCCESS) {
     // const ids = R.pipe(R.filter(R.propEq()))
     return R.union(state, R.pluck('id', action.tweets));

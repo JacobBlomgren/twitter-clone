@@ -33,6 +33,7 @@ TimelineContainer.propTypes = {
   tweetIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   recievedAt: PropTypes.number.isRequired,
   fetching: PropTypes.bool.isRequired,
+  // following: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchTimeline: PropTypes.func.isRequired,
 };
 
@@ -41,6 +42,7 @@ function mapStateToProps(state) {
     tweetIDs: state.entities.tweets.timeline,
     recievedAt: state.network.timeline.recievedAt,
     fetching: state.network.timeline.fetching,
+    // following: state.entities.users.following.allIDs,
   };
 }
 

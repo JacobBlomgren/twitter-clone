@@ -1,9 +1,11 @@
+import 'isomorphic-fetch';
 import * as R from 'ramda';
 
+import rootReducer from '../../../../src/shared/reducers';
 import mapStateToProps from '../../../../src/shared/containers/DetailedTweet/mapStateToProps';
 
 it('should find parents and children correctly', () => {
-  const props = mapStateToProps(
+  const state = rootReducer(
     {
       entities: {
         tweets: {
@@ -45,26 +47,27 @@ it('should find parents and children correctly', () => {
             },
           },
         },
-        replies: {
-          byID: {
-            '0': ['1', '8'],
-            '1': ['2'],
-            '2': ['3', '4'],
-            '4': ['5'],
-            '5': ['6'],
-            '6': ['7'],
-          },
-        },
+        // replies: {
+        //   byID: {
+        //     '0': ['1', '8'],
+        //     '1': ['2'],
+        //     '2': ['3', '4'],
+        //     '4': ['5'],
+        //     '5': ['6'],
+        //     '6': ['7'],
+        //   },
+        // },
       },
     },
-    { id: '2' },
+    {},
   );
+  const props = mapStateToProps(state, { id: '2' });
 
   const { id, parents, replies } = props;
 
   expect(id).toBe('2');
   expect(parents).toEqual(['0', '1']);
-  expect(R.find(child => child.id === '3', replies).replies).toBeUndefined();
+  expect(R.find(child => child.id === '3', replies).replies).toEqual([]);
   const children4 = R.find(child => child.id === '4', replies).replies;
   expect(children4).toEqual([
     {

@@ -75,7 +75,6 @@ const findUser = (users, username) =>
 
 function mapStateToProps(state, { username }) {
   const fetching = state.network.user.fetching.includes(username);
-  console.log(fetching);
   const user = findUser(Object.values(state.entities.users.byID), username);
   // Determine whether there is enough data to display the profile.
   if (!user) {
@@ -94,9 +93,6 @@ function mapStateToProps(state, { username }) {
     };
   }
 
-  const follows =
-    !!state.entities.login.user &&
-    state.entities.users.following.allIDs.includes(user.id);
   const tweetsWithTimestamp = user.tweets
     ? user.tweets.map(id => ({
         id,
@@ -114,7 +110,6 @@ function mapStateToProps(state, { username }) {
   )(tweetsWithTimestamp, retweets);
   return {
     ...user,
-    follows,
     tweets,
     loggedInUserID: state.entities.login.user && state.entities.login.user.id,
     fetching,
