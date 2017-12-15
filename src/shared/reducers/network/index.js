@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 
+import auth from './auth';
 import following from './following';
+import timeline from './timeline';
 import tweet from './tweet';
 import user from './user';
 
@@ -9,7 +11,9 @@ import user from './user';
  * fetching, when it was last recieved, etc.
  */
 export default combineReducers({
+  auth,
   following,
+  timeline,
   tweet,
   user,
 });

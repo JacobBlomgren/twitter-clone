@@ -20,7 +20,7 @@ import {
   POST_TWEET_SUCCESS,
 } from '../../actions/tweet';
 import { LOGIN_SUCCESS } from '../../actions/auth';
-import {FETCH_TIMELINE_SUCCESS} from '../../actions/timeline';
+import { FETCH_TIMELINE_SUCCESS } from '../../actions/timeline';
 
 // Replaces a tweet in state, that is assumed to exist.
 function replaceTweet(state, tweet) {
@@ -125,6 +125,7 @@ function byID(state = {}, action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
     case POST_TWEET_SUCCESS:
+    case FETCH_TIMELINE_SUCCESS:
       return recieveTweets(state, action);
     case LOGIN_SUCCESS:
       return invalidateOnLogin(state);
@@ -138,6 +139,7 @@ function allIDs(state = [], action) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
     case POST_TWEET_SUCCESS:
+    case FETCH_TIMELINE_SUCCESS:
       return R.union(state, action.tweets.map(R.prop('id')));
     default:
       return state;
@@ -166,8 +168,11 @@ function notFound(state = {}, action) {
 }
 
 function timeline(state = [], action) {
-  if (action.type === FETCH_TIMELINE_SUCCESS)
+  console.log(action.tweets);
+  if (action.type === FETCH_TIMELINE_SUCCESS) {
+    // const ids = R.pipe(R.filter(R.propEq()))
     return R.union(state, R.pluck('id', action.tweets));
+  }
   return state;
 }
 

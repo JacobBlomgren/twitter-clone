@@ -20,6 +20,7 @@ WITH selected_user AS (
 SELECT selected_user.user_id AS id,
 selected_user.name,
 selected_user.username,
+selected_user.profile_picture_url,
 selected_user.description,
 selected_user.created_at,
 followers.follower_count,

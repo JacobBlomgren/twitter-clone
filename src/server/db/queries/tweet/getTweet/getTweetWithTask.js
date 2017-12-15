@@ -14,6 +14,12 @@ export default async function(task, tweetID, loggedInUserID) {
   if (!tweet) return Promise.resolve(null);
   return {
     ...tweet,
+    // The reply_to subquery returns the ids as integers rather than strings (wanted)
+    reply_to: tweet.reply_to && {
+      ...tweet.reply_to,
+      original_tweet_id: String(tweet.reply_to.original_tweet_id),
+      original_user_id: String(tweet.reply_to.original_user_id),
+    },
     reply_count: parseInt(tweet.reply_count, 10),
     retweet_count: parseInt(tweet.retweet_count, 10),
     like_count: parseInt(tweet.like_count, 10),

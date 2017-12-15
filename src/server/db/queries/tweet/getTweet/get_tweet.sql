@@ -10,7 +10,7 @@ WITH RECURSIVE replies AS (
   SELECT COUNT(reply_tweet_id) AS reply_count
   FROM replies
 )
-SELECT tweet.tweet_id AS id, account.username, account.name, tweet.user_id,
+SELECT tweet.tweet_id AS id, account.username, account.name, account.profile_picture_url, tweet.user_id,
   tweet.content, tweet.created_at, likes.count AS like_count, reply_count,
   retweets.count AS retweet_count,
   EXISTS(SELECT * FROM likes WHERE tweet_id = $1 AND user_id = $2) AS liked,
