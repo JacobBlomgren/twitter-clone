@@ -12,6 +12,11 @@ import {
   fetchTweetSuccess,
 } from '../../shared/actions/tweet';
 import { loginSuccess } from '../../shared/actions/auth';
+import getTimeLine from '../db/queries/timeline';
+import {
+  fetchTimelineFailure,
+  fetchTimelineSuccess,
+} from '../../shared/actions/timeline';
 
 export async function profile(username, loggedInUserID) {
   const response = await getUser(undefined, username, loggedInUserID);
@@ -32,5 +37,14 @@ export async function tweet(tweetID, loggedInUserID) {
 
   if (response) actions.push(fetchTweetSuccess(response));
   else actions.push(fetchTweetNotFound(tweetID));
-  return initStore();
+  return initStore(actions);
+}
+
+export async function timeline(loggedInUserID) {
+  const response = await getTimeLine(loggedInUserID);
+  const actions = [loginSuccess({ user_id: loggedInUserID })];
+
+  if (response) actions.push(fetchTimelineSuccess(response));
+  else actions.push(fetchTimelineFailure());
+  return initStore(actions);
 }

@@ -8,7 +8,7 @@ function fetchTimelineRequest() {
 }
 
 export const FETCH_TIMELINE_SUCCESS = 'FETCH_TIMELINE_SUCESS';
-function fetchTimelineSuccess(response) {
+export function fetchTimelineSuccess(response) {
   const normalized = normalizeTweets(camelizeKeys(response));
   return {
     type: FETCH_TIMELINE_SUCCESS,
@@ -18,7 +18,7 @@ function fetchTimelineSuccess(response) {
 }
 
 export const FETCH_TIMELINE_FAILURE = 'FETCH_TIMELINE_FAILURE';
-function fetchTimelineFailure() {
+export function fetchTimelineFailure() {
   return { type: FETCH_TIMELINE_FAILURE };
 }
 
