@@ -1,20 +1,30 @@
 import * as R from 'ramda';
+import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import ComposeTweet from '../components/ComposeTweet/ComposeTweet';
 import { postTweet } from '../actions/tweet';
 
-function mapStateToProps(state) {
-  const users = R.pipe(
+function usersByIDSelector(state) {
+  return state.entities.users.byID;
+}
+
+const users = createSelector(
+  usersByIDSelector,
+  R.pipe(
+    R.values,
     R.filter(R.has('profilePictureURL')),
     R.map(({ username, profilePictureURL }) => ({
       name: `@${username}`,
       avatar: profilePictureURL,
     })),
-  )(Object.values(state.entities.users.byID));
+  ),
+);
+
+function mapStateToProps(state) {
   return {
-    users,
+    users: users(state),
     posting: state.network.tweet.posting,
   };
 }

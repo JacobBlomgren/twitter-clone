@@ -16,10 +16,6 @@ function findRepliesRecursion(levels, limit, tweets, id) {
   };
 }
 
-function tweetsSelector(state) {
-  return Object.values(state.entities.tweets.byID);
-}
-
 function tweetsByIDSelector(state) {
   return state.entities.tweets.byID;
 }
@@ -29,8 +25,8 @@ function IDSelector(_, id) {
 }
 
 const findReplies = createSelector(
-  [tweetsSelector, IDSelector],
-  (tweets, id) => findRepliesRecursion(0, 3, tweets, id).replies,
+  [tweetsByIDSelector, IDSelector],
+  (tweets, id) => findRepliesRecursion(0, 3, Object.values(tweets), id).replies,
 );
 
 function findParentsRecursion(tweets, parents, id) {
