@@ -1,9 +1,5 @@
 import * as R from 'ramda';
-
-function findParents(tweets, parents, id) {
-  if (!tweets[id].replyTo) return [tweets[id].id, ...parents];
-  return findParents(tweets, [tweets[id].id, ...parents], tweets[id].replyTo);
-}
+import { createSelector } from 'reselect';
 
 // Finds replies to a certain depth limit.
 function findRepliesRecursion(levels, limit, tweets, id) {
@@ -20,9 +16,39 @@ function findRepliesRecursion(levels, limit, tweets, id) {
   };
 }
 
-function findReplies(tweets, id) {
-  return findRepliesRecursion(0, 3, tweets, id).replies;
+function tweetsSelector(state) {
+  return Object.values(state.entities.tweets.byID);
 }
+
+function tweetsByIDSelector(state) {
+  return state.entities.tweets.byID;
+}
+
+function IDSelector(_, id) {
+  return id;
+}
+
+const findReplies = createSelector(
+  [tweetsSelector, IDSelector],
+  (tweets, id) => findRepliesRecursion(0, 3, tweets, id).replies,
+);
+
+function findParentsRecursion(tweets, parents, id) {
+  if (!tweets[id].replyTo) return [tweets[id].id, ...parents];
+  return findParentsRecursion(
+    tweets,
+    [tweets[id].id, ...parents],
+    tweets[id].replyTo,
+  );
+}
+
+const findParents = createSelector(
+  [tweetsByIDSelector, IDSelector],
+  (tweets, id) => {
+    const { replyTo } = tweets[id];
+    return replyTo ? findParentsRecursion(tweets, [], replyTo) : [];
+  },
+);
 
 export default function mapStateToProps(state, { id }) {
   const fetching = state.network.tweet.fetching.includes(id);
@@ -42,11 +68,8 @@ export default function mapStateToProps(state, { id }) {
     };
   }
 
-  const parents = tweet.replyTo
-    ? findParents(state.entities.tweets.byID, [], tweet.replyTo)
-    : [];
-
-  const replies = findReplies(Object.values(state.entities.tweets.byID), id);
+  const parents = findParents(state, id);
+  const replies = findReplies(state, id);
   return {
     id,
     shouldFetch: false,

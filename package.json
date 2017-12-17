@@ -114,6 +114,7 @@
     "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "spinkit": "^1.2.5",
     "string-length": "^2.0.0",
     "stylelint-order": "^0.7.0",
