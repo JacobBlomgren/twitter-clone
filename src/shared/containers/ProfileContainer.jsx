@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
+import { createSelector } from 'reselect';
 
 import Profile from '../components/Profile/Profile';
 import Spinner from '../components/Spinner';
@@ -73,6 +74,35 @@ ProfileContainer.defaultProps = {
 const findUser = (users, username) =>
   R.find(R.propEq('username', username), users);
 
+function usersTweetsSelector(state, user) {
+  return user.tweets;
+}
+
+function tweetsSelector(state) {
+  return state.entities.tweets.byID;
+}
+
+function usersRetweetsSelector(state, user) {
+  return user.retweets;
+}
+
+const tweetsSorted = createSelector(
+  [usersTweetsSelector, usersRetweetsSelector, tweetsSelector, user => user],
+  (usersTweets = [], retweets = [], tweets, user) => {
+    const tweetsWithTimestamp = usersTweets.map(id => ({
+      id,
+      createdAt: tweets[id].createdAt,
+      retweet: null,
+    }));
+    const retweetsWithUserID = retweets.map(t => ({ ...t, retweet: user.id }));
+    return R.pipe(
+      R.union,
+      R.sortBy(R.prop('createdAt')),
+      R.map(({ id, retweet }) => ({ id, retweet })),
+    )(tweetsWithTimestamp, retweetsWithUserID);
+  },
+);
+
 function mapStateToProps(state, { username }) {
   const fetching = state.network.user.fetching.includes(username);
   const user = findUser(Object.values(state.entities.users.byID), username);
@@ -86,28 +116,13 @@ function mapStateToProps(state, { username }) {
   if (user.partial) {
     return {
       id: user.id,
-      // can probably remove
-      partial: true,
       shouldFetch: true,
       fetching,
     };
   }
 
-  const tweetsWithTimestamp = user.tweets
-    ? user.tweets.map(id => ({
-        id,
-        createdAt: state.entities.tweets.byID[id].createdAt,
-        retweet: null,
-      }))
-    : [];
-  const retweets = user.retweets
-    ? user.retweets.map(t => ({ ...t, retweet: user.id }))
-    : [];
-  const tweets = R.compose(
-    R.map(({ id, retweet }) => ({ id, retweet })),
-    R.sortBy(R.prop('createdAt')),
-    R.union,
-  )(tweetsWithTimestamp, retweets);
+  const tweets = tweetsSorted(state, user);
+
   return {
     ...user,
     tweets,
