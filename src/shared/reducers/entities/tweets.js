@@ -95,16 +95,8 @@ function recieveTweets(state, action) {
   return mergeTweets(state, action.tweets);
 }
 
-// Removes data concerning user actions (liked/retweeted tweets) on login.
 function invalidateOnLogin(state) {
-  // prettier-ignore
-  return R.map(
-    R.pipe(
-      R.omit(['liked', 'retweeted']),
-      R.assoc('partial', true),
-    ),
-    state
-  );
+  return R.map(R.assoc('partial', true), state);
 }
 
 function byID(state = {}, action) {

@@ -66,16 +66,8 @@ function removeFollow(state, action) {
   return replaceUser(state, newUser);
 }
 
-// Invalidates follows data for users on login.
 function invalidateOnLogin(state) {
-  // prettier-ignore
-  return R.map(
-    R.pipe(
-      R.omit(['follows']),
-      R.assoc('partial', true),
-    ),
-    state,
-  );
+  return R.map(R.assoc('partial', true), state);
 }
 
 function byID(state = {}, action) {
@@ -104,6 +96,7 @@ function allIDs(state = [], action) {
   switch (action.type) {
     case FETCH_PROFILE_SUCCESS:
     case FETCH_TWEET_SUCCESS:
+    case FETCH_FOLLOWING_SUCCESS:
     case POST_TWEET_SUCCESS:
     case FETCH_TIMELINE_SUCCESS:
       return R.union(state, action.users.map(R.prop('id')));
