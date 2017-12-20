@@ -24,6 +24,7 @@ export const FETCH_TWEET_SUCCESS = 'FETCH_TWEET_SUCCESS';
 export function fetchTweetSuccess(response) {
   const { tweet, parents, children } = camelizeKeys(response);
   return {
+    id: tweet.id,
     ...normalizeTweetResponse(tweet, parents, children),
     type: FETCH_TWEET_SUCCESS,
   };
