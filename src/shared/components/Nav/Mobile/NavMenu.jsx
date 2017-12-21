@@ -48,7 +48,7 @@ NavMenu.defaultProps = {
   profilePictureURL: null,
   followerCount: 0,
   followingCount: 0,
-}
+};
 
 NavMenu.propTypes = {
   open: PropTypes.bool.isRequired,
