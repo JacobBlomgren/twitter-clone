@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Spinner from '../components/Spinner';
-import Timeline from '../components/Timeline/Timeline';
 import { fetchTimeline } from '../actions/timeline';
 import TweetList from '../components/Tweet/TweetList';
 

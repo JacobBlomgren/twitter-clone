@@ -4,11 +4,11 @@ import Edit from 'react-icons/lib/fa/edit';
 import { Link } from 'react-router-dom';
 import BurgerButton from './BurgerButton';
 
-export default function NavLoggedIn({ open, toggleMenu }) {
+export default function NavLoggedIn({ open, toggleMenu, closeMenu }) {
   return (
     <div>
       <BurgerButton onClick={toggleMenu} open={open} />
-      <Link to="/compose" className="NavComposeLink">
+      <Link to="/compose" className="NavComposeLink" onClick={closeMenu}>
         <Edit size="28px" />
       </Link>
     </div>
@@ -18,4 +18,5 @@ export default function NavLoggedIn({ open, toggleMenu }) {
 NavLoggedIn.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleMenu: PropTypes.func.isRequired,
+  closeMenu: PropTypes.func.isRequired,
 };

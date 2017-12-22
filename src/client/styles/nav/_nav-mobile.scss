@@ -7,11 +7,40 @@
   height: 24px;
 }
 
+.NavMenu__ProfileInfo {
+  margin-bottom: 0.8rem;
+}
+
 .NavMenuProfilePicture {
   display: block;
   margin: auto;
 }
 
-.NavMenu__ProfileInfo {
-  margin-top: 1rem;
+
+.NavMenu__Username {
+  margin-bottom: 0.2rem;
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+.NavMenu__Username__Link {
+  color: inherit;
+}
+
+.NavMenu__List,
+.NavMenu__Username__Link {
+  font-size: 1.4rem;
+}
+
+.NavMenu__Username__Link:hover,
+.NavMenu__Username__Link:focus {
+  text-decoration: none;
+}
+
+.NavMenu__List {
+  @include ul-no-style;
+
+  svg {
+    margin-bottom: 4px;
+  }
 }

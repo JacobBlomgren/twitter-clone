@@ -10,10 +10,15 @@ export default class NavMobile extends Component {
     super(props);
     this.state = { menuOpen: false };
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   toggleMenu() {
     this.setState(prevState => ({ menuOpen: !prevState.menuOpen }));
+  }
+
+  closeMenu() {
+    this.setState({ menuOpen: false });
   }
 
   render() {
@@ -24,13 +29,18 @@ export default class NavMobile extends Component {
         {loggedIn && (
           <NavMenuContainer
             open={menuOpen}
+            onClick={this.closeMenu}
             pageWrapId="page-wrap"
             outerContainerId="outer-container"
           />
         )}
         <nav className="d-md-none Nav SmallPadding--Sides">
           {loggedIn ? (
-            <NavLoggedIn open={menuOpen} toggleMenu={this.toggleMenu} />
+            <NavLoggedIn
+              open={menuOpen}
+              toggleMenu={this.toggleMenu}
+              closeMenu={this.closeMenu}
+            />
           ) : (
             <NotLoggedIn location={location} />
           )}
