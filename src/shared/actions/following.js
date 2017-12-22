@@ -94,6 +94,7 @@ function fetchFollowingSuccess(following) {
   const normalized = normalizeFollowing(camelizeKeys(following));
   return {
     type: FETCH_FOLLOWING_SUCCESS,
+    recievedAt: Date.now(),
     ...normalized,
   };
 }

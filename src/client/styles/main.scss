@@ -62,7 +62,7 @@ body {
 }
 
 .Content {
-  margin-top: $nav-height;
+  padding-top: $nav-height;
 }
 
 @include media-breakpoint-up(md) {
@@ -105,4 +105,13 @@ body {
 
 .LightText {
   color: $gray-700;
+}
+
+/* stylelint-disable selector-max-id */
+html,
+body,
+#root,
+#outer-container,
+#page-wrap {
+  height: 100%;
 }

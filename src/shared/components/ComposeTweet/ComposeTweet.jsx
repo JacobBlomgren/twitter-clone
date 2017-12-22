@@ -47,9 +47,7 @@ export default class ComposeTweet extends Component {
   }
 
   onSearchChange({ value }) {
-    this.setState(prevState => ({
-      suggestions: prevState.fuse.search(value),
-    }));
+    this.setState(() => ({ suggestions: this.fuse.search(value) }));
   }
 
   handleSubmit(e) {
@@ -70,7 +68,7 @@ export default class ComposeTweet extends Component {
     // can't change it once it's posted.
     const onChange = posting ? () => null : this.onChange;
     return (
-      <main>
+      <main style={{ height: '100%' }}>
         <form
           className="MainColumn ComposeTweet SmallPadding"
           onSubmit={posting ? e => e.preventDefault() : this.handleSubmit}
