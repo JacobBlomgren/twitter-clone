@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { scroller, Element } from 'react-scroll';
+
 import Tweet from '../Tweet';
 import TweetProfilePicture from '../TweetProfilePicture';
 import TweetContent from '../TweetContent';
@@ -7,7 +9,7 @@ import MainTweetInfo from './MainTweetInfo';
 import MainTweetDate from './MainTweetDate';
 import ReplyTo from '../ReplyTo';
 
-export default function MainTweet({
+function MainTweet({
   id,
   name,
   username,
@@ -63,3 +65,29 @@ export default function MainTweet({
 MainTweet.defaultProps = Tweet.defaultProps;
 
 MainTweet.propTypes = Tweet.propTypes;
+
+/**
+ * A wrapping component that scrolls the window to the MainTweet upon mounting.
+ */
+export default class ScrollWrapper extends Component {
+  componentDidMount() {
+    if (window) {
+      // Check if the device is (probably) a mobile phone or not,
+      // since the nav height differs for mobile and larger devices.
+      const mobile =
+        window.screen.height > window.screen.width && window.innerWidth < 768;
+      scroller.scrollTo('main-tweet', {
+        duration: 0,
+        offset: mobile ? -3 * 16 : -2.5 * 16,
+      });
+    }
+  }
+
+  render() {
+    return (
+      <Element name="main-tweet">
+        <MainTweet {...this.props} />
+      </Element>
+    );
+  }
+}
