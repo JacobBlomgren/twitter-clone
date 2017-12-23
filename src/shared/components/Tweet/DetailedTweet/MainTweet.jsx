@@ -5,6 +5,7 @@ import TweetContent from '../TweetContent';
 import TweetActions from '../TweetActions';
 import MainTweetInfo from './MainTweetInfo';
 import MainTweetDate from './MainTweetDate';
+import ReplyTo from '../ReplyTo';
 
 export default function MainTweet({
   id,
@@ -14,6 +15,7 @@ export default function MainTweet({
   createdAt,
   content,
   loggedIn,
+  replyTo,
   replyCount,
   retweetCount,
   retweeted,
@@ -37,6 +39,7 @@ export default function MainTweet({
         </div>
       </div>
       <div>
+        {replyTo ? <ReplyTo username={replyTo} /> : ''}
         <TweetContent content={content} />
         <MainTweetDate createdAt={createdAt} />
         <TweetActions
