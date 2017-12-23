@@ -42,7 +42,7 @@ export default function Tweet({
             <TweetProfilePicture url={profilePictureURL} username={username} />
           </div>
         </div>
-        <div className="float-left">
+        <div className="float-left Tweet__Right">
           <TweetInfo name={name} username={username} createdAt={createdAt} />
           {replyTo ? <ReplyTo username={replyTo} /> : ''}
           <TweetContent content={content} />
