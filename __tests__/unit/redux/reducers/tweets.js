@@ -543,8 +543,8 @@ test('invalidate data on login', () => {
 
   const state = tweets(initialState, { type: LOGIN_SUCCESS });
   const tweet1 = state.byID['1'];
-  expect(tweet1).not.toHaveProperty('liked');
-  expect(tweet1).not.toHaveProperty('retweeted');
+  expect(tweet1).toHaveProperty('liked');
+  expect(tweet1).toHaveProperty('retweeted');
   expect(tweet1).toHaveProperty('partial', true);
 
   expect(state.byID['2']).toHaveProperty('partial', true);

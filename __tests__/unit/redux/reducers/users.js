@@ -360,7 +360,7 @@ test('invalidate data on login', () => {
   deepFreeze(initialState);
 
   const state = users(initialState, { type: LOGIN_SUCCESS });
-  expect(state.byID['1']).not.toHaveProperty('follows');
+  expect(state.byID['1']).toHaveProperty('follows');
   expect(state.byID['1']).toHaveProperty('partial', true);
   expect(state.byID['2']).toHaveProperty('partial', true);
 });
