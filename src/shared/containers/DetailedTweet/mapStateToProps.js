@@ -25,14 +25,10 @@ function IDSelector(_, id) {
 }
 
 /*
- * findReplies recieves tweets.byID as an argument, and a change to that table
- * doesn't necessarily mean that replies has to be recomputed.
- * However, to project only the necessary fields of each tweet in the selector
- * would be too expensive (if the table is large) to be justifiable.
- * Therefore, the tweets.byID tables are compared based on if they contain the
- * same amount of rows. The only scenario in which a recomputation is necessary
- * is if a new tweet has been added (which could potentially be a reply),
- * in which the table size has changed.
+ * Compares the tweets.byID argument for findReplies based on the table sizes.
+ * The only scenario in which a recomputation is necessary is if a new tweet
+ * has been added (which could potentially be a reply), in which the table size
+ * has changed. Otherwise findReplies only depends on the id argument.
  */
 const createSelectorReplies = createSelectorCreator(
   defaultMemoize,
@@ -62,6 +58,7 @@ const createSelectorParents = createSelectorCreator(
   defaultMemoize,
   (a, b) => (typeof a === 'object' ? true : a === b),
 );
+
 const findParents = createSelectorParents(
   [tweetsByIDSelector, IDSelector],
   (tweets, id) => {
