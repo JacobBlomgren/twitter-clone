@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { createSelector } from 'reselect';
+import { createSelectorCreator, defaultMemoize } from 'reselect';
 
 // Finds replies to a certain depth limit.
 function findRepliesRecursion(levels, limit, tweets, id) {
@@ -24,7 +24,25 @@ function IDSelector(_, id) {
   return id;
 }
 
-const findReplies = createSelector(
+/*
+ * findReplies recieves tweets.byID as an argument, and a change to that table
+ * doesn't necessarily mean that replies has to be recomputed.
+ * However, to project only the necessary fields of each tweet in the selector
+ * would be too expensive (if the table is large) to be justifiable.
+ * Therefore, the tweets.byID tables are compared based on if they contain the
+ * same amount of rows. The only scenario in which a recomputation is necessary
+ * is if a new tweet has been added (which could potentially be a reply),
+ * in which the table size has changed.
+ */
+const createSelectorReplies = createSelectorCreator(
+  defaultMemoize,
+  (a, b) =>
+    typeof a === 'object'
+      ? Object.keys(a).length === Object.keys(b).length
+      : a === b,
+);
+
+const findReplies = createSelectorReplies(
   [tweetsByIDSelector, IDSelector],
   (tweets, id) => findRepliesRecursion(0, 3, Object.values(tweets), id).replies,
 );
@@ -38,7 +56,13 @@ function findParentsRecursion(tweets, parents, id) {
   );
 }
 
-const findParents = createSelector(
+// Unlike replies, parents for a tweet never has to be recomputed as another
+// parent can't possibly be created for a tweet that is already posted.
+const createSelectorParents = createSelectorCreator(
+  defaultMemoize,
+  (a, b) => (typeof a === 'object' ? true : a === b),
+);
+const findParents = createSelectorParents(
   [tweetsByIDSelector, IDSelector],
   (tweets, id) => {
     const { replyTo } = tweets[id];
