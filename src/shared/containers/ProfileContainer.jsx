@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
-import { createSelector } from 'reselect';
+import { createSelectorCreator, defaultMemoize } from 'reselect';
 
 import Profile from '../components/Profile/Profile';
 import Spinner from '../components/Spinner';
@@ -74,33 +74,29 @@ ProfileContainer.defaultProps = {
 const findUser = (users, username) =>
   R.find(R.propEq('username', username), users);
 
-function usersTweetsSelector(state, user) {
-  return user.tweets;
+function usersTweetsSelector(state, { tweets = [] }) {
+  return tweets.map(id => ({
+    id,
+    createdAt: state.entities.tweets.byID[id].createdAt,
+    retweet: null,
+  }));
 }
 
-function tweetsSelector(state) {
-  return state.entities.tweets.byID;
+function usersRetweetsSelector(_, { retweets = [], id }) {
+  return retweets.map(R.assoc('retweet', id));
 }
 
-function usersRetweetsSelector(state, user) {
-  return user.retweets;
-}
+const createSelector = createSelectorCreator(defaultMemoize, R.equals);
 
+// combines the tweets and retweets by a user into a list sorted by createdAt
 const tweetsSorted = createSelector(
-  [usersTweetsSelector, usersRetweetsSelector, tweetsSelector, user => user],
-  (usersTweets = [], retweets = [], tweets, user) => {
-    const tweetsWithTimestamp = usersTweets.map(id => ({
-      id,
-      createdAt: tweets[id].createdAt,
-      retweet: null,
-    }));
-    const retweetsWithUserID = retweets.map(t => ({ ...t, retweet: user.id }));
-    return R.pipe(
+  [usersTweetsSelector, usersRetweetsSelector],
+  (tweets, retweets) =>
+    R.pipe(
       R.union,
       R.sortBy(R.prop('createdAt')),
-      R.map(({ id, retweet }) => ({ id, retweet })),
-    )(tweetsWithTimestamp, retweetsWithUserID);
-  },
+      R.project(['id', 'retweet']),
+    )(tweets, retweets),
 );
 
 function mapStateToProps(state, { username }) {
