@@ -1,4 +1,5 @@
 import express from 'express';
+import { WDS_PORT } from '../../shared/config';
 
 const router = express.Router();
 
@@ -14,10 +15,9 @@ router.get('*', (req, res) => {
       </head>
       <body>
         <div id="root"></div>
-        <script src="http://localhost:7000/dist/js/manifest.bundle.js"></script>
-        <script src="http://localhost:7000/dist/js/vendor.bundle.js"></script>
-        <script src="http://localhost:7000/dist/js/main.bundle.js"></script>
-        <script src="http://localhost:7000/dist/js/polyfills.bundle.js"></script>
+        <script src="http://localhost:${WDS_PORT}/dist/js/manifest.bundle.js"></script>
+        <script src="http://localhost:${WDS_PORT}/dist/js/vendor.bundle.js"></script>
+        <script src="http://localhost:${WDS_PORT}/dist/js/main.bundle.js"></script>
       </body>
     </html>`);
 });
