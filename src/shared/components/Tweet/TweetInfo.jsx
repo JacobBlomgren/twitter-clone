@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -54,16 +54,21 @@ moment.defineLocale('en-abbr', {
   },
 });
 
-function time(createdAt) {
-  const m = moment(createdAt).locale('en');
-  if (m.isBefore(moment().subtract(1, 'months'))) return m.format('MMM D');
-  return (
-    <span>
-      <span className="d-none d-sm-inline">{m.fromNow()}</span>
-      <span className="d-sm-none">{m.locale('en-abbr').fromNow()}</span>
-    </span>
-  );
+class Time extends PureComponent {
+  render() {
+    const { createdAt } = this.props;
+    const m = moment(createdAt).locale('en');
+    if (m.isBefore(moment().subtract(1, 'months'))) return m.format('MMM D');
+    return (
+      <small className="LightText" aria-hidden="true">
+        <span className="d-none d-sm-inline">{m.fromNow()}</span>
+        <span className="d-sm-none">{m.locale('en-abbr').fromNow()}</span>
+      </small>
+    );
+  }
 }
+
+Time.propTypes = { createdAt: PropTypes.string.isRequired };
 
 export default function TweetInfo({ name, username, createdAt }) {
   return (
@@ -74,9 +79,7 @@ export default function TweetInfo({ name, username, createdAt }) {
         <span className="sr-only">
           Tweet created {moment(createdAt).fromNow()}.
         </span>
-        <small className="LightText" aria-hidden="true">
-          {time(createdAt)}
-        </small>
+        <Time createdAt={createdAt} />
       </time>
     </div>
   );
