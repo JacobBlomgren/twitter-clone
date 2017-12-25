@@ -93,7 +93,7 @@ export default function NavMenu({
       customCrossIcon={false}
       isOpen={open}
       {...props}
-      noOverlay
+      disableOverlayClick={onClick}
       // width="200"
     >
       <ProfileInfo
