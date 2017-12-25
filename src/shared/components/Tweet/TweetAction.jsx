@@ -11,7 +11,10 @@ export default function TweetAction({ label, active, icon, count, onClick }) {
           active ? 'Tweet__Action__Button--Active' : 'LightText'
         }`}
         aria-label={label}
-        onClick={onClick}
+        onClick={e => {
+          e.stopPropagation();
+          onClick();
+        }}
       >
         <span className="Tweet__Action__Button__Icon">{icon}</span>
         <span aria-hidden="true">{formatNumber(count)}</span>
