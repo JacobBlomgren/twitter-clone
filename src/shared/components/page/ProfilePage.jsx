@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProfileContainer from '../../containers/ProfileContainer';
+import ProfileContainer from '../../containers/Profile/ProfileContainer';
 
 export default function ProfilePage({ match }) {
   return <ProfileContainer username={match.params.username} />;
