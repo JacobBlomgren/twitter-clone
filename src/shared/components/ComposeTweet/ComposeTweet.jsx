@@ -68,7 +68,7 @@ export default class ComposeTweet extends Component {
     // can't change it once it's posted.
     const onChange = posting ? () => null : this.onChange;
     return (
-      <main style={{ height: '100%' }}>
+      <main className="Main--FullPage">
         <form
           className="MainColumn ComposeTweet SmallPadding"
           onSubmit={posting ? e => e.preventDefault() : this.handleSubmit}

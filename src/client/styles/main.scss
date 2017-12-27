@@ -63,7 +63,7 @@ body {
 }
 
 .Content {
-  padding-top: $nav-height;
+  margin-top: $nav-height;
 }
 
 @include media-breakpoint-up(md) {
@@ -94,6 +94,14 @@ body {
   }
 }
 
+@include media-breakpoint-down(sm) {
+  .Main--FullPage {
+    height: 100vh;
+    margin-top: -3rem;
+    padding-top: 3rem;
+  }
+}
+
 .Header {
   background-color: #fff;
   margin-bottom: 0.5rem;
@@ -106,13 +114,4 @@ body {
 
 .LightText {
   color: $gray-700;
-}
-
-/* stylelint-disable selector-max-id */
-html,
-body,
-#root,
-#outer-container,
-#page-wrap {
-  min-height: 100%;
 }

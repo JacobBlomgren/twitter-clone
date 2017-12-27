@@ -8,7 +8,7 @@ import NotFoundPage from './NotFoundPage';
 function SettingsPage({ loggedIn }) {
   if (!loggedIn) return <NotFoundPage />;
   return (
-    <main className="MainColumn MainColumn--Narrow">
+    <main className="MainColumn MainColumn--Narrow Main--FullPage">
       <div className="Form__Container">
         <h1 className="Form__Heading">Settings</h1>
         <SettingsContainer />
