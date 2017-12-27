@@ -7,7 +7,8 @@ import TweetPage from './components/page/TweetPage';
 import ProfilePage from './components/page/ProfilePage';
 import LoginPage from './components/page/LoginPage';
 import Lazy from './components/ComposeTweet/Lazy';
-import HomePageContainer from './containers/HomePageContainer';
+import HomePage from './components/page/HomePage';
+import SettingsPage from './components/page/SettingsPage';
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
         <Route path="/t/:id" component={TweetPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/compose" component={Lazy} />
-        <Route exact path="/" component={HomePageContainer} />
+        <Route path="/settings" component={SettingsPage} />
+        <Route exact path="/" component={HomePage} />
       </div>
       <ErrorsContainer />
     </div>

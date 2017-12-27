@@ -7,8 +7,8 @@ export default function LoginPage({ location }) {
   const from = location.state && location.state.from;
   return (
     <main className="MainColumn MainColumn--Narrow">
-      <div className="Login">
-        <h1 className="Login__Heading">Login</h1>
+      <div className="Form__Container">
+        <h1 className="Form__Heading">Login</h1>
         <LoginFormContainer from={from} />
       </div>
     </main>

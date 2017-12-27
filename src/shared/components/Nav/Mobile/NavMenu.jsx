@@ -3,6 +3,7 @@ import Menu from 'react-burger-menu/lib/menus/push';
 import PropTypes from 'prop-types';
 import User from 'react-icons/lib/fa/user';
 import Home from 'react-icons/lib/fa/home';
+import Settings from 'react-icons/lib/fa/cog';
 import { Link } from 'react-router-dom';
 
 import ProfilePicture from '../../Profile/ProfilePicture';
@@ -61,12 +62,19 @@ ProfileInfo.propTypes = {
 };
 
 function MenuList({ onClick }) {
+  const size = '22px';
   return (
     <ul className="NavMenu__List">
       <li>
-        <Home size="22px" />
+        <Home size={size} />
         <Link to="/" className="link-no-style" onClick={onClick}>
           Home
+        </Link>
+      </li>
+      <li>
+        <Settings size={size} />
+        <Link to="/settings" className="link-no-style" onClick={onClick}>
+          Settings
         </Link>
       </li>
     </ul>

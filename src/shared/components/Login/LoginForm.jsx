@@ -52,7 +52,7 @@ export default class LoginForm extends Component {
     const showError = error && !dissmissed.includes(error.id);
     const valid = /^[a-z0-9]{3,15}$/i.test(username) && password.length >= 8;
     return (
-      <div className="Login__Form">
+      <div className="Form">
         {showError && (
           <LoginError
             error={error.message}
@@ -61,25 +61,25 @@ export default class LoginForm extends Component {
           />
         )}
         <form className="clearfix" onSubmit={this.onSubmit}>
-          <label htmlFor="username" className="Login__Input__Label">
+          <label htmlFor="username" className="Form__Input__Label">
             <span className="sr-only">Username</span>
             <input
               type="text"
               value={username}
               onChange={this.onChangeUsername}
-              className="Login__Input"
+              className="Form__Input"
               placeholder="Username"
               autoComplete="on"
               id="username"
             />
           </label>
-          <label htmlFor="password" className="Login__Input__Label">
+          <label htmlFor="password" className="Form__Input__Label">
             <span className="sr-only">Password</span>
             <input
               type="password"
               value={password}
               onChange={this.onChangePassword}
-              className="Login__Input"
+              className="Form__Input"
               placeholder="Password"
               autoComplete="current-password"
               id="password"

@@ -1,0 +1,60 @@
+@import 'no-style';
+@import '~bootstrap/scss/mixins';
+
+.Form__Container {
+  background-color: #fff;
+  height: 100%;
+  padding-top: 1rem;
+}
+
+@include media-breakpoint-up(md) {
+  .Form__Container {
+    height: 100%;
+  }
+}
+
+.Form__Heading {
+  font-weight: bold;
+  text-align: center;
+}
+
+.Form {
+  margin: auto;
+  padding-bottom: 2rem;
+  padding-top: 1rem;
+  width: 250px;
+}
+
+@include media-breakpoint-up(md) {
+  .Form {
+    width: 250px;
+  }
+}
+
+.Form__Input {
+  border: solid 1px #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 0.7rem;
+  padding: 0.3rem;
+  width: 100%;
+}
+
+.Form__Textarea {
+  resize: none;
+}
+
+.Form__Input:focus {
+  border-color: transparent;
+  outline: 1px solid $main-color;
+  outline-offset: 0;
+}
+
+.Form__Input__Label {
+  display: block;
+}
+
+.Form__Button {
+  display: block;
+  float: right;
+  margin-top: 0.15rem;
+}

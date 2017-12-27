@@ -1,58 +1,5 @@
 @import 'no-style';
-@import '~bootstrap/scss/mixins';
-
-.Login {
-  background-color: #fff;
-  height: 100vh;
-  padding-top: 1rem;
-}
-
-@include media-breakpoint-up(md) {
-  .Login {
-    height: 100%;
-  }
-}
-
-.Login__Heading {
-  font-weight: bold;
-  text-align: center;
-}
-
-.Login__Form {
-  margin: auto;
-  padding-bottom: 2rem;
-  padding-top: 1rem;
-  width: 250px;
-}
-
-@include media-breakpoint-up(md) {
-  .Login__Form {
-    width: 250px;
-  }
-}
-
-.Login__Input {
-  border: solid 1px #ccc;
-  border-radius: 0.25rem;
-  margin-bottom: 0.7rem;
-  padding: 0.3rem;
-  width: 100%;
-}
-
-.Login__Input:focus {
-  outline: 1px solid $main-color;
-  outline-offset: 0;
-}
-
-.Login__Input__Label {
-  display: block;
-}
-
-.Login__Button {
-  display: block;
-  float: right;
-  margin-top: 0.15rem;
-}
+//@import '~bootstrap/scss/mixins';
 
 .Login__Error {
   font-size: 0.8rem;

@@ -30,6 +30,11 @@
 .NavMenu__List,
 .NavMenu__Username__Link {
   font-size: 1.4rem;
+
+  svg {
+    margin-bottom: 4px;
+    margin-right: 0.2rem;
+  }
 }
 
 .NavMenu__Username__Link:hover,
@@ -39,8 +44,4 @@
 
 .NavMenu__List {
   @include ul-no-style;
-
-  svg {
-    margin-bottom: 4px;
-  }
 }
