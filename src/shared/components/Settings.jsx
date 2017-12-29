@@ -5,11 +5,11 @@ import Spinner from './Spinner';
 export default class Settings extends Component {
   constructor(props) {
     super(props);
-    const { name, description } = this.props;
-    this.state = { name, description };
+    this.state = {};
 
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChangeName(e) {
@@ -20,11 +20,17 @@ export default class Settings extends Component {
     this.setState({ description: e.target.value });
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    this.props.updateSettings(this.state.name, this.state.description);
+  }
+
   render() {
     if (this.props.fetching) return <Spinner fullPage />;
-    const { name, description } = this.state;
+    const name = this.state.name || this.props.name;
+    const description = this.state.description || this.props.description;
     return (
-      <form className="Form" id="settings">
+      <form className="Form" id="settings" onSubmit={this.onSubmit}>
         <label htmlFor="name" className="Form__Input__Label">
           <span>Name</span>
           <input
@@ -47,12 +53,17 @@ export default class Settings extends Component {
             wrap="hard"
           />
         </label>
+        <input
+          type="submit"
+          value="Update"
+          className="btn btn-primary Form__Button"
+        />
       </form>
     );
   }
 }
 
-Settings.defaultPropTypes = {
+Settings.defaultProps = {
   name: '',
   description: '',
   fetching: false,
@@ -62,4 +73,5 @@ Settings.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   fetching: PropTypes.bool,
+  updateSettings: PropTypes.func.isRequired,
 };

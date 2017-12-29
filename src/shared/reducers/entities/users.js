@@ -15,6 +15,7 @@ import {
 import { FETCH_TWEET_SUCCESS, POST_TWEET_SUCCESS } from '../../actions/tweet';
 import { LOGIN_SUCCESS } from '../../actions/auth';
 import { FETCH_TIMELINE_SUCCESS } from '../../actions/timeline';
+import { UPDATE_SETTINGS_SUCCESS } from '../../actions/settings';
 
 function merge(key, left, right) {
   if (Array.isArray(left)) return R.union(left, right);
@@ -66,8 +67,16 @@ function removeFollow(state, action) {
   return replaceUser(state, newUser);
 }
 
-function invalidateOnLogin(state) {
-  return R.map(R.assoc('partial', true), state);
+const invalidateOnLogin = R.map(R.assoc('partial', true));
+
+function updateSettings(state, action) {
+  const user = state[action.loggedInUserID];
+  const newUser = {
+    ...user,
+    name: action.name,
+    description: action.description,
+  };
+  return replaceUser(state, newUser);
 }
 
 function byID(state = {}, action) {
@@ -87,6 +96,8 @@ function byID(state = {}, action) {
       return removeFollow(state, action);
     case LOGIN_SUCCESS:
       return invalidateOnLogin(state);
+    case UPDATE_SETTINGS_SUCCESS:
+      return updateSettings(state, action);
     default:
       return state;
   }

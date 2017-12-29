@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import * as R from 'ramda';
 
 import Settings from '../components/Settings';
+import { updateSettings } from '../actions/settings';
 
 function mapStateToProps(state) {
   const loggedInUserID =
@@ -13,4 +14,11 @@ function mapStateToProps(state) {
   return R.pick(['name', 'description'], user);
 }
 
-export default connect(mapStateToProps)(Settings);
+function mapDispatchToProps(dispatch) {
+  return {
+    updateSettings: (name, description) =>
+      dispatch(updateSettings(name, description)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
