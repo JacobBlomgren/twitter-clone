@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import mapStateToProps from './mapStateToProps';
 import { fetchTweet } from '../../actions/tweet';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/Spinners/Spinner';
 import DetailedTweet from '../../components/Tweet/DetailedTweet/DetailedTweet';
 import NotFoundPage from '../../components/page/NotFoundPage';
 

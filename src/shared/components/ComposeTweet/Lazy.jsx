@@ -1,6 +1,6 @@
 import React from 'react';
 import Loadable from 'react-loadable';
-import Spinner from '../Spinner';
+import Spinner from '../Spinners/Spinner';
 
 // Lazy load ComposeTweet with its heavy draft.js dependency, which is not needed for instance when
 // the user is not logged in.

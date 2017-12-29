@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Profile from '../../components/Profile/Profile';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/Spinners/Spinner';
 import { fetchProfile } from '../../actions/profile';
 import { follow, unfollow } from '../../actions/following';
 import NotFoundPage from '../../components/page/NotFoundPage';

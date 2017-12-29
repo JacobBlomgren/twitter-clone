@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Fade from './Transitions/Fade';
+import Fade from '../Transitions/Fade';
 
 export default function Spinner({ fullPage }) {
   return (

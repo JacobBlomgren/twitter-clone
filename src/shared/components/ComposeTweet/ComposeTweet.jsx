@@ -8,7 +8,7 @@ import createHashtagPlugin from 'draft-js-hashtag-plugin';
 import createMentionPlugin from 'draft-js-mention-plugin';
 import stringLength from 'string-length';
 
-import SmallSpinner from '../SmallSpinner';
+import SmallSpinner from '../Spinners/SmallSpinner';
 
 const hashtagPlugin = createHashtagPlugin({
   theme: { hashtag: 'Compose__Hashtag' },

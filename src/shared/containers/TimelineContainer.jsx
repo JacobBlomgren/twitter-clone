@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Spinners/Spinner';
 import { fetchTimeline } from '../actions/timeline';
 import TweetList from '../components/Tweet/TweetList';
 

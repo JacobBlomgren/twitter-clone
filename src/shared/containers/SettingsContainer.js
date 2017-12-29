@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import * as R from 'ramda';
 
-import Settings from '../components/Settings';
+import Settings from '../components/Settings/Settings';
 import { updateSettings } from '../actions/settings';
 
 function mapStateToProps(state) {
