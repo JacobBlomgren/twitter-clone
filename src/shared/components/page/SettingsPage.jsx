@@ -1,24 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import RedirectOnNoteLoggedIn from './RedirectOnNotLoggedIn';
 import SettingsContainer from '../../containers/SettingsContainer';
-import LoggedInContainer from '../../containers/LoggedInContainer';
-import NotFoundPage from './NotFoundPage';
 
-function SettingsPage({ loggedIn }) {
-  if (!loggedIn) return <NotFoundPage />;
+export default function SettingsPage() {
   return (
-    <main className="MainColumn MainColumn--Narrow Main--FullPage">
-      <div className="Form__Container">
-        <h1 className="Form__Heading">Settings</h1>
-        <SettingsContainer />
-      </div>
-    </main>
+    <RedirectOnNoteLoggedIn>
+      <main className="MainColumn MainColumn--Narrow Main--FullPage">
+        <div className="Form__Container">
+          <h1 className="Form__Heading">Settings</h1>
+          <SettingsContainer />
+        </div>
+      </main>
+    </RedirectOnNoteLoggedIn>
   );
 }
-
-SettingsPage.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-};
-
-export default LoggedInContainer(SettingsPage);

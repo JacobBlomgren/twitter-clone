@@ -1,4 +1,4 @@
-import Lazy from '../shared/components/ComposeTweet/Lazy';
+import LazyLoad from '../shared/components/ComposeTweet/LazyLoadComposeTweet';
 import { fetchFollowing } from '../shared/actions/following';
 import { fetchProfile } from '../shared/actions/profile';
 
@@ -6,7 +6,7 @@ let fetchedCompose = false;
 
 function compose(dispatch) {
   return () => {
-    Lazy.preload();
+    LazyLoad.preload();
     dispatch(fetchFollowing());
   };
 }
