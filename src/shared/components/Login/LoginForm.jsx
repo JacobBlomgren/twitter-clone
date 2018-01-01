@@ -39,7 +39,7 @@ export default class LoginForm extends Component {
   onSubmit(e) {
     e.preventDefault();
     if (!this.props.submitted)
-      this.login(this.state.username, this.state.password);
+      this.props.login(this.state.username, this.state.password);
   }
 
   render() {
@@ -85,13 +85,15 @@ export default class LoginForm extends Component {
               id="password"
             />
           </label>
-          <input
-            type="submit"
-            value="Post"
-            className="btn btn-primary Login__Button"
-            disabled={!valid}
-            aria-disabled={!valid}
-          />
+          <div className="Form__Buttons">
+            <input
+              type="submit"
+              value="Post"
+              className="btn btn-primary Form__Button"
+              disabled={!valid}
+              aria-disabled={!valid}
+            />
+          </div>
         </form>
       </div>
     );
