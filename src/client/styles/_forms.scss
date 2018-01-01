@@ -53,8 +53,13 @@
   display: block;
 }
 
-.Form__Button {
+.Form__Buttons {
+  @include clearfix;
   display: block;
   float: right;
   margin-top: 0.15rem;
+}
+
+.Form__Button {
+  margin-left: 0.8rem;
 }

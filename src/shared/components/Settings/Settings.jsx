@@ -22,15 +22,19 @@ export default class Settings extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.props.updateSettings(this.state.name, this.state.description);
+    this.props.updateSettings(
+      this.state.name || this.props.name,
+      this.state.description || this.props.description,
+    );
   }
 
   render() {
-    if (this.props.fetching) return <Spinner fullPage />;
+    const { fetching, goBack } = this.props;
+    if (fetching) return <Spinner fullPage />;
     const name = this.state.name || this.props.name;
     const description = this.state.description || this.props.description;
     return (
-      <form className="Form" id="settings" onSubmit={this.onSubmit}>
+      <form className="Form clearfix" id="settings" onSubmit={this.onSubmit}>
         <label htmlFor="name" className="Form__Input__Label">
           <span>Name</span>
           <input
@@ -53,11 +57,20 @@ export default class Settings extends Component {
             wrap="hard"
           />
         </label>
-        <input
-          type="submit"
-          value="Update"
-          className="btn btn-primary Form__Button"
-        />
+        <div className="Form__Buttons">
+          <button
+            onClick={goBack}
+            className="btn btn-outline-primary Form__Button"
+            type="button"
+          >
+            Cancel
+          </button>
+          <input
+            type="submit"
+            value="Update"
+            className="btn btn-primary Form__Button"
+          />
+        </div>
       </form>
     );
   }
@@ -74,4 +87,5 @@ Settings.propTypes = {
   description: PropTypes.string,
   fetching: PropTypes.bool,
   updateSettings: PropTypes.func.isRequired,
+  goBack: PropTypes.func.isRequired,
 };

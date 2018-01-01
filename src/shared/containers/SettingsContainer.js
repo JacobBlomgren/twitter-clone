@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import * as R from 'ramda';
+import { withRouter } from 'react-router-dom';
 
 import Settings from '../components/Settings/Settings';
 import { updateSettings } from '../actions/settings';
@@ -14,11 +15,14 @@ function mapStateToProps(state) {
   return R.pick(['name', 'description'], user);
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, { history }) {
   return {
     updateSettings: (name, description) =>
       dispatch(updateSettings(name, description)),
+    goBack: history.goBack,
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Settings),
+);
