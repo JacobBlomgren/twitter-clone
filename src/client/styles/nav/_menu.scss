@@ -3,6 +3,15 @@
   overflow: hidden;
 }
 
+// Needed since the z-index interfered with the nav bar in the latest update.
+.bm-overlay {
+  z-index: 4 !important;
+}
+
+.bm-menu-wrap {
+  z-index: 5 !important;
+}
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   height: 30px;
