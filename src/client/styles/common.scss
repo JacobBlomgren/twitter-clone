@@ -1,0 +1,104 @@
+@import '../../../node_modules/bootstrap/scss/mixins';
+@import '../../../node_modules/bootstrap/scss/variables';
+
+$padding-sides: 10px;
+$padding: 1rem;
+$large-padding: 1.2rem;
+
+.SmallPadding {
+  padding: $padding $padding-sides;
+}
+
+
+.SmallPadding--Sides {
+  padding-left: $padding-sides;
+  padding-right: $padding-sides;
+}
+
+.SmallPadding--Bottom {
+  padding-bottom: $padding;
+}
+
+@include media-breakpoint-up(md-mobile) {
+  .SmallPadding {
+    padding: $large-padding $padding;
+  }
+
+  .SmallPadding--Sides {
+    padding-left: $padding;
+    padding-right: $padding;
+  }
+
+  .SmallPadding--Bottom {
+    padding-bottom: $large-padding;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .SmallPadding {
+    padding: $large-padding;
+  }
+
+  .SmallPadding--Sides {
+    padding-left: $large-padding;
+    padding-right: $large-padding;
+  }
+}
+
+body {
+  background-color: #ededed;
+}
+
+.Content {
+  margin-top: $nav-height;
+}
+
+@include media-breakpoint-up(md) {
+  .Content {
+    margin-top: $nav-height-desktop;
+    padding-top: 1rem;
+  }
+}
+
+.MainColumn {
+  margin: auto;
+  width: 100%;
+}
+
+@include media-breakpoint-up(md) {
+  .MainColumn {
+    width: 520px;
+  }
+
+  .MainColumn--Narrow {
+    max-width: 350px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .MainColumn {
+    width: 600px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .Main--FullPage {
+    height: 100vh;
+    margin-top: -3rem;
+    padding-top: 3rem;
+  }
+}
+
+.Header {
+  background-color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.ListSkin {
+  background-color: #fff;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.LightText {
+  color: $gray-700;
+}
