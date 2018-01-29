@@ -9,15 +9,19 @@ import uniqueGrouped from './uniqueGrouped';
 export default function updateOperations(msgLst) {
   const grouped = uniqueGrouped(msgLst);
 
-  const userActions = grouped.users.map(user => [
-    { update: { _index: 'user', _id: user.userID } },
-    { name: user.name },
-  ]);
+  const userUpdates = !grouped.users
+    ? []
+    : grouped.users.map(user => [
+        { update: { _index: 'user', _id: user.userID } },
+        { name: user.name },
+      ]);
 
-  const tweetActions = grouped.tweets.map(tweet => [
-    { index: { _index: 'tweet', _id: tweet.tweetID } },
-    { hashtags: tweet.hashtags },
-  ]);
+  const tweetUpdates = !grouped.tweets
+    ? []
+    : grouped.tweets.map(tweet => [
+        { index: { _index: 'tweet', _id: tweet.tweetID } },
+        { hashtags: tweet.hashtags },
+      ]);
 
-  return R.concat(R.flatten(userActions), R.flatten(tweetActions));
+  return R.concat(R.flatten(userUpdates), R.flatten(tweetUpdates));
 }
