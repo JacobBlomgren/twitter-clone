@@ -12,9 +12,9 @@
     "prod:build": "rimraf lib dist && babel src -d lib && cross-env NODE_ENV=production webpack --config webpack.prod.babel.js --progress",
     "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
-    "prettify": "yarn prettier \"{src,__tests__}/**/*.{js,jsx}\" webpack.*.js README.md api/**/*.md",
+    "prettify": "yarn prettier \"{src,__tests__,elasticsearch}/**/*.{js,jsx}\" webpack.*.js README.md api/**/*.md",
     "prettier": "prettier --single-quote --trailing-comma all --write",
-    "eslint": "eslint src webpack.*.js __test__ --ext .js,.jsx",
+    "eslint": "eslint src webpack.*.js __test__ elasticsearch --ext .js,.jsx",
     "stylelint": "stylelint \"src/client/styles/**/*.scss\"",
     "lint": "yarn eslint && yarn stylelint",
     "pretty-lint": "yarn prettify && yarn eslint",
@@ -79,6 +79,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "amqplib": "^0.5.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "bootstrap": "4.0.0",
@@ -89,6 +90,7 @@
     "draft-js-hashtag-plugin": "^2.0.1",
     "draft-js-mention-plugin": "^2.0.1",
     "draft-js-plugins-editor": "^2.0.3",
+    "elasticsearch": "^14.0.0",
     "express": "^4.15.3",
     "express-session": "^1.15.4",
     "fuse.js": "^3.2.0",
