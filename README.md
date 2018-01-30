@@ -15,6 +15,16 @@ A Postgres server needs to be running with a database named `twitter` and the
 schema found in `db/schema.sql`. Configure a `.env` file with `DB_HOST`,
 `DB_PORT`, `DB_USER` and `DB_PASSWORD` set.
 
+An Elasticsearch server needs to be running for text search. Set `ELASTIC_HOST`
+and `ELASTIC_PORT` in the `.env` file. To setup the indices, run
+`yarn elastic:setup`. All elastic scripts require `yarn prod:build` to be run.
+
+The Elasticsearch server is updated by a script that is started with
+`yarn elastic:sync`. It uses a RabbitMQ queue to store all the updates published
+by the main server, which are then sent in bulk to the Elasticsearch server.
+Therefore a RabbitMQ server needs to be running. Set `RABBIT_HOST`,
+`RABBIT_PORT`, `RABBIT_USER` and `RABBIT_PASSWORD` in the `.env` file.
+
 Lastly, a secret key needs to be set in `.env` as `SECRET_KEY` to sign the
 session id cookie. It can be anything, e.g. generated with python's
 `os.urandom`.
