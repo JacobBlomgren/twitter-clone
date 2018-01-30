@@ -58,7 +58,7 @@ typings/
 .env
 
 /coverage/
-/lib/
+**/lib/
 docs/
 /dist/
 .idea
