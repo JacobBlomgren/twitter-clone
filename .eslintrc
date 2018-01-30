@@ -11,8 +11,7 @@
   ],
   "parser": "babel-eslint",
   "env": {
-    "browser": true,
-    "jest": true
+    "browser": true
   },
   "rules": {
     "compat/compat": 2,
