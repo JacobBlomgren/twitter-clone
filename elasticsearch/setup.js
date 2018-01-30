@@ -1,7 +1,7 @@
 /* eslint-disable */
 require('dotenv').config();
 
-const client = import('./elasticsearch');
+import client from './elasticsearch';
 
 async function setup() {
   await Promise.all([

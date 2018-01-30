@@ -1,4 +1,4 @@
-import connect from '../../../elasticsearch/lib/rabbitMQ';
+import connect from '../../../lib/elasticsearch/rabbitMQ';
 
 const q = 'tasks';
 let channel;

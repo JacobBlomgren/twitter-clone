@@ -23,8 +23,6 @@ export default async function(elasticClient, rabbitChannel, updates) {
     R.pipe(msg => msg.content.toString(), JSON.parse),
   );
 
-  console.log(deserialized);
-
   try {
     await elasticClient.bulk({
       body: updateOperations(deserialized),
