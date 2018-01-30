@@ -15,8 +15,7 @@ connect({
     .createChannel()
     .then(channel => {
       channel.assertQueue(q);
-      channel.sendToQueue(q, new Buffer('{"userID": "1", "name": "Jacob"}'));
+      channel.sendToQueue(q, Buffer.from('{"userID": "1", "name": "Jacob"}'));
     })
     .catch(console.warn);
 });
-
