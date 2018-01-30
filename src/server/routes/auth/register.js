@@ -5,10 +5,12 @@ import registerUser from '../../auth/registerUser';
 import passport from '../../auth/passport';
 import username from '../middleware/validation/username';
 import password from '../middleware/validation/password';
+import update from '../../elasticsearch/update';
 
 export async function register(req, res, next) {
   try {
-    await registerUser(req.body.username, req.body.password);
+    const userID = await registerUser(req.body.username, req.body.password);
+    update({ userID, username: req.body.username });
     passport.authenticate('local', (err, user) => {
       if (err || !user)
         res

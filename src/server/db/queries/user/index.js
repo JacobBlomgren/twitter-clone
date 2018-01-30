@@ -27,7 +27,6 @@ export async function getUser(userID, username, loggedInUserID) {
   if (!user) return null;
   return {
     ...user,
-    profile_picture_url: '/static/drake.png',
     tweets,
   };
 }
@@ -65,8 +64,8 @@ export function getUserByUsernameAuth(username) {
 }
 
 export function insertUser(username, hash, saltRounds, profilePictureURL) {
-  return db.none(
-    'INSERT INTO account (username, hash, salt_rounds, profile_picture_url) VALUES ($/username/, $/hash/, $/saltRounds/, $/profilePictureURL/) ',
+  return db.one(
+    'INSERT INTO account (username, hash, salt_rounds, profile_picture_url) VALUES ($/username/, $/hash/, $/saltRounds/, $/profilePictureURL/) RETURNING user_id',
     {
       username,
       hash,

@@ -4,8 +4,9 @@ import * as R from 'ramda';
  * Groups a list of mixed user and tweet updates, and sorts out duplicates by
  * keeping the most recent update. The property for users or tweets will be left
  * out if there were no updates for the respective group.
- * @param msgLst a list of messages, with the most recent updates first.
- * @returns { users: [list of user updates], tweets: [list of tweet updates ] }
+ * @param {[object]} msgLst - a list of messages, with the most recent updates first.
+ * @returns {{ users: [object], tweets: [object] }}
+ *  { users: [list of user updates], tweets: [list of tweet updates ] }
  */
 export default function uniqueGrouped(msgLst) {
   return R.pipe(

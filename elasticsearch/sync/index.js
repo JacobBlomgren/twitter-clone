@@ -1,22 +1,17 @@
 /* eslint-disable import/first */
 import '../../src/server/env';
-import { connect } from 'amqplib';
+import connect from '../rabbitMQ';
 import elasticClient from '../elasticsearch';
 import update from './update';
-
-// https://www.elastic.co/blog/found-keeping-elasticsearch-in-sync
 
 let updates = [];
 
 const q = 'tasks';
 
-connect({
-  protocol: 'amqp',
-  hostname: process.env.RABBIT_HOST,
-  port: process.env.RABBIT_PORT,
-  username: process.env.RABBIT_USER,
-  password: process.env.RABBIT_PASSWORD,
-}).then(connection => {
+// Keeps elasticsearch in sync with a RabbitMQ queue for updates from the main
+// server as suggested here
+// https://www.elastic.co/blog/found-keeping-elasticsearch-in-sync
+connect().then(connection => {
   connection
     .createChannel()
     .then(channel => {

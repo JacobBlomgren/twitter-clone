@@ -12,7 +12,7 @@ it('should send a batch update', async () => {
 
   const updates = [msg];
 
-  const rest = await update(elasticClient, rabbitChannel, updates)();
+  const rest = await update(elasticClient, rabbitChannel, updates);
   expect(rest).toEqual([]);
   expect(elasticClient.bulk.mock.calls.length).toBe(1);
   expect(rabbitChannel.ack.mock.calls.length).toBe(1);
@@ -32,7 +32,7 @@ it('should handle an elasticsearch error correctly', async () => {
 
   const updates = [msg];
 
-  const rest = await update(elasticClient, rabbitChannel, updates)();
+  const rest = await update(elasticClient, rabbitChannel, updates);
   expect(rest).toBe(updates);
   expect(elasticClient.bulk.mock.calls.length).toBe(1);
   expect(rabbitChannel.nack.mock.calls.length).toBe(1);
@@ -45,7 +45,7 @@ it("shouldn't do api calls if updates is empty", async () => {
 
   const rabbitChannel = { ack: jest.fn() };
 
-  const rest = await update(elasticClient, rabbitChannel, [])();
+  const rest = await update(elasticClient, rabbitChannel, []);
   expect(rest).toEqual([]);
   expect(elasticClient.bulk.mock.calls.length).toBe(0);
   expect(rabbitChannel.ack.mock.calls.length).toBe(0);
@@ -70,7 +70,7 @@ it("shouldn't handle messages added after it's been called", async () => {
 
   const rabbitChannel = { ack: jest.fn() };
 
-  const rest = await update(elasticClient, rabbitChannel, updates)();
+  const rest = await update(elasticClient, rabbitChannel, updates);
   expect(rest.length).toBe(1);
   expect(elasticClient.bulk.mock.calls.length).toBe(1);
   expect(rabbitChannel.ack.mock.calls.length).toBe(1);

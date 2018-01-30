@@ -6,6 +6,7 @@ import updateSettings from '../../db/queries/settings/index';
 
 import loginRequired from '../middleware/loginRequired';
 import loggedInUserID from '../middleware/loggedInUserID';
+import update from '../../elasticsearch/update';
 
 const router = express.Router();
 
@@ -13,6 +14,8 @@ async function settings(req, res) {
   try {
     if (!req.body.description && !req.body.name) return res.status(400).end();
     await updateSettings(req.loggedInUserID, req.body);
+    if (req.body.name)
+      await update({ userID: req.loggedInUserID, name: req.body.name });
     return res.status(201).json({ status: `Success` });
   } catch (err) {
     return res.status(500).end();

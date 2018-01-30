@@ -3,15 +3,14 @@ import * as R from 'ramda';
 import updateOperations from './updateOperations';
 
 /**
- * A higher order function that given a RabbitMQ channel returns a function
- * that when called consumes the most recent messages in the channel, and sends
- * the updates that they represent to the Elasticsearch client. Won't do any
- * api calls if updates is empty.
+ * Consumes the most recent messages in the channel, and sends the updates that
+ * they represent to the Elasticsearch client. Won't do any api calls if
+ * updates is empty.
  *
- * @param elasticClient an Elasticsearch client
- * @param rabbitChannel a RabbitMQ channel.
- * @param updates a list of messages from the RabbitMQ channel.
- * @returns the (unhandled) messages that have been added to updates since this
+ * @param {object} elasticClient - an Elasticsearch client
+ * @param {object} rabbitChannel - a RabbitMQ channel.
+ * @param {[object]} updates - a list of messages from the RabbitMQ channel.
+ * @returns {[object]} the (unhandled) messages that have been added to updates since this
  * function was called.
  */
 export default async function(elasticClient, rabbitChannel, updates) {
@@ -23,6 +22,8 @@ export default async function(elasticClient, rabbitChannel, updates) {
   const deserialized = batch.map(
     R.pipe(msg => msg.content.toString(), JSON.parse),
   );
+
+  console.log(deserialized);
 
   try {
     await elasticClient.bulk({
