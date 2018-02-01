@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-import uniqueGrouped from './uniqueGrouped';
+import uniqueGrouped from './mergedGrouped';
 
 /**
  * Takes a message list of mixed user and tweet updates, and returns the body

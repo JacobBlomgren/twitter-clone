@@ -14,7 +14,7 @@ it('should format updates to bulk update api format', () => {
   // expect it to be immediately followed by the update value.
   expect(updates[idx1 + 1]).toEqual({ doc: { name: 'Jacob' } });
 
-  const user2 = { create: { _index: 'twitter', _type: 'user', _id: '2' } };
+  const user2 = { index: { _index: 'twitter', _type: 'user', _id: '2' } };
   expect(updates).toContainEqual(user2);
   const idx2 = R.findIndex(R.equals(user2), updates);
   expect(updates[idx2 + 1]).toEqual({ doc: { name: 'Sara' } });
