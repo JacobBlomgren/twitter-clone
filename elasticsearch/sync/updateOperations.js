@@ -14,15 +14,15 @@ export default function updateOperations(msgLst) {
   const userUpdates = !grouped.users
     ? []
     : grouped.users.map(user => [
-        { update: { _index: 'user', _id: user.userID } },
-        R.dissoc('userID', user),
+        { update: { _index: 'twitter', _type: 'user', _id: user.userID } },
+        { doc: R.dissoc('userID', user) },
       ]);
 
   const tweetUpdates = !grouped.tweets
     ? []
     : grouped.tweets.map(tweet => [
-        { index: { _index: 'tweet', _id: tweet.tweetID } },
-        R.dissoc('tweetID', tweet),
+        { index: { _index: 'twitter', _type: 'tweet', _id: tweet.tweetID } },
+        { doc: R.dissoc('tweetID', tweet)},
       ]);
 
   return R.concat(R.flatten(userUpdates), R.flatten(tweetUpdates));
