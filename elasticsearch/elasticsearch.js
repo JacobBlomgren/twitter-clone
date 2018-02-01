@@ -1,6 +1,6 @@
-const elasticsearch = require('elasticsearch');
+import { Client } from 'elasticsearch';
 
-module.exports = new elasticsearch.Client({
+export default new Client({
   host: `${process.env.ELASTIC_HOST}:${process.env.ELASTIC_PORT}`,
   log: 'trace',
 });

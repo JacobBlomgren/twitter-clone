@@ -1,5 +1,4 @@
-/* eslint-disable */
-require('dotenv').config();
+import '../lib/server/env';
 
 import client from './elasticsearch';
 

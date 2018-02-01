@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-require('dotenv').config();
+import '../../lib/server/env';
 
 import connect from '../rabbitMQ';
 import elasticClient from '../elasticsearch';
