@@ -63,8 +63,13 @@ export function getUserByUsernameAuth(username) {
   );
 }
 
-export function insertUser(username, hash, saltRounds, profilePictureURL) {
-  return db.one(
+/**
+ * Inserts (registers) a user with the given credentials, and returns the
+ * created user's ID.
+ */
+export async function insertUser(username, hash, saltRounds, profilePictureURL) {
+  /* eslint-disable camelcase */
+  const { user_id } = await db.one(
     'INSERT INTO account (username, hash, salt_rounds, profile_picture_url) VALUES ($/username/, $/hash/, $/saltRounds/, $/profilePictureURL/) RETURNING user_id',
     {
       username,
@@ -73,4 +78,6 @@ export function insertUser(username, hash, saltRounds, profilePictureURL) {
       profilePictureURL,
     },
   );
+  console.log(user_id);
+  return user_id;
 }
