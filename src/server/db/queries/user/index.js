@@ -67,7 +67,12 @@ export function getUserByUsernameAuth(username) {
  * Inserts (registers) a user with the given credentials, and returns the
  * created user's ID.
  */
-export async function insertUser(username, hash, saltRounds, profilePictureURL) {
+export async function insertUser(
+  username,
+  hash,
+  saltRounds,
+  profilePictureURL,
+) {
   /* eslint-disable camelcase */
   const { user_id } = await db.one(
     'INSERT INTO account (username, hash, salt_rounds, profile_picture_url) VALUES ($/username/, $/hash/, $/saltRounds/, $/profilePictureURL/) RETURNING user_id',

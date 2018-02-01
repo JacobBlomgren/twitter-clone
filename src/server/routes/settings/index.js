@@ -6,7 +6,7 @@ import updateSettings from '../../db/queries/settings/index';
 
 import loginRequired from '../middleware/loginRequired';
 import loggedInUserID from '../middleware/loggedInUserID';
-import update from '../../elasticsearch/update';
+import { update } from '../../elasticsearch/update';
 
 const router = express.Router();
 

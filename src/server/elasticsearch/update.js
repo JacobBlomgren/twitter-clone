@@ -14,12 +14,24 @@ connect().then(connection => {
     .catch(console.warn);
 });
 
+function request(msg, method) {
+  return Buffer.from(JSON.stringify({ ...msg, method }));
+}
+
 /**
- * Updates the Elasticsearch with the new user or tweet data. The message must
- * either have a userID property or a tweetID property. The rest of the object
- * is the updated properties.
+ * Updates the Elasticsearch server with the new user or tweet data. The message
+ * must either have a userID property or a tweetID property. The rest of the
+ * object is the updated properties.
  * @param {object} msg - the update message
  */
-export default function update(msg) {
-  channel.sendToQueue(q, Buffer.from(JSON.stringify(msg)));
+export function update(msg) {
+  channel.sendToQueue(q, request(msg, 'update'));
+}
+
+/**
+ * Creates a new entity similarly to {@link update}, but with the create method.
+ * @param {object} msg - the update message
+ */
+export function create(msg) {
+  channel.sendToQueue(q, request(msg, 'index'));
 }
