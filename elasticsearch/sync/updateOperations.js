@@ -21,36 +21,40 @@ import mergedGrouped from './mergedGrouped';
  * @returns {[object]} a list of updates as specified by the elasticsearch API.
  */
 export default function updateOperations(msgLst) {
-  const grouped = mergedGrouped(msgLst);
+  const { users, tweets } = mergedGrouped(msgLst);
 
   const formatSource = (method, source) =>
     method === 'update' ? { doc: source } : source;
+  // Formats the update according to the bulk API and omits the source if the
+  // is a delete action.
+  const format = (header, source) =>
+    header.delete ? [header] : [header, source];
 
-  const userUpdates = !grouped.users
-    ? []
-    : grouped.users.map(({ method, userID, ...user }) => [
-        {
-          [method]: {
-            _index: 'twitter',
-            _type: 'user',
-            _id: userID,
-          },
+  const userUpdates = users.map(({ method, userID, ...user }) =>
+    format(
+      {
+        [method]: {
+          _index: 'twitter',
+          _type: 'user',
+          _id: userID,
         },
-        formatSource(method, user),
-      ]);
+      },
+      formatSource(method, user),
+    ),
+  );
 
-  const tweetUpdates = !grouped.tweets
-    ? []
-    : grouped.tweets.map(({ method, tweetID, ...tweet }) => [
-        {
-          [method]: {
-            _index: 'twitter',
-            _type: 'tweet',
-            _id: tweetID,
-          },
+  const tweetUpdates = tweets.map(({ method, tweetID, ...tweet }) =>
+    format(
+      {
+        [method]: {
+          _index: 'twitter',
+          _type: 'tweet',
+          _id: tweetID,
         },
-        formatSource(method, tweet),
-      ]);
+      },
+      formatSource(method, tweet),
+    ),
+  );
 
   return R.concat(R.flatten(userUpdates), R.flatten(tweetUpdates));
 }

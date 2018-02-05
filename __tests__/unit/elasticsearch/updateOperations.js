@@ -6,6 +6,7 @@ it('should format updates to bulk update api format', () => {
   const updates = updateOperations([
     { userID: '1', name: 'Jacob', method: 'update' },
     { userID: '2', name: 'Sara', method: 'index' },
+    { userID: '0', method: 'delete' },
   ]);
 
   const user1 = { update: { _index: 'twitter', _type: 'user', _id: '1' } };
@@ -18,6 +19,9 @@ it('should format updates to bulk update api format', () => {
   expect(updates).toContainEqual(user2);
   const idx2 = R.findIndex(R.equals(user2), updates);
   expect(updates[idx2 + 1]).toEqual({ name: 'Sara' });
+
+  const deleted = { delete: { _index: 'twitter', _type: 'user', _id: '0' } };
+  expect(updates).toContainEqual(deleted);
 });
 
 it('should handle an empty list', () => {

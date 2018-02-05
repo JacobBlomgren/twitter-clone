@@ -1,7 +1,7 @@
-import uniqueGrouped from '../../../elasticsearch/sync/mergedGrouped';
+import mergedGrouped from '../../../elasticsearch/sync/mergedGrouped';
 
 it('should group updates in users and tweets', () => {
-  const grouped = uniqueGrouped([
+  const grouped = mergedGrouped([
     { userID: '1', name: 'Jacob', method: 'update' },
     // haven't decided on the tweets yet, probably an array of hashtags.
     { tweetID: '1', method: 'update' },
@@ -17,11 +17,11 @@ it('should group updates in users and tweets', () => {
 });
 
 it('should handle an empty list', () => {
-  expect(uniqueGrouped([])).toEqual({});
+  expect(mergedGrouped([])).toEqual({ users: [], tweets: [] });
 });
 
 it('should group them together correctly', () => {
-  const { users } = uniqueGrouped([
+  const { users } = mergedGrouped([
     { userID: '1', name: 'Jacob', method: 'update' },
     { userID: '2', name: 'Second User', method: 'update' },
     // index should be given preference
@@ -32,4 +32,12 @@ it('should group them together correctly', () => {
     { userID: '1', name: 'Jacob', username: 'jacob', method: 'index' },
     { userID: '2', name: 'Second User', method: 'update' },
   ]);
+});
+
+it('should handle delete and create operations within the same batch', () => {
+  const { users } = mergedGrouped([
+    { userID: '1', method: 'delete' },
+    { userID: '1', username: 'jacob', method: 'index' },
+  ]);
+  expect(users).toEqual([]);
 });
