@@ -47,7 +47,20 @@ export default class ComposeTweet extends Component {
   }
 
   onSearchChange({ value }) {
-    this.setState(() => ({ suggestions: this.fuse.search(value) }));
+    const suggestions = this.fuse.search(value);
+    const contains = R.contains(value, suggestions);
+    // We add the currently typed value to the suggestion list to avoid the
+    // unfortunate feature of the mention plugin where, if the enter button is
+    // pressed when the suggestion list is empty (for instance if it's loading
+    // autocompletion in the background), no mention will be added visibly, i.e.
+    // with red color.
+    const withValue = [
+      { name: `@${value}`, avatar: '/static/avatars/1.png' },
+      ...suggestions,
+    ];
+    this.setState(() => ({
+      suggestions: contains || value === '' ? suggestions : withValue,
+    }));
   }
 
   handleSubmit(e) {
