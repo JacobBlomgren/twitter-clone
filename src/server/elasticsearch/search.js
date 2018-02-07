@@ -5,7 +5,7 @@ import getQueryFile from '../db/getQueryFile';
 const searchQueryFile = getQueryFile('user/get_users_with_ids');
 
 // eslint-disable-next-line import/prefer-default-export
-export async function searchUsers(term) {
+export async function searchUsers(term, loggedInUserID) {
   const { hits: { hits } } = await client.search({
     index: 'twitter',
     body: {
@@ -22,5 +22,5 @@ export async function searchUsers(term) {
   });
   // eslint-disable-next-line no-underscore-dangle
   const ids = hits.map(h => h._id);
-  return db.any(searchQueryFile, [ids]);
+  return db.any(searchQueryFile, [ids, loggedInUserID]);
 }
