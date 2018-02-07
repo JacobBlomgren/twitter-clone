@@ -3,7 +3,7 @@ WITH users AS (
   FROM account
   WHERE user_id IN ($1:csv)
 )
-SELECT users.user_id, users.name, users.username, users.description,
+SELECT users.user_id AS id, users.name, users.username, users.description,
 users.profile_picture_url, followed.follows
 FROM users LEFT JOIN LATERAL (
   SELECT EXISTS(

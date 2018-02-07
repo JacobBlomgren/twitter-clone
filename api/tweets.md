@@ -6,8 +6,8 @@ Posts a tweet in the logged in users name.
 
 _content: string_ — the content of the tweet (required).
 
-_reply_to: ?string_ the tweet id that the tweet potentially is a reply to. Non-existent
-ids will simply be ignored.
+_reply_to: ?string_ the tweet id that the tweet potentially is a reply to.
+Non-existent ids will simply be ignored.
 
 ## Response
 

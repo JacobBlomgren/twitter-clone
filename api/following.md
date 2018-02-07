@@ -4,7 +4,8 @@ Gets a list of all accounts that the logged in user follows. Login required.
 
 ## Response
 
-_200_ if successful. The response body is an array of the following format: `{ id, username, name, profile_picture_url }`
+_200_ if successful. The response body is an array of the following format:
+`{ id, username, name, profile_picture_url }`
 
 _401_ if no user is logged in.
 
