@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NotLoggedIn from '../NotLoggedIn';
+import NotLoggedIn from './NotLoggedIn';
 import NavLoggedIn from './NavLoggedIn';
 import NavMenuContainer from '../../../containers/NavMenuContainer';
 

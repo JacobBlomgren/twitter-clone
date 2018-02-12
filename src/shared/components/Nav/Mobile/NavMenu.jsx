@@ -66,14 +66,14 @@ function MenuList({ onClick }) {
   return (
     <ul className="NavMenu__List">
       <li>
-        <Home size={size} />
         <Link to="/" className="link-no-style" onClick={onClick}>
+          <Home size={size} />
           Home
         </Link>
       </li>
       <li>
-        <Settings size={size} />
         <Link to="/settings" className="link-no-style" onClick={onClick}>
+          <Settings size={size} />
           Settings
         </Link>
       </li>

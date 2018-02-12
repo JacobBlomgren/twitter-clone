@@ -2,14 +2,21 @@
 @import '../variables';
 @import '../no-style';
 
+$mobile-width: 100px;
 $border-radius: 6px;
 $inner-padding: $border-radius + 2px;
 $background-color: #f5f5f5;
+$button-width: 16px;
+
+@mixin searchbar-width($width) {
+  width: $width + $button-width + 2*$inner-padding;
+}
 
 // Style the form as an input element instead of Searchbar__Input
 // as we want the icon inside of the "input", which is illegal for input
 // elements.
 .Searchbar {
+  @include searchbar-width($mobile-width);
   background-color: $background-color;
   border: 1px none $background-color;
   border-radius: $border-radius;
@@ -35,6 +42,7 @@ $background-color: #f5f5f5;
   border: 0;
   font-size: 0.85rem;
   padding-left: $inner-padding;
+  width: $mobile-width;
 }
 
 .Searchbar__Input:focus {
@@ -43,10 +51,47 @@ $background-color: #f5f5f5;
 
 .Searchbar__Button {
   @include button-no-style;
-  padding-bottom: 4px;
+  float: right;
   padding-right: $inner-padding;
 }
 
 .Searchbar__Icon {
   color: #a0a0a0;
+  margin-bottom: 4px;
+}
+
+@mixin centered-searchbar($width) {
+  .Searchbar {
+    @include searchbar-width($width);
+    display: block;
+    margin: auto;
+  }
+
+  .Searchbar__Input {
+    width: $width;
+  }
+}
+
+.NavLoggedInMobile__Searchbar {
+  @include centered-searchbar(140px);
+}
+
+@include media-breakpoint-up(md-mobile) {
+  $width: $mobile-width+40px;
+
+  .Searchbar {
+    @include searchbar-width($width);
+  }
+
+  .Searchbar__Input {
+    width: $width;
+  }
+
+  .NavLoggedInMobile__Searchbar {
+    @include centered-searchbar(160px);
+  }
+}
+
+@include media-breakpoint-up(md) {
+  @include centered-searchbar(180px);
 }
