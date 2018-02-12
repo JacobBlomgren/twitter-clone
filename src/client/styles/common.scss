@@ -1,5 +1,6 @@
-@import '../../../node_modules/bootstrap/scss/mixins';
-@import '../../../node_modules/bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/variables';
+@import './variables';
 
 $padding-sides: 10px;
 $padding: 1rem;

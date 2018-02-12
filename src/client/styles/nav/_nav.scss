@@ -1,8 +1,10 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 @import '../variables';
+@import '../no-style';
 
 @import 'nav-mobile';
+@import 'searchbar';
 
 .Nav {
   background-color: $main-color;
@@ -69,4 +71,20 @@
 .NavComposeLink:hover,
 .NavComposeLink:active {
   color: #f5f5f5;
+}
+
+@include media-breakpoint-up(md) {
+  .Nav__NotLoggedIn {
+    @include float-right;
+  }
+
+  .Nav__NotLoggedIn__SignUpLogIn {
+    padding-left: 2rem;
+  }
+}
+
+@include media-breakpoint-down(md-mobile) {
+  .Nav__NotLoggedIn__SignUpLogIn {
+    @include float-right;
+  }
 }

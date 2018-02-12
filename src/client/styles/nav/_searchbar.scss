@@ -1,0 +1,52 @@
+@import '~bootstrap/scss/mixins';
+@import '../variables';
+@import '../no-style';
+
+$border-radius: 6px;
+$inner-padding: $border-radius + 2px;
+$background-color: #f5f5f5;
+
+// Style the form as an input element instead of Searchbar__Input
+// as we want the icon inside of the "input", which is illegal for input
+// elements.
+.Searchbar {
+  background-color: $background-color;
+  border: 1px none $background-color;
+  border-radius: $border-radius;
+  display: inline-block;
+}
+
+@include media-breakpoint-up(md) {
+  .Searchbar {
+    border: 1px solid darken($background-color, 20%);
+  }
+}
+
+.Searchbar--Focused {
+  border-color: $main-color;
+}
+
+.Searchbar__Label {
+  margin-bottom: 0; // remove bootstrap default value
+}
+
+.Searchbar__Input {
+  background-color: transparent;
+  border: 0;
+  font-size: 0.85rem;
+  padding-left: $inner-padding;
+}
+
+.Searchbar__Input:focus {
+  outline: none;
+}
+
+.Searchbar__Button {
+  @include button-no-style;
+  padding-bottom: 4px;
+  padding-right: $inner-padding;
+}
+
+.Searchbar__Icon {
+  color: #a0a0a0;
+}
