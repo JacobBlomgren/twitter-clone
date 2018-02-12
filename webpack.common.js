@@ -8,6 +8,7 @@ import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import prefixer from 'autoprefixer';
 import noComments from 'postcss-discard-comments';
+import babelRamda from 'babel-plugin-ramda'
 
 export default {
   name: 'client',
@@ -20,8 +21,14 @@ export default {
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
-      // { test: /plugin\.(scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
+      {
+        test: /\.(js|jsx)$/,
+        use: {
+          loader: 'babel-loader',
+          options: { plugins: [babelRamda] },
+        },
+        exclude: /node_modules/,
+      },
       {
         test: /\.(scss)$/,
         use: ExtractTextPlugin.extract({

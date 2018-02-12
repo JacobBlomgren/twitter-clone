@@ -3,5 +3,8 @@
     "env",
     "react"
   ],
-  "plugins": ["transform-object-rest-spread", "syntax-dynamic-import", "ramda"]
+  "plugins": [
+    "transform-object-rest-spread",
+    "syntax-dynamic-import"
+  ]
 }
