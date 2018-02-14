@@ -38,7 +38,10 @@ export function search(callback, query) {
           if (!response.ok) throw Error(response.status);
           return response.json();
         })
-        .then(result => dispatch(searchUserSuccess(result)))
+        .then(result => {
+          dispatch(searchUserSuccess(result));
+          callback(query);
+        })
         .catch(() => {
           dispatch(searchUserFailure());
           return dispatch(addError("Couldn't fetch data"));

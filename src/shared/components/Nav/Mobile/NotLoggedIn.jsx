@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import Searchbar from '../Searchbar';
+import SearchbarContainer from '../../../containers/SearchbarContainer';
 
 export default function NotLoggedIn({ location }) {
   const { pathname } = location;
   return (
     <div className="Nav__NotLoggedIn">
-      <Searchbar />
+      <SearchbarContainer />
       <span className="float-right">
         <Link to="/signup" className="Nav__Link">
           Sign up

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Edit from 'react-icons/lib/fa/edit';
 import { Link } from 'react-router-dom';
 
-import Searchbar from '../Searchbar';
+import SearchbarContainer from '../../../containers/SearchbarContainer';
 import BurgerButton from './BurgerButton';
 
 export default function NavLoggedIn({ open, toggleMenu, closeMenu }) {
@@ -15,7 +15,7 @@ export default function NavLoggedIn({ open, toggleMenu, closeMenu }) {
         </div>
         <div className="col-8">
           <div className="NavLoggedInMobile__Searchbar">
-            <Searchbar />
+            <SearchbarContainer />
           </div>
         </div>
         <div className="col-2">

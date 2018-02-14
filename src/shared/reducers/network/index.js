@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import auth from './auth';
 import following from './following';
+import search from './search';
 import settings from './settings';
 import timeline from './timeline';
 import tweet from './tweet';
@@ -14,6 +15,7 @@ import user from './user';
 export default combineReducers({
   auth,
   following,
+  search,
   settings,
   timeline,
   tweet,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import Searchbar from '../Searchbar';
+import SearchbarContainer from '../../../containers/SearchbarContainer';
 
 export default function NotLoggedIn({ location }) {
   const { pathname } = location;
@@ -12,7 +12,7 @@ export default function NotLoggedIn({ location }) {
         <div className="row no-gutters">
           <div className="col-3" />
           <div className="col-6">
-            <Searchbar />
+            <SearchbarContainer />
           </div>
           <div className="col-3">
             <span className="float-right">
