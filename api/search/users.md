@@ -26,6 +26,4 @@ _200_ if successful. The response body is:
 
 _400_ if the paramaters are malformed.
 
-_404_ if a user with that id or username does not exist.
-
 _500_ if an error occured.
