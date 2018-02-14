@@ -11,15 +11,13 @@ export async function searchUsers(term, loggedInUserID) {
     body: {
       query: {
         bool: {
-          should: [
-            { match: { name: term }},
-            { match: { username: term }},
-          ],
+          should: [{ match: { name: term } }, { match: { username: term } }],
         },
       },
     },
     type: 'user',
   });
+  if (hits.length === 0) return Promise.resolve([]);
   // eslint-disable-next-line no-underscore-dangle
   const ids = hits.map(h => h._id);
   return db.any(searchQueryFile, [ids, loggedInUserID]);
