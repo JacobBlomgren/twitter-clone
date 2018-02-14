@@ -2,7 +2,7 @@ import headers from '../utils/fetch/jsonHeaders';
 import { addError } from './error';
 import camelizeKeys from '../utils/camelizeKeys';
 import decamelizeKeys from '../utils/decamelizeKeys';
-import { normalizeFollowing } from './normalization';
+import { normalizePartialUsers } from './normalization';
 
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 function followRequest(userID) {
@@ -91,7 +91,7 @@ function fetchFollowingRequest() {
 
 export const FETCH_FOLLOWING_SUCCESS = 'FETCH_FOLLOWING_SUCCESS';
 function fetchFollowingSuccess(following) {
-  const normalized = normalizeFollowing(camelizeKeys(following));
+  const normalized = normalizePartialUsers(camelizeKeys(following));
   return {
     type: FETCH_FOLLOWING_SUCCESS,
     recievedAt: Date.now(),

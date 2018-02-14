@@ -99,12 +99,11 @@ export function normalizeTweets(tweets) {
 }
 
 /**
- * Normalizes following data
- * @param following an array of the format [{ id, username, name, profilePictureURL }]
+ * Normalizes partial user data,
+ * e.g. [{ id, username, name, profilePictureURL }].
+ * @param {[object]} users
  * @returns {{users}}
  */
-export function normalizeFollowing(following) {
-  return {
-    users: following.map(R.assoc('partial', true)),
-  };
+export function normalizePartialUsers(users) {
+  return { users: users.map(R.assoc('partial', true)) };
 }
