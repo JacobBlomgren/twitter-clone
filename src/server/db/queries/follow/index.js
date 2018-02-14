@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 import { db } from '../../connection';
 import getQueryFile from '../../getQueryFile';
 
@@ -17,6 +19,7 @@ export function unfollow(follower, followee) {
 
 const getFollowersQueryFile = getQueryFile('follow/get_following');
 
-export function getFollowing(userID) {
-  return db.any(getFollowersQueryFile, userID);
+export async function getFollowing(userID) {
+  const res = await db.any(getFollowersQueryFile, userID);
+  return res.map(R.assoc('follows', true));
 }
