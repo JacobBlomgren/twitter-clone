@@ -90,7 +90,7 @@ function fetchFollowingRequest() {
 }
 
 export const FETCH_FOLLOWING_SUCCESS = 'FETCH_FOLLOWING_SUCCESS';
-function fetchFollowingSuccess(following) {
+export function fetchFollowingSuccess(following) {
   const normalized = normalizePartialUsers(camelizeKeys(following));
   return {
     type: FETCH_FOLLOWING_SUCCESS,
@@ -99,7 +99,7 @@ function fetchFollowingSuccess(following) {
   };
 }
 export const FETCH_FOLLOWING_FAILURE = 'FETCH_FOLLOWING_FAILURE';
-function fetchFollowingFailure() {
+export function fetchFollowingFailure() {
   return {
     type: FETCH_FOLLOWING_FAILURE,
   };

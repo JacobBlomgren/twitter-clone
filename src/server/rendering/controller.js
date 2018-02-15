@@ -17,7 +17,16 @@ import {
   fetchTimelineFailure,
   fetchTimelineSuccess,
 } from '../../shared/actions/timeline';
+import { getFollowing } from '../db/queries/follow';
+import {
+  fetchFollowingFailure,
+  fetchFollowingSuccess,
+} from '../../shared/actions/following';
 
+/**
+ * Returns a Redux store initialized with everything necessary to render
+ * the profile page.
+ */
 export async function profile(username, loggedInUserID) {
   const response = await getUser(undefined, username, loggedInUserID);
   const actions = [];
@@ -30,6 +39,10 @@ export async function profile(username, loggedInUserID) {
   return initStore(actions);
 }
 
+/**
+ * Returns a Redux store initialized with everything necessary to render
+ * the tweet page.
+ */
 export async function tweet(tweetID, loggedInUserID) {
   const response = await getTweetWithReplies(tweetID, loggedInUserID);
   const actions = [];
@@ -40,11 +53,47 @@ export async function tweet(tweetID, loggedInUserID) {
   return initStore(actions);
 }
 
+/**
+ * Returns a Redux store initialized with everything necessary to render
+ * the timeline page.
+ */
 export async function timeline(loggedInUserID) {
   const response = await getTimeLine(loggedInUserID);
   const actions = [loginSuccess({ user_id: loggedInUserID })];
 
   if (response) actions.push(fetchTimelineSuccess(response));
   else actions.push(fetchTimelineFailure());
+  return initStore(actions);
+}
+
+/**
+ * Returns a Redux store initialized with everything necessary to render
+ * the settings page.
+ */
+export async function settings(loggedInUserID) {
+  if (!loggedInUserID) return initStore([]);
+  const response = await getUser(loggedInUserID, undefined, loggedInUserID);
+  const actions = [loginSuccess({ user_id: loggedInUserID })];
+
+  if (!response) return Promise.reject();
+  actions.push(fetchProfileSuccess(response));
+  return initStore(actions);
+}
+
+/**
+ * Returns a Redux store initialized with everything necessary to render
+ * the login page.
+ */
+export async function login(loggedInUserID) {
+  return loggedInUserID ? [loginSuccess({ user_id: loggedInUserID })] : [];
+}
+
+export async function compose(loggedInUserID) {
+  if (!loggedInUserID) return initStore([]);
+  const response = await getFollowing(loggedInUserID);
+  const actions = [loginSuccess({ user_id: loggedInUserID })];
+
+  if (response) actions.push(fetchFollowingSuccess(response));
+  else actions.push(fetchFollowingFailure(response));
   return initStore(actions);
 }
