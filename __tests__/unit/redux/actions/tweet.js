@@ -125,9 +125,11 @@ test('post tweet success', async () => {
     content: 'tweet',
   });
   const store = mockStore();
-  await store.dispatch(postTweet('tweet'));
+  const mockCallback = jest.fn();
+  await store.dispatch(postTweet('tweet', null, mockCallback));
   expect(store.getActions()[0].type).toBe(POST_TWEET_REQUEST);
   expect(store.getActions()[1].type).toBe(POST_TWEET_SUCCESS);
+  expect(mockCallback.mock.calls[0][0]).toBe('1');
 });
 
 test('post tweet failure', async () => {
