@@ -40,7 +40,7 @@ export function search(callback, query) {
         })
         .then(result => {
           dispatch(searchUserSuccess(result));
-          callback(query);
+          callback(result.query);
         })
         .catch(() => {
           dispatch(searchUserFailure());
