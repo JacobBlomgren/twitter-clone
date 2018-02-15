@@ -5,7 +5,7 @@ import {
   FETCH_FOLLOWING_SUCCESS,
 } from '../../actions/following';
 
-function isFetching(state = false, action) {
+function fetching(state = false, action) {
   switch (action.type) {
     case FETCH_FOLLOWING_REQUEST:
       return true;
@@ -23,6 +23,6 @@ function recievedAt(state = 0, action) {
 }
 
 export default combineReducers({
-  isFetching,
+  fetching,
   recievedAt,
 });
