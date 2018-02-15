@@ -26,7 +26,6 @@ test('search users success', async () => {
   const store = mockStore();
   const mockCallback = jest.fn();
   await store.dispatch(search(mockCallback, 'Jacob'));
-  console.log(store.getActions()[1])
   expect(store.getActions()[0].type).toBe(SEARCH_REQUEST);
   expect(store.getActions()[1].type).toBe(SEARCH_USER_SUCCESS);
   expect(mockCallback.mock.calls[0][0]).toBe('Jacob');

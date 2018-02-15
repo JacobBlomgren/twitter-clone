@@ -85,7 +85,9 @@ export async function settings(loggedInUserID) {
  * the login page.
  */
 export async function login(loggedInUserID) {
-  return loggedInUserID ? [loginSuccess({ user_id: loggedInUserID })] : [];
+  const actions = [];
+  if (loggedInUserID) actions.push([loginSuccess({ user_id: loggedInUserID })]);
+  return initStore(actions);
 }
 
 export async function compose(loggedInUserID) {
