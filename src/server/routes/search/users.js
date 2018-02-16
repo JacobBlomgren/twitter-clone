@@ -6,7 +6,7 @@ import { searchUsers as searchUsersQuery } from '../../elasticsearch/search';
 export async function searchUsers(req, res) {
   try {
     const response = await searchUsersQuery(req.query.q, req.loggedInUserID);
-    return res.status(200).json(response);
+    return res.status(200).json({ query: req.query.q, matches: response });
   } catch (err) {
     return res.status(500).end();
   }
