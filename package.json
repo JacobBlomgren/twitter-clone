@@ -13,7 +13,7 @@
     "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "elastic:setup": "node lib/elasticsearch/setup",
-    "elastic:sync" : "node lib/elasticsearch/sync",
+    "elastic:sync": "node lib/elasticsearch/sync",
     "prettify": "yarn prettier \"{src,__tests__,elasticsearch}/**/*.{js,jsx}\" webpack.*.js README.md api/**/*.md",
     "prettier": "prettier --single-quote --trailing-comma all --write",
     "eslint": "eslint src webpack.*.js __test__ elasticsearch --ext .js,.jsx",

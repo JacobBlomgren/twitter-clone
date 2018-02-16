@@ -1,7 +1,10 @@
 import 'isomorphic-fetch';
 
 import login from '../../../../src/shared/reducers/entities/login';
-import {LOGIN_FAILURE, LOGIN_SUCCESS} from '../../../../src/shared/actions/auth';
+import {
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+} from '../../../../src/shared/actions/auth';
 
 test('login', () => {
   const state = login(undefined, {
@@ -23,4 +26,4 @@ test('login failure', () => {
   const { id, message } = state.error;
   expect(id).toEqual('1');
   expect(message).toEqual('Invalid username or password');
-})
+});

@@ -1,7 +1,11 @@
 import bcrypt from 'bcryptjs';
 import { insertUser } from '../db/queries/user';
 
-const avatars = ['/static/1.png', '/static/2.png', '/static/3.png'];
+const avatars = [
+  '/static/avatars/1.png',
+  '/static/avatars/2.png',
+  '/static/avatars/3.png',
+];
 
 // random int between two min and max as suggested here
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -24,7 +28,6 @@ export default async function(username, password) {
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
     const profilePicture = avatars[getRandomInt(0, avatars.length)];
-    console.log(profilePicture)
     return insertUser(username, hash, saltRounds, profilePicture);
   } catch (err) {
     return Promise.reject(err);

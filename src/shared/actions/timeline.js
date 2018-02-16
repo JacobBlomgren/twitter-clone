@@ -34,7 +34,7 @@ export function fetchTimeline() {
         return response.json();
       })
       .then(json => dispatch(fetchTimelineSuccess(json)))
-      .catch(err => {
+      .catch(() => {
         dispatch(fetchTimelineFailure());
         dispatch(addError("Couldn't fetch timeline"));
       });

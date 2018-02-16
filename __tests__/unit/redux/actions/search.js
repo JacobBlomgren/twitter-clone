@@ -19,7 +19,10 @@ afterEach(() => {
 test('search users success', async () => {
   fetchMock.get('/api/search/users?q=Jacob', {
     body: {
-      matches: [{ id: '1', name: 'Jacob Blomgren' }, { id: '2', name: 'Jacob' }],
+      matches: [
+        { id: '1', name: 'Jacob Blomgren' },
+        { id: '2', name: 'Jacob' },
+      ],
       query: 'Jacob',
     },
   });

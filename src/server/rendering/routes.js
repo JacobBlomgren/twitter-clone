@@ -11,7 +11,6 @@ import {
   tweet,
 } from './controller';
 
-
 const router = express.Router();
 
 router.use(loggedInUserID);

@@ -38,11 +38,9 @@ export default class searchbar extends Component {
   }
 
   render() {
-    console.log('asd');
     const { searching } = this.props;
     const { query, focus, searchID, redirect, redirectQuery } = this.state;
-    // search?user=${redirectQuery}
-    if (redirect) return <Redirect to={`settings`} />;
+    if (redirect) return <Redirect to={`search?user=${redirectQuery}`} />;
     return (
       <form
         className={`Searchbar ${focus ? 'Searchbar--Focused' : ''}`}

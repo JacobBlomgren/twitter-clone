@@ -83,6 +83,5 @@ export async function insertUser(
       profilePictureURL,
     },
   );
-  console.log(user_id);
   return user_id;
 }

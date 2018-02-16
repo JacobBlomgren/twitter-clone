@@ -8,9 +8,9 @@ export async function getTweet(req, res) {
   try {
     const response = await getTweetWithReplies(req.query.tweet_id);
     if (!response) return res.status(404).end();
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (err) {
-    res.status(500).end();
+    return res.status(500).end();
   }
 }
 

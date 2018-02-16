@@ -21,6 +21,7 @@ export default async function getTimeLine(loggedInUserID) {
       ({ reply_to_user: replyUser }) =>
         replyUser === null || R.contains({ followee: replyUser }, following),
     );
+    // eslint-disable-next-line camelcase
     const queries = filtered.map(({ tweet_id }) =>
       getTweetWithTask(task, tweet_id, loggedInUserID),
     );

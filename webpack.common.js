@@ -8,7 +8,7 @@ import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import prefixer from 'autoprefixer';
 import noComments from 'postcss-discard-comments';
-import babelRamda from 'babel-plugin-ramda'
+import babelRamda from 'babel-plugin-ramda';
 
 export default {
   name: 'client',
