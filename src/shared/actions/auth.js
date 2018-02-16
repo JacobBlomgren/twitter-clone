@@ -1,5 +1,4 @@
 import camelizeKeys from '../utils/camelizeKeys';
-import { addError } from './error';
 
 import headers from '../utils/fetch/jsonHeaders';
 
@@ -51,8 +50,7 @@ export function login(username, password) {
       .catch(err => {
         if (err.message === '401')
           return dispatch(loginFailure('Invalid username or password'));
-        // Don't dispatch a login failure as it wasn't a client error.
-        return dispatch(addError('Something went wrong'));
+        return dispatch(loginFailure('Something went wrong'));
       });
   };
 }
