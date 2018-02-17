@@ -13,7 +13,7 @@ import {
   UNFOLLOW_REQUEST,
 } from '../../actions/following';
 import { FETCH_TWEET_SUCCESS, POST_TWEET_SUCCESS } from '../../actions/tweet';
-import { LOGIN_SUCCESS } from '../../actions/auth';
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../../actions/auth';
 import { FETCH_TIMELINE_SUCCESS } from '../../actions/timeline';
 import { UPDATE_SETTINGS_SUCCESS } from '../../actions/settings';
 
@@ -69,6 +69,11 @@ function removeFollow(state, action) {
 
 const invalidateOnLogin = R.map(R.assoc('partial', true));
 
+const removeUserDataOnLogout = R.map(user => ({
+  ...user,
+  follows: false,
+}));
+
 function updateSettings(state, action) {
   const user = state[action.loggedInUserID];
   const newUser = {
@@ -96,6 +101,8 @@ function byID(state = {}, action) {
       return removeFollow(state, action);
     case LOGIN_SUCCESS:
       return invalidateOnLogin(state);
+    case LOGOUT_SUCCESS:
+      return removeUserDataOnLogout(state);
     case UPDATE_SETTINGS_SUCCESS:
       return updateSettings(state, action);
     default:

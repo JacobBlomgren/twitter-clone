@@ -1,4 +1,8 @@
-import { LOGIN_FAILURE, LOGIN_SUCCESS } from '../../actions/auth';
+import {
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+} from '../../actions/auth';
 
 export default function(state = {}, action) {
   const { userID, username, message, errorID } = action;
@@ -7,6 +11,8 @@ export default function(state = {}, action) {
       return { user: { id: userID, username } };
     case LOGIN_FAILURE:
       return { error: { message, id: errorID } };
+    case LOGOUT_SUCCESS:
+      return {};
     default:
       return state;
   }

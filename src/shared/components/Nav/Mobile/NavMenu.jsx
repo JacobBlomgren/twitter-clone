@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import User from 'react-icons/lib/fa/user';
 import Home from 'react-icons/lib/fa/home';
 import Settings from 'react-icons/lib/fa/cog';
+import Logout from 'react-icons/lib/fa/sign-out';
 import { Link } from 'react-router-dom';
 
 import ProfilePicture from '../../Profile/ProfilePicture';
@@ -75,6 +76,12 @@ function MenuList({ onClick }) {
         <Link to="/settings" className="link-no-style" onClick={onClick}>
           <Settings size={size} />
           Settings
+        </Link>
+      </li>
+      <li>
+        <Link to="/logout" className="link-no-style" onClick={onClick}>
+          <Logout size={size} />
+          Logout
         </Link>
       </li>
     </ul>

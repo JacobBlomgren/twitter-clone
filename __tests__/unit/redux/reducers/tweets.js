@@ -20,7 +20,10 @@ import {
   FETCH_TWEET_SUCCESS,
   POST_TWEET_SUCCESS,
 } from '../../../../src/shared/actions/tweet';
-import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+} from '../../../../src/shared/actions/auth';
 import { FETCH_TIMELINE_SUCCESS } from '../../../../src/shared/actions/timeline';
 
 test('default', () => {
@@ -573,4 +576,37 @@ test('timeline', () => {
     ],
   });
   expect(state.timeline).toEqual(['1', '2']);
+});
+
+test('logging out should remove likes and retweets', () => {
+  const { byID } = tweets(
+    {
+      byID: {
+        '1': {
+          id: '1',
+          liked: true,
+          retweeted: false,
+        },
+        '2': {
+          id: '2',
+          liked: false,
+          retweeted: true,
+        },
+      },
+    },
+    { type: LOGOUT_SUCCESS },
+  );
+
+  expect(byID).toEqual({
+    '1': {
+      id: '1',
+      liked: false,
+      retweeted: false,
+    },
+    '2': {
+      id: '2',
+      liked: false,
+      retweeted: false,
+    },
+  });
 });

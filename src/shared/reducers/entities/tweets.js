@@ -19,7 +19,7 @@ import {
   FETCH_TWEET_SUCCESS,
   POST_TWEET_SUCCESS,
 } from '../../actions/tweet';
-import { LOGIN_SUCCESS } from '../../actions/auth';
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../../actions/auth';
 import { FETCH_TIMELINE_SUCCESS } from '../../actions/timeline';
 
 // Replaces a tweet in state, that is assumed to exist.
@@ -99,6 +99,17 @@ function invalidateOnLogin(state) {
   return R.map(R.assoc('partial', true), state);
 }
 
+function removeUserDataOnLogout(state) {
+  return R.map(
+    tweet => ({
+      ...tweet,
+      liked: false,
+      retweeted: false,
+    }),
+    state,
+  );
+}
+
 function byID(state = {}, action) {
   switch (action.type) {
     // We add a like at the request for immediate feedback, and remove it on failure
@@ -121,6 +132,8 @@ function byID(state = {}, action) {
       return recieveTweets(state, action);
     case LOGIN_SUCCESS:
       return invalidateOnLogin(state);
+    case LOGOUT_SUCCESS:
+      return removeUserDataOnLogout(state);
     default:
       return state;
   }

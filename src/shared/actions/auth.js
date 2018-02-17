@@ -1,6 +1,7 @@
 import camelizeKeys from '../utils/camelizeKeys';
 
 import headers from '../utils/fetch/jsonHeaders';
+import { addError } from './error';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 function loginRequest(username) {
@@ -51,6 +52,39 @@ export function login(username, password) {
         if (err.message === '401')
           return dispatch(loginFailure('Invalid username or password'));
         return dispatch(loginFailure('Something went wrong'));
+      });
+  };
+}
+
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+function logoutRequest() {
+  return { type: LOGOUT_REQUEST };
+}
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+function logoutSuccess() {
+  return { type: LOGOUT_SUCCESS };
+}
+
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+function logoutFailure() {
+  return { type: LOGOUT_FAILURE };
+}
+
+export function logout() {
+  return dispatch => {
+    dispatch(logoutRequest());
+    return fetch('/api/auth/logout', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.status);
+        return dispatch(logoutSuccess());
+      })
+      .catch(() => {
+        dispatch(addError('Something went wrong'));
+        return dispatch(logoutFailure());
       });
   };
 }

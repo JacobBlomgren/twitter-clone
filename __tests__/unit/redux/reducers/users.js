@@ -13,7 +13,10 @@ import {
   FETCH_PROFILE_NOT_FOUND,
   FETCH_PROFILE_SUCCESS,
 } from '../../../../src/shared/actions/profile';
-import { LOGIN_SUCCESS } from '../../../../src/shared/actions/auth';
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+} from '../../../../src/shared/actions/auth';
 
 test('default', () => {
   const state = users(undefined, {});
@@ -390,6 +393,40 @@ test('fetch following', async () => {
     '2': {
       id: '2',
       follows: true,
+      name: 'jake',
+    },
+  });
+});
+
+test('logging out should remove follows data', () => {
+  const { byID } = users(
+    {
+      byID: {
+        '1': {
+          id: '1',
+          follows: true,
+          name: 'jacob',
+        },
+        '2': {
+          id: '2',
+          follows: false,
+          name: 'jake',
+        },
+      },
+    },
+    {
+      type: LOGOUT_SUCCESS,
+    },
+  );
+  expect(byID).toEqual({
+    '1': {
+      id: '1',
+      follows: false,
+      name: 'jacob',
+    },
+    '2': {
+      id: '2',
+      follows: false,
       name: 'jake',
     },
   });
