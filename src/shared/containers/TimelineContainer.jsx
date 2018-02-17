@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -37,8 +38,15 @@ TimelineContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
+  // Join the tweet id list with the tweets.byID table to get createdAt to
+  // sort by.
+  const tweets = state.entities.tweets.timeline.map(id => ({
+    id,
+    createdAt: state.entities.tweets.byID[id].createdAt,
+  }));
+  const sorted = R.sortWith([R.descend(R.prop('createdAt'))], tweets);
   return {
-    tweetIDs: state.entities.tweets.timeline,
+    tweetIDs: R.pluck('id', sorted),
     recievedAt: state.network.timeline.recievedAt,
     fetching: state.network.timeline.fetching,
     // following: state.entities.users.following.allIDs,

@@ -24,7 +24,7 @@ const tweetsSorted = createSelector(
   (tweets, retweets) =>
     R.pipe(
       R.union,
-      R.sortBy(R.prop('createdAt')),
+      R.sortWith([R.descend(R.prop('createdAt'))]),
       R.project(['id', 'retweet']),
     )(tweets, retweets),
 );
