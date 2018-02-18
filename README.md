@@ -41,3 +41,7 @@ run with `yarn test-integration` but that requires a database with the name
 The api documentation can be found in the `api` directory. To generate the rest
 of the docs, run `yarn docs`, which will generate a `docs` directory. Note that
 JSDocs has only been used for exported functions.
+
+## Screenshots
+![Profile page](https://raw.githubusercontent.com/JacobBlomgren/twitter-clone/master/screenshots/profile.png)
+![Replies page](https://raw.githubusercontent.com/JacobBlomgren/twitter-clone/master/screenshots/replies.png)
