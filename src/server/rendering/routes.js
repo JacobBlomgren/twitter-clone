@@ -10,10 +10,15 @@ import {
   timeline,
   tweet,
 } from './controller';
+import initStore from './initStore';
 
 const router = express.Router();
 
 router.use(loggedInUserID);
+
+// The general policy is to not let express handle redirects, but to render the
+// page with React exactly as it would be rendered if it was navigated to in
+// client.
 
 router.get('/u/:username', async (req, res) => {
   try {
@@ -46,6 +51,15 @@ router.get('/login', async (req, res) => {
   try {
     const store = await login(req.loggedInUserID);
     res.send(renderApp(req.url, store));
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
+router.get('/logout', async (req, res) => {
+  try {
+    req.logout();
+    res.send(renderApp(req.url, initStore([])));
   } catch (err) {
     res.sendStatus(500);
   }
