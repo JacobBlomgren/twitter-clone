@@ -5,13 +5,13 @@ import {
   FETCH_TIMELINE_SUCCESS,
 } from '../../actions/timeline';
 
-function fetching(state = false, action) {
+function fetching(state = { fetching: false }, action) {
   switch (action.type) {
     case FETCH_TIMELINE_REQUEST:
-      return true;
+      return { fetching: true };
     case FETCH_TIMELINE_SUCCESS:
     case FETCH_TIMELINE_FAILURE:
-      return false;
+      return { fetching: false };
     default:
       return state;
   }

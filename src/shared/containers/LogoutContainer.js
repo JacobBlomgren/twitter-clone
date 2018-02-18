@@ -6,7 +6,7 @@ import Logout from '../components/Auth/Logout/Logout';
 
 function mapStateToProps(state) {
   return {
-    fetching: state.network.auth.logout,
+    fetching: state.network.auth.logout.fetching,
   };
 }
 

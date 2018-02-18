@@ -8,25 +8,25 @@ import {
   LOGOUT_SUCCESS,
 } from '../../actions/auth';
 
-function login(state = false, action) {
+function login(state = { fetching: false }, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return true;
+      return { fetching: true };
     case LOGIN_FAILURE:
     case LOGIN_SUCCESS:
-      return false;
+      return { fetching: false };
     default:
       return state;
   }
 }
 
-function logout(state = false, action) {
+function logout(state = { fetching: false }, action) {
   switch (action.type) {
     case LOGOUT_REQUEST:
-      return true;
+      return { fetching: true };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAILURE:
-      return false;
+      return { fetching: false };
     default:
       return state;
   }
