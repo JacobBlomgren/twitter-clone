@@ -60,6 +60,14 @@ $button-width: 16px;
   margin-bottom: 4px;
 }
 
+.Searchbar__Button:focus {
+  outline: none;
+
+  .Searchbar__Icon {
+    color: $main-color;
+  }
+}
+
 @mixin centered-searchbar($width) {
   .Searchbar {
     @include searchbar-width($width);

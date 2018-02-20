@@ -5,14 +5,16 @@
 
 @import 'nav-mobile';
 @import 'searchbar';
+@import 'dropdown';
+@import 'nav-variables';
 
 .Nav {
   background-color: $main-color;
   color: #fff;
   height: $nav-height;
   left: 0;
-  padding-bottom: 0.7rem;
-  padding-top: 0.7rem;
+  padding-bottom: $padding;
+  padding-top: $padding;
   position: fixed;
   top: 0;
   width: 100%;
@@ -22,7 +24,7 @@
 @include media-breakpoint-up(md) {
   .Nav {
     background-color: #fff;
-    border-bottom: 1px solid #c3c3c3;
+    border-bottom: 1px solid $border-color;
     color: inherit;
     height: $nav-height-desktop;
   }

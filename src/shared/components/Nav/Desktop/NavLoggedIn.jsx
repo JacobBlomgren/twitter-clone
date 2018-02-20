@@ -5,6 +5,7 @@ import Home from 'react-icons/lib/fa/home';
 import Edit from 'react-icons/lib/fa/edit';
 
 import SearchbarContainer from '../../../containers/SearchbarContainer';
+import DropDown from './DropDown';
 
 export default function NavLoggedIn() {
   const iconStyle = { 'vertical-align': 'inherit' };
@@ -16,9 +17,6 @@ export default function NavLoggedIn() {
           <Link to="/">
             <Home size={iconSize} style={iconStyle} />
           </Link>
-          <Link to="/settings">
-            <Settings size={iconSize} style={iconStyle} />
-          </Link>
           <Link to="/compose">
             <Edit size={iconSize} style={iconStyle} />
           </Link>
@@ -26,7 +24,9 @@ export default function NavLoggedIn() {
         <div className="col-6">
           <SearchbarContainer />
         </div>
-        <div className="col-3" />
+        <div className="col-3">
+          <DropDown />
+        </div>
       </div>
     </div>
   );
