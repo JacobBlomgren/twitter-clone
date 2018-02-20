@@ -15,6 +15,7 @@ function Like({ likeCount, liked, loggedIn, redirect, onLike, onUnlike }) {
   return (
     <TweetAction
       label={liked ? 'Unlike' : 'Like'}
+      description={{ singular: 'like', plural: 'likes' }}
       active={liked}
       icon={<LikeIcon />}
       count={likeCount}
@@ -46,6 +47,7 @@ function Retweet({
   return (
     <TweetAction
       label={retweeted ? 'Remove retweet' : 'Retweet'}
+      description={{ singular: 'retweet', plural: 'retweets' }}
       active={retweeted}
       icon={<RetweetIcon />}
       count={retweetCount}
@@ -85,6 +87,7 @@ function TweetActions({
     <div>
       <TweetAction
         label="Reply"
+        description={{ singular: 'reply', plural: 'replies' }}
         active={false}
         icon={<Reply />}
         count={replyCount}
