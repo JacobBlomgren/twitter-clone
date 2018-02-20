@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Down from 'react-icons/lib/fa/caret-down';
-import Up from 'react-icons/lib/fa/caret-up';
 
-function Button({ expanded, toggle }) {
+function Button({ expanded, toggle, close }) {
   return (
-    <button onFocus={toggle} onBlur={toggle} className="NavDropDown__Button">
+    <button
+      onBlur={close}
+      onClick={toggle}
+      className={`NavDropDown__Button ${
+        expanded ? 'NavDropDown__Button--Expanded' : ''
+      }`}
+    >
       {expanded ? <Down /> : <Down />}
     </button>
   );
@@ -23,10 +28,15 @@ export default class DropDown extends Component {
     this.state = { expanded: false };
 
     this.toggle = this.toggle.bind(this);
+    this.close = this.close.bind(this);
   }
 
   toggle() {
     this.setState(prevState => ({ expanded: !prevState.expanded }));
+  }
+
+  close() {
+    this.setState({ expanded: false });
   }
 
   render() {
@@ -34,7 +44,7 @@ export default class DropDown extends Component {
     return (
       <div className="NavDropDownContainer">
         <div className="clearfix">
-          <Button expanded={expanded} toggle={this.toggle} />
+          <Button expanded={expanded} toggle={this.toggle} close={this.close} />
         </div>
         {expanded && (
           <div className="NavDropDown">

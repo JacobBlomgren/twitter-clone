@@ -58,8 +58,11 @@
   float: right;
 }
 
-.NavDropDown__Button:focus {
+.NavDropDown__Button--Expanded {
   color: $main-color;
+}
+
+.NavDropDown__Button:focus {
   outline: none;
 }
 
