@@ -1,7 +1,10 @@
 import * as R from 'ramda';
 import { createSelectorCreator, defaultMemoize } from 'reselect';
 
-const findUser = (users, username) =>
+/**
+ * Finds a user with the specified username in a list of users.
+ */
+export const findUser = (users, username) =>
   R.find(R.propEq('username', username), users);
 
 function usersTweetsSelector(state, { tweets = [] }) {
@@ -29,7 +32,7 @@ const tweetsSorted = createSelector(
     )(tweets, retweets),
 );
 
-export default function mapStateToProps(state, { username }) {
+export function mapStateToProps(state, { username }) {
   const fetching = state.network.user.fetching.includes(username);
   const user = findUser(Object.values(state.entities.users.byID), username);
   // Determine whether there is enough data to display the profile.

@@ -14,8 +14,6 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import common from './webpack.common';
 
-import { APP_NAME } from './src/shared/config';
-
 const clientConfig = merge(common, {
   entry: {
     main: './src/client',
@@ -43,7 +41,6 @@ const clientConfig = merge(common, {
         minifyJS: true,
         removeComments: true,
       },
-      title: APP_NAME,
       template: 'index.ejs',
     }),
     new InlineManifestWebpackPlugin({

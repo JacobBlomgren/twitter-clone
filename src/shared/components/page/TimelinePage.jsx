@@ -1,14 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-
+import Helmet from 'react-helmet';
 import TimelineContainer from '../../containers/TimelineContainer';
 
 export default function TimelinePage() {
   return (
-    <main className="MainColumn">
-      <TimelineContainer />
-    </main>
+    <div>
+      <Helmet title="Timeline" />
+      <main className="MainColumn">
+        <TimelineContainer />
+      </main>
+    </div>
   );
 }
-
-TimelinePage.propTypes = {};

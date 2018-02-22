@@ -7,7 +7,7 @@ import Spinner from '../../components/Spinners/Spinner';
 import { fetchProfile } from '../../actions/profile';
 import { follow, unfollow } from '../../actions/following';
 import NotFoundPage from '../../components/page/NotFoundPage';
-import mapStateToProps from './mapStateToProps';
+import { mapStateToProps } from './mapStateToProps';
 
 /**
  * Component to wrap a profile, that fetches new data for the requested user
