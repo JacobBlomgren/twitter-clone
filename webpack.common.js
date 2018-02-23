@@ -9,6 +9,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import prefixer from 'autoprefixer';
 import noComments from 'postcss-discard-comments';
 import babelRamda from 'babel-plugin-ramda';
+import { ReactLoadablePlugin } from 'react-loadable/webpack';
 
 export default {
   name: 'client',
@@ -84,5 +85,8 @@ export default {
     new webpack.NoEmitOnErrorsPlugin(),
     // Omit the very heavy locales of moment, as the app is not international yet.
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json',
+    }),
   ],
 };

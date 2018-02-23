@@ -3,6 +3,7 @@ import { hydrate, render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
 
 import './styles/main.scss';
 
@@ -25,7 +26,9 @@ function wrapApp(AppComponent, reduxStore) {
 }
 
 if (isProd) {
-  hydrate(wrapApp(App, store), rootEl);
+  Loadable.preloadReady().then(() => {
+    hydrate(wrapApp(App, store), rootEl);
+  });
 } else {
   render(wrapApp(App, store), rootEl);
 }

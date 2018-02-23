@@ -8,6 +8,7 @@
     "react"
   ],
   "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": true }]
+    ["transform-object-rest-spread", { "useBuiltIns": true }],
+    "react-loadable/babel"
   ]
 }
