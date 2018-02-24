@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Down from 'react-icons/lib/fa/caret-down';
+import onClickOutside from 'react-onclickoutside';
 
-function Button({ expanded, toggle, close }) {
+function Button({ expanded, toggle }) {
   return (
     <button
-      onBlur={close}
       onClick={toggle}
       className={`NavDropDown__Button ${
         expanded ? 'NavDropDown__Button--Expanded' : ''
@@ -22,13 +22,45 @@ Button.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
-export default class DropDown extends Component {
+function DropDownList({ close }) {
+  return (
+    <div className="NavDropDown">
+      <ul className="NavDropDown__List">
+        <li className="NavDropDown__List__Item">
+          <Link
+            to="/settings"
+            className="NavDropDown__List__Item__Link"
+            onClick={close}
+          >
+            Settings
+          </Link>
+        </li>
+        <li className="NavDropDown__List__Item">
+          <Link
+            to="/logout"
+            className="NavDropDown__List__Item__Link"
+            onClick={close}
+          >
+            Logout
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+DropDownList.propTypes = {
+  close: PropTypes.func.isRequired,
+};
+
+class DropDown extends Component {
   constructor(props) {
     super(props);
     this.state = { expanded: false };
 
     this.toggle = this.toggle.bind(this);
     this.close = this.close.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   toggle() {
@@ -39,6 +71,10 @@ export default class DropDown extends Component {
     this.setState({ expanded: false });
   }
 
+  handleClickOutside() {
+    this.setState({ expanded: false });
+  }
+
   render() {
     const { expanded } = this.state;
     return (
@@ -46,25 +82,10 @@ export default class DropDown extends Component {
         <div className="clearfix">
           <Button expanded={expanded} toggle={this.toggle} close={this.close} />
         </div>
-        {expanded && (
-          <div className="NavDropDown">
-            <ul className="NavDropDown__List">
-              <li className="NavDropDown__List__Item">
-                <Link to="/settings" className="NavDropDown__List__Item__Link">
-                  Settings
-                </Link>
-              </li>
-              <li className="NavDropDown__List__Item">
-                <Link to="/logout" className="NavDropDown__List__Item__Link">
-                  Logout
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
+        {expanded && <DropDownList close={this.close} />}
       </div>
     );
   }
 }
 
-DropDown.propTypes = {};
+export default onClickOutside(DropDown, { excludeScrollbar: true });

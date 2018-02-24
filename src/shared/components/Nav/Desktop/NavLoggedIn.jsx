@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Settings from 'react-icons/lib/fa/cog';
 import Home from 'react-icons/lib/fa/home';
 import Edit from 'react-icons/lib/fa/edit';
 
