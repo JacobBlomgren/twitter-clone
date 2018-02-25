@@ -78,12 +78,12 @@ class DropDown extends Component {
   render() {
     const { expanded } = this.state;
     return (
-      <div className="NavDropDownContainer">
-        <div className="clearfix">
+      <span className="NavDropDownContainer">
+        <span className="clearfix">
           <Button expanded={expanded} toggle={this.toggle} close={this.close} />
-        </div>
+        </span>
         {expanded && <DropDownList close={this.close} />}
-      </div>
+      </span>
     );
   }
 }

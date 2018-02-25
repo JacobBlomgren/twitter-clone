@@ -7,14 +7,8 @@ import NavLoggedIn from './NavLoggedIn';
 export default function NavDesktop({ loggedIn, location }) {
   return (
     <nav className="d-none d-md-block Nav">
-      <div className="MainColumn">
-        {loggedIn ? (
-          <NavLoggedIn />
-        ) : (
-          <div className="SmallPadding--Sides">
-            <NotLoggedIn location={location} />
-          </div>
-        )}
+      <div className="MainColumn NavDesktop__Column">
+        {loggedIn ? <NavLoggedIn /> : <NotLoggedIn location={location} />}
       </div>
     </nav>
   );

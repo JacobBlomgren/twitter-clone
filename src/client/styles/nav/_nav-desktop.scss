@@ -1,0 +1,25 @@
+@import 'dropdown';
+
+.NavDesktop__Column {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.Nav__UserInfo__Link {
+  color: inherit;
+}
+
+.Nav__UserInfo__Link:hover {
+  span {
+    text-decoration: underline;
+  }
+}
+
+.Nav__UserInfo__Image {
+  height: 1.3rem;
+  margin-right: 0.3rem;
+}
+
+.Nav__LoggedInAction {
+  padding: 0 0.3rem;
+}
