@@ -55,12 +55,11 @@
 
 .NavDropDown__Button {
   @include button-no-style;
+  color: $main-color;
   float: right;
 }
 
-.NavDropDown__Button--Expanded,
-.NavDropDown__Button--Expanded:focus {
-  color: $main-color;
+.NavDropDown__Button:active {
   outline: none;
 }
 

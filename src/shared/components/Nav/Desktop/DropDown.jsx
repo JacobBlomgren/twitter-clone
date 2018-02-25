@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Down from 'react-icons/lib/fa/caret-down';
+import Up from 'react-icons/lib/fa/caret-up';
 import onClickOutside from 'react-onclickoutside';
 
 function Button({ expanded, toggle }) {
@@ -12,7 +13,7 @@ function Button({ expanded, toggle }) {
         expanded ? 'NavDropDown__Button--Expanded' : ''
       }`}
     >
-      {expanded ? <Down /> : <Down />}
+      {expanded ? <Up /> : <Down />}
     </button>
   );
 }
