@@ -73,9 +73,11 @@ Time.propTypes = { createdAt: PropTypes.string.isRequired };
 export default function TweetInfo({ name, username, createdAt }) {
   return (
     <div className="Tweet__Info">
-      <Name name={name} username={username} />
-      <Username username={username} />
-      <time dateTime={createdAt}>
+      <div className="Tweet__Info__Names">
+        <Name name={name} username={username} />
+        <Username username={username} />
+      </div>
+      <time dateTime={createdAt} className="Tweet__Info__Time">
         <span className="sr-only">
           Tweet created {moment(createdAt).fromNow()}.
         </span>

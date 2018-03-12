@@ -51,11 +51,15 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ProfilePage__Header__Names {
   float: left;
   margin-bottom: 0.2rem;
+  max-width: 250px;
   padding-right: 1rem;
 }
 

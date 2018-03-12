@@ -81,14 +81,48 @@ $tweet-profile-picture-col-width-lg: 3.8rem;
   }
 }
 
-.Tweet__Info__Name,
-.Tweet__Info__Username {
+.Tweet__Info__Name {
   margin-right: 0.3rem;
+}
+
+.Tweet__Info__Time {
+  margin-left: 0.3rem;
 }
 
 .Tweet__Info__Name {
   color: inherit;
   font-weight: bold;
+}
+
+// Fix overflowing of too long names and usernames, especially on mobile.
+.Tweet__Info__Name,
+.Tweet__Info__Username,
+.Tweet__Info__Names {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Tweet__Info__Name,
+.Tweet__Info__Names {
+  display: inline-block;
+}
+
+// Set a max width on both the name, username and both together. Ideally we
+// want username, the second name displayed, to overflow rather than the name,
+// but in the case of extremely long names, we set a limit for them as well.
+@include media-breakpoint-down(md-mobile) {
+  .Tweet__Info__Name {
+    max-width: 70%;
+  }
+
+  .Tweet__Info__Username {
+    max-width: 37%;
+  }
+
+  .Tweet__Info__Names {
+    max-width: 89%;
+  }
 }
 
 .Tweet__Info {
