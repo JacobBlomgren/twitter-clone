@@ -43,5 +43,6 @@ of the docs, run `yarn docs`, which will generate a `docs` directory. Note that
 JSDocs has only been used for exported functions.
 
 ## Screenshots
+
 ![Profile page](https://raw.githubusercontent.com/JacobBlomgren/twitter-clone/master/screenshots/profile.png)
 ![Replies page](https://raw.githubusercontent.com/JacobBlomgren/twitter-clone/master/screenshots/replies.png)

@@ -16,7 +16,6 @@ beforeAll(async () => {
 
   // we need the user id
   user1 = await getUserByUsernameAuth('following1');
-  console.log(user1);
   user2 = await getUserByUsernameAuth('following2');
 });
 
